@@ -67,8 +67,8 @@ void	ppx_exit_with_error_message(t_ppx *env, int err_code)
 
 void	ppx_exit_when_cmd_not_found(t_ppx *env, char *cmd)
 {
-	ppx_putstr_fd("pipex: command not found: ", STDERR_FILENO, NONE);
-	ppx_putstr_fd(cmd, STDERR_FILENO, PUT_NEWLINE);
+	ppx_putstr_fd(cmd, STDERR_FILENO, NONE);
+	ppx_putstr_fd(": command not found", STDERR_FILENO, PUT_NEWLINE);
 	ppx_free_array_of_pointers(env->cmd, 0);
 	ppx_free_pipe_fds(env);
 	exit(EXIT_FAILURE);

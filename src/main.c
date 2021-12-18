@@ -54,7 +54,7 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			buffer = readline("$ ");
 	//		printf("str: %s\n", buffer);
-			if (ms_check_if_cmd_is_handled(buffer) == true)
+			//if (ms_check_if_cmd_is_handled(buffer) == true)
 				ms_execute_cmd(envp, buffer);
 		}
 	}
