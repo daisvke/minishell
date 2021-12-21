@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/16 04:57:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/21 07:00:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void	ms_execute_cmd(char *envp[], char *read_line)
 		ppx_exit_when_cmd_not_found(&ppx_env, ppx_env.cmd[0]);
 }
 
-int	ms_check_if_cmd_is_handled(char *cmd)
+int	s_check_if_the_cmd_exists_inside_minishell(char *cmd_line)
 {
-	if (ms_strncmp(cmd, "echo ", 5) == MS_SAME \
-		|| ms_strncmp(cmd, "pwd", 3) == MS_SAME \
-		|| ms_strncmp(cmd, "env", 3) == MS_SAME)
+	if (\
+		ms_strncmp(cmd_line, "cd", 2) == MS_SAME \
+		|| ms_strncmp(cmd_line, "export", 6) == MS_SAME \
+		|| ms_strncmp(cmd_line, "unset", 5) == MS_SAME \
+		|| ms_strncmp(cmd_line, "exit", 4) == MS_SAME \
+		)
 		return (true);
 	return (false);
 }
@@ -44,19 +47,46 @@ bool	ms_check_if_args_are_set(int argc, char *argv[])
 	return (MS_NO_ARGS);
 }
 
+void	ms_parse_cmd_line(t_ms *ms_env, char *cmd_line)
+{
+	size_t	start;
+	size_t	end;
+
+	ms_env->array_of_cmds = ppx_split(cmd_line, '|');
+	if (array_of_cmds == NULL)
+	{
+		//set error
+		//exit
+	}
+}
+
+int	ms_show_prompt_and_read_cmd_line(char *cmd_line)
+{
+	cmd_line = readline("$ ");
+	if (cmd_line == NULL)
+		return (MS_EMPTY_CMD_LINE);
+	return (MS_LINE_READ);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	char	*buffer;
+	t_ms	ms_env;
+	char	*cmd_line;
 
 	if (ms_check_if_args_are_set(argc, argv) == MS_NO_ARGS)
 	{
 		while (1)
 		{
-			buffer = readline("$ ");
+			if (ms_show_prompt_and_read_cmd_line(cmd_line) == MS_EMPTY_CMD_LINE)
+				continue ;
+			ms_parse_cmd_line(&ms_env, cmd_line);
 	//		printf("str: %s\n", buffer);
-			//if (ms_check_if_cmd_is_handled(buffer) == true)
-				ms_execute_cmd(envp, buffer);
+	//		if (ms_check_if_the_cmd_exists_inside_minishell(cmd_line) == true)
+				
+			ms_execute_cmd(envp, cmd_line);
 		}
 	}
+	// ms_free
+	free(cmd_line);
 	exit(EXIT_SUCCESS);
 }
