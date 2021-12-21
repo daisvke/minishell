@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/16 04:55:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:57:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,16 @@
 # define MS_SAME			0
 # define MS_NO_ARGS			0
 
+# define MS_LINE_READ		0
+# define MS_EMPTY_CMD_LINE	1 
+
 # define MS_ERROR			1
+
+// Main struct
+typedef struct t_ms
+{
+}
+
 
 /*
 ** utils_strings
