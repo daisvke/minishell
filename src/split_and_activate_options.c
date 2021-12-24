@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   split_and_activate_options.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/24 03:45:01 by dtanigaw         ###   ########.fr       */
+/*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
+/*   Updated: 2021/12/24 03:55:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ppx_free_split(char *split[])
+void	ms_free_split(char *split[])
 {
 	size_t	i;
 
@@ -26,9 +26,9 @@ void	ppx_free_split(char *split[])
 	split = NULL;
 }
 
-char	*ppx_strdup(char *src, int size)
+char	*ms_strdup(char *src, size_t size)
 {
-	int		i;
+	size_t	i;
 	char	*dest;
 
 	dest = (char *)malloc(sizeof(*dest) * (size + 1));
@@ -44,9 +44,9 @@ char	*ppx_strdup(char *src, int size)
 	return (dest);
 }
 
-int	ppx_split_iter(char *split[], char *s, char c)
+int	ms_split_iter(char *split[], char *s, char c)
 {
-	int		i;
+	size_t	i;
 	char	*start;
 
 	i = 0;
@@ -59,7 +59,7 @@ int	ppx_split_iter(char *split[], char *s, char c)
 		start = s;
 		while (*s != c && *s)
 			s++;
-		split[i] = ppx_strdup(start, s - start);
+		split[i] = ms_strdup(start, s - start);
 		if (!split[i])
 		{
 			ppx_free_array_of_pointers(split, i);
@@ -71,15 +71,24 @@ int	ppx_split_iter(char *split[], char *s, char c)
 	return (0);
 }
 
-int	ppx_wordcount(char *s, int sep)
+void	ms_activate_option(t_ms *env, int sep)
 {
-	int	wc;
+	if ((char)sep == '|')
+		env->pipe = true;
+}
+
+size_t	ms_wordcount(t_ms *env, char *s, int sep)
+{
+	size_t	wc;
 
 	wc = 0;
 	while (*s)
 	{
 		while (*s == (char)sep)
+		{
+			ms_activate_option(env, sep);
 			s++;
+		}
 		if (!*s)
 			break ;
 		while (*s != (char)sep && *s)
@@ -89,15 +98,17 @@ int	ppx_wordcount(char *s, int sep)
 	return (wc);
 }
 
-char	**ppx_split(char const *s, char c)
+char	**ms_split_and_activate_options(t_ms *env, char const *s, char c)
 {
-	int		res;
 	char	**split;
+	int		res;
+	size_t	wordcount;
 
-	split = (char **)malloc(sizeof(*split) * (ppx_wordcount((char *)s, c) + 1));
+	wordcount = ms_wordcount(env, (char *)s, c);
+	split = (char **)malloc(sizeof(*split) * (wordcount + 1));
 	if (!split)
 		return (NULL);
-	res = ppx_split_iter(split, (char *)s, c);
+	res = ms_split_iter(split, (char *)s, c);
 	if (res == ERROR)
 		return (NULL);
 	return (split);

@@ -9,7 +9,9 @@ SRC_DIR				=	src/
 SRC_FILES			=	exit.c \
 						main.c \
 						path.c \
+						ppx_main.c \
 						split.c \
+						split_and_activate_options.c \
 						get_next_line.c \
 						heredoc.c \
 						pipex.c \
