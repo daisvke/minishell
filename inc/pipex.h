@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/16 03:43:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/24 03:48:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdbool.h>
+
+# include "minishell.h"
 
 # include "get_next_line.h"
 
@@ -54,11 +56,12 @@ typedef struct s_ppx
 	int		argc;
 	int		fd_in;
 	char	**cmd;
+	bool	pipe;
 	bool	heredoc;
 }			t_ppx;
 
 void	ppx_close_and_free_pipe_fds(t_ppx *env);
-int		ppx_pipex(char *argv[], char *envp[], t_ppx *env);
+//int		ppx_pipex(char *argv[], char *envp[], t_ppx *env, t_ms *ms_env);
 
 /*
 ** system calls

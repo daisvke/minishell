@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/04 01:12:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/24 03:31:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ void	ppx_spawn_child_to_execute_cmd(t_ppx *env, char *argv[], char *envp[])
 	char	*path_to_cmd;
 	int		fd;
 
-	ppx_close(env, env->pipe_fds[env->i][0]);
-	ppx_dup2(env, env->fd_in, STDIN_FILENO);
-	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
-	fd = ppx_get_fd(env, argv);
+	if (env->pipe == true)
+	{
+		ppx_close(env, env->pipe_fds[env->i][0]);
+		ppx_dup2(env, env->fd_in, STDIN_FILENO);
+		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
+		fd = ppx_get_fd(env, argv);
+	}
 	env->cmd = ppx_split(argv[env->pos], ' ');
 	if (!env->cmd)
 		ppx_exit_with_error_message(env, 7);
@@ -62,28 +65,52 @@ int	ppx_wait_for_all_children(t_ppx *env, pid_t pid)
 	return (0);
 }
 
-int	ppx_pipex(char *argv[], char *envp[], t_ppx *env)
+int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 {
 	pid_t	pid;
 	int		err;
-
-	env->pos += GET_FIRST_CMD;
-	if (env->heredoc)
-		ppx_input_heredoc(env, argv);
-	while (env->pos < env->argc - 1)
+	char	*path_to_cmd;
+// IF infile redirect
+//	env->pos += GET_FIRST_CMD;
+//	if (ppx_env->heredoc)
+//		ppx_input_heredoc(ppx_env, argv);
+//	printf("argc: %d\n", ppx_env->argc);
+	while (ppx_env->pos < ppx_env->argc)
 	{
-		ppx_pipe(env, env->pipe_fds[env->i]);
-		pid = ppx_fork(env);
+		/*
+		if (ppx_env->argc == 1)
+		{
+			ppx_env->cmd = ppx_split(ms_env->cmd_line[0], ' ');
+			if (!ppx_env->cmd)
+				ppx_exit_with_error_message(ppx_env, 7);
+			path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, envp, "PATH=", ppx_env->cmd[0]);
+			if (execve(path_to_cmd, ppx_env->cmd, envp) == ERROR)
+				ppx_exit_when_cmd_not_found(ppx_env, ms_env->cmd_line[0]);
+		}
+		else
+		{
+			*/
+		if (ppx_env->pipe == true)
+			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
+		pid = ppx_fork(ppx_env);
 		if (pid == CHILD)
 		{
-			ppx_spawn_child_to_execute_cmd(env, argv, envp);
+			ppx_spawn_child_to_execute_cmd(ppx_env, argv, envp);
 			exit(EXIT_SUCCESS);
 		}
-		ppx_save_data_from_child(env);
+		if (ppx_env->pipe == true)
+			ppx_save_data_from_child(ppx_env);
+		else
+		{
+			++ppx_env->pos;
+		}
+			/*
+		}
+		*/
 	}
-	err = ppx_wait_for_all_children(env, pid);
-	if (env->heredoc)
+	err = ppx_wait_for_all_children(ppx_env, pid);
+	if (ppx_env->heredoc)
 		unlink("heredoc_output");
-	ppx_free_pipe_fds(env);
+	ppx_free_pipe_fds(ppx_env);
 	return (err);
 }
