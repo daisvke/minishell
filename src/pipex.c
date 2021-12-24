@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/24 03:31:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/24 06:08:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 void	ppx_spawn_child_to_execute_cmd(t_ppx *env, char *argv[], char *envp[])
 {
 	char	*path_to_cmd;
-	int		fd;
 
-	if (env->pipe == true)
+	if (env->pipe == true || env->redir_output == true)
 	{
 		ppx_close(env, env->pipe_fds[env->i][0]);
 		ppx_dup2(env, env->fd_in, STDIN_FILENO);
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
-		fd = ppx_get_fd(env, argv);
+		ppx_get_fd(env, argv);
 	}
 	env->cmd = ppx_split(argv[env->pos], ' ');
 	if (!env->cmd)
@@ -70,26 +69,15 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 	pid_t	pid;
 	int		err;
 	char	*path_to_cmd;
-// IF infile redirect
-//	env->pos += GET_FIRST_CMD;
-//	if (ppx_env->heredoc)
-//		ppx_input_heredoc(ppx_env, argv);
-//	printf("argc: %d\n", ppx_env->argc);
+
+	if (ppx_env->redir_output == true)
+		ppx_env->pos += GET_FIRST_CMD;
+	if (ppx_env->heredoc)
+		ppx_input_heredoc(ppx_env, argv);
+	printf("argc: %d\n", ppx_env->argc);
 	while (ppx_env->pos < ppx_env->argc)
 	{
-		/*
-		if (ppx_env->argc == 1)
-		{
-			ppx_env->cmd = ppx_split(ms_env->cmd_line[0], ' ');
-			if (!ppx_env->cmd)
-				ppx_exit_with_error_message(ppx_env, 7);
-			path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, envp, "PATH=", ppx_env->cmd[0]);
-			if (execve(path_to_cmd, ppx_env->cmd, envp) == ERROR)
-				ppx_exit_when_cmd_not_found(ppx_env, ms_env->cmd_line[0]);
-		}
-		else
-		{
-			*/
+	printf("pos: %d\n", ppx_env->pos);
 		if (ppx_env->pipe == true)
 			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
 		pid = ppx_fork(ppx_env);
@@ -104,9 +92,6 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 		{
 			++ppx_env->pos;
 		}
-			/*
-		}
-		*/
 	}
 	err = ppx_wait_for_all_children(ppx_env, pid);
 	if (ppx_env->heredoc)
