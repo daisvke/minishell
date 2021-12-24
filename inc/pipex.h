@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/24 03:48:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/24 06:11:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@
 # define INPUT_FILE				1
 # define NO_INPUT_FILE			0
 
-# define FIRST_CMD				2
+# define FIRST_CMD				0
 # define GET_FIRST_CMD			2
 # define GET_LAST_CMD			2
+# define FIRST_CMD_WHEN_READING_FROM_FILE	1
 # define FIRST_CMD_WHEN_HEREDOC 3
 
 # define ERROR 					-1
@@ -57,6 +58,8 @@ typedef struct s_ppx
 	int		fd_in;
 	char	**cmd;
 	bool	pipe;
+	bool	read_from_file;
+	bool	redir_output;
 	bool	heredoc;
 }			t_ppx;
 
@@ -75,7 +78,7 @@ void	ppx_pipe(t_ppx *env, int *fds);
 /*
 ** utils_fd
 */
-int		ppx_get_fd(t_ppx *env, char *argv[]);
+void	ppx_get_fd(t_ppx *env, char *argv[]);
 int		ppx_open_file(t_ppx *env, char *file_name, int flags, int mod);
 void	ppx_putstr_fd(char *s, int fd, bool option);
 
