@@ -20,7 +20,8 @@ void	ppx_spawn_child_to_execute_cmd(t_ppx *env, char *argv[], char *envp[])
 	{
 		ppx_close(env, env->pipe_fds[env->i][0]);
 		ppx_dup2(env, env->fd_in, STDIN_FILENO);
-		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
+		if (env->pos != env->argc - 1)
+	    	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 		ppx_get_fd(env, argv);
 	}
 	env->cmd = ppx_split(argv[env->pos], ' ');
@@ -86,7 +87,7 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 			ppx_spawn_child_to_execute_cmd(ppx_env, argv, envp);
 			exit(EXIT_SUCCESS);
 		}
-		if (ppx_env->pipe == true)
+		if (ppx_env->pipe == true && ppx_env->pos != ppx_env->argc - 1)
 			ppx_save_data_from_child(ppx_env);
 		else
 		{
