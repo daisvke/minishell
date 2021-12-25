@@ -7,6 +7,7 @@ INC					=	-I inc/
 
 SRC_DIR				=	src/
 SRC_FILES			=	exit.c \
+						init_ms_env.c \
 						main.c \
 						path.c \
 						ppx_main.c \
