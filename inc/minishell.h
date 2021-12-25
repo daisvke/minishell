@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/24 03:53:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/25 07:13:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,16 @@
 # define MS_SAME			0
 # define MS_NO_ARGS			0
 
+// READ FROM PROMPT
 # define MS_LINE_READ		0
 # define MS_EMPTY_CMD_LINE	1 
+
+// CHECK IF THE CMD IS IMPLEMENTED
+# define MS_CMD_CD			1
+# define MS_CMD_EXPORT		2
+# define MS_CMD_UNSET		3
+# define MS_CMD_EXIT		4
+# define MS_FIRST_ARG_POS	1
 
 # define MS_ERROR			1
 

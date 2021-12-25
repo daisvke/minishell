@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 00:45:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/25 07:28:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ms_execute_cmd(char *envp[], t_ms *ms_env, char **cmd_line)
 {
-	t_ppx	ppx_env;
-	char	*path_to_cmd;
 	size_t	i;
 	size_t	cmd_and_file_nbr;
 
@@ -25,17 +23,49 @@ void	ms_execute_cmd(char *envp[], t_ms *ms_env, char **cmd_line)
 	cmd_and_file_nbr = i;
 	ppx_main(cmd_and_file_nbr, cmd_line, envp, ms_env);
 }
-
-int	s_check_if_the_cmd_exists_inside_minishell(char *cmd_line)
+// add env for err
+void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
 {
-	if (\
-		ms_strncmp(cmd_line, "cd", 2) == MS_SAME \
-		|| ms_strncmp(cmd_line, "export", 6) == MS_SAME \
-		|| ms_strncmp(cmd_line, "unset", 5) == MS_SAME \
-		|| ms_strncmp(cmd_line, "exit", 4) == MS_SAME \
-		)
-		return (true);
-	return (false);
+	size_t	i;
+	char	*curr_abs_path;
+
+	curr_abs_path = getcwd(NULL, 0);
+//	if (curr_abs_path == NULL)
+	//	ppx_exit_with_error_message(env, 10);
+	i = MS_FIRST_ARG_POS;
+	if (cmd_and_args[i] == NULL)
+	{
+//		strcat(curr_abs_path, cmd_and_args[i]);
+		cmd_and_args[i] = ppx_join_two_str(env, curr_abs_path, cmd_and_args[i]);
+		printf("strcat: %s\n", cmd_and_args[i]);
+		return ;
+	}
+	while (cmd_and_args[i])
+	{
+		cmd_and_args[i] = ppx_join_two_str(env, curr_abs_path, cmd_and_args[i]);
+	//	strcat(curr_abs_path, cmd_and_args[i]);
+		printf("strcat: %s\n", cmd_and_args[i]);
+		++i;
+	}
+		// ms_free
+}
+
+bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd_code)
+{
+	*cmd_code = 0;
+	if (ms_strcmp(cmd_line[0], "cd") == MS_SAME)
+	{
+		*cmd_code = MS_CMD_CD;
+	}
+	else if (ms_strcmp(cmd_line[0], "export") == MS_SAME)
+		*cmd_code = MS_CMD_EXPORT;
+	else if (ms_strcmp(cmd_line[0], "unset") == MS_SAME)
+		*cmd_code = MS_CMD_UNSET;
+	else if (ms_strcmp(cmd_line[0], "exit") == MS_SAME)
+		*cmd_code = MS_CMD_EXIT;
+	else if (ms_strcmp(cmd_line[0], "ls") == MS_SAME)
+		ms_add_curr_path_to_ls_cmd(env, cmd_line);
+	return (*cmd_code);
 }
 
 bool	ms_check_if_args_are_set(int argc)
@@ -72,6 +102,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*cmd_line;
 
 	ft_memset(&ms_env, 0, sizeof(t_ms));
+	(void)argv;
 
 //	size_t	i = 0;
 	if (ms_check_if_args_are_set(argc) == MS_NO_ARGS)
