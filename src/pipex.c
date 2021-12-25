@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 11:47:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/25 12:10:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,12 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], 
 	// if not implemented
 //	if (ms_check_if_the_cmd_is_implemented(ppx_env, ppx_env->cmd, &cmd_code) == true)
 //		ppx_execute_implemented_cmd(ms_env, ppx_env, cmd_code, ppx_env->cmd[1]);
-	else
-	{
-		if (ms_strcmp(ppx_env->cmd[0], "ls") == MS_SAME)
-			ms_add_curr_path_to_ls_cmd(ppx_env, ppx_env->cmd);
+
+		//if (ms_strcmp(ppx_env->cmd[0], "ls") == MS_SAME)
+		//	ms_add_curr_path_to_ls_cmd(ppx_env, ppx_env->cmd);
 		path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, envp, "PATH=", ppx_env->cmd[0]);
 		if (execve(path_to_cmd, ppx_env->cmd, envp) == ERROR)
 			ppx_exit_when_cmd_not_found(ppx_env, ppx_env->cmd[0]);
-	}
 }
 
 void	ppx_save_data_from_child(t_ppx *env)
