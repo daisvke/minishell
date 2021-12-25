@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 11:43:37 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/25 21:40:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 # include "pipex.h"
 
 # define MS_SAME			0
-# define MS_NO_ARGS			0
+# define MS_OK				0
+
+# define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 
 // READ FROM PROMPT
-# define MS_LINE_READ		0
-# define MS_EMPTY_CMD_LINE	1 
+# define MS_READ_LINE		0
+# define MS_READ_EOF		1
 
 // CHECK IF THE CMD IS IMPLEMENTED
 # define MS_CMD_CD			1

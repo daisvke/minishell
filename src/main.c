@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 11:41:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/25 21:43:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_execute_cmd(char *envp[], t_ms *ms_env, char **cmd_line)
+void	ms_execute_cmd_line(char *envp[], t_ms *ms_env, char **cmd_line)
 {
 	size_t	i;
 	size_t	cmd_and_file_nbr;
@@ -33,6 +33,7 @@ void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
 //	if (curr_abs_path == NULL)
 	//	ppx_exit_with_error_message(env, 10);
 	i = MS_FIRST_ARG_POS;
+	/*
 	if (cmd_and_args[i] == NULL)
 	{
 		ms_free_split(cmd_and_args);
@@ -42,10 +43,10 @@ void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
 //		strcat(curr_abs_path, cmd_and_args[i]);
 		cmd_and_args[1] = curr_abs_path;
 		cmd_and_args[2] = NULL;
-		printf("strcat: %s\n", cmd_and_args[i]);
 		//free cmd after use 
 		return ;
 	}
+	*/
 	while (cmd_and_args[i])
 	{
 		cmd_and_args[i] = ppx_join_three_str(env, curr_abs_path, "/", cmd_and_args[i]);
@@ -72,13 +73,14 @@ bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd
 	return (*cmd_code);
 }
 
-bool	ms_check_if_args_are_set(int argc)
+int	ms_control_arguments(int argc, char *argv[])
 {
+	(void)argv;
 	if (argc > 1)
 	{
 		return (MS_ERROR);
 	}
-	return (MS_NO_ARGS);
+	return (MS_OK);
 }
 
 void	ms_parse_cmd_line(t_ms *ms_env, char *cmd_line)
@@ -95,9 +97,15 @@ int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
 {
 	*cmd_line = readline("$ ");
 	if (*cmd_line == NULL)
-		return (MS_EMPTY_CMD_LINE);
+		return (MS_READ_EOF);
 	add_history(*cmd_line);
-	return (MS_LINE_READ);
+	return (MS_READ_LINE);
+}
+
+void	ms_handle_sigint(int signum)
+{
+	(void)signum;
+	signal(SIGINT, ms_handle_sigint);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -105,26 +113,20 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ms	ms_env;
 	char	*cmd_line;
 
-	(void)argv;
-	ms_init_env(&ms_env);
-//	size_t	i = 0;
-	if (ms_check_if_args_are_set(argc) == MS_NO_ARGS)
+	if (ms_control_arguments(argc, argv) == MS_OK)
 	{
+		ms_init_env(&ms_env);
 		cmd_line = NULL;
-		while (1)
+		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			if (ms_show_prompt_and_read_cmd_line(&cmd_line) == MS_EMPTY_CMD_LINE)
-				continue ;
+			signal(SIGINT, ms_handle_sigint);
+			if (ms_show_prompt_and_read_cmd_line(&cmd_line) == MS_READ_EOF)
+				exit(EXIT_SUCCESS);
 			ms_parse_cmd_line(&ms_env, cmd_line);
-	//		if (ms_check_if_the_cmd_exists_inside_minishell(cmd_line) == true)
-	/*
-			for (i = 0; ms_env.cmd_line[i]; ++i)
-				printf("str: %s\n", ms_env.cmd_line[i]);
-	*/
-			ms_execute_cmd(envp, &ms_env, ms_env.cmd_line);
+			ms_execute_cmd_line(envp, &ms_env, ms_env.cmd_line);
+			// ms_free
 			free(cmd_line);
 		}
 	}
-	// ms_free
 	exit(EXIT_SUCCESS);
 }
