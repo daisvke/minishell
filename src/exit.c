@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/16 03:43:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/25 02:03:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	**ppx_get_array_of_error_messages(char *errors[])
 	errors[7] = "split failed";
 	errors[8] = "permission denied:";
 	errors[9] = "execve failed: No such file or directory";
+	errors[10] = "getcwd failed";
 	return (errors);
 }
 
