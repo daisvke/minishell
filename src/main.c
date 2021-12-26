@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 21:43:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/26 01:00:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,28 @@ void	ms_parse_cmd_line(t_ms *ms_env, char *cmd_line)
 	}
 }
 
-int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
+void	ms_handle_sigint(int signum)
+{
+	(void)signum;
+
+	rl_replace_line("\n", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	signal(SIGINT, ms_handle_sigint);
+}
+
+void	ms_handle_signals(t_ms *ms_env)
+{
+	signal(SIGINT, ms_handle_sigint);
+}
+
+int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
 {
 	*cmd_line = readline("$ ");
 	if (*cmd_line == NULL)
 		return (MS_READ_EOF);
 	add_history(*cmd_line);
 	return (MS_READ_LINE);
-}
-
-void	ms_handle_sigint(int signum)
-{
-	(void)signum;
-	signal(SIGINT, ms_handle_sigint);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -119,8 +128,8 @@ int	main(int argc, char *argv[], char *envp[])
 		cmd_line = NULL;
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			signal(SIGINT, ms_handle_sigint);
-			if (ms_show_prompt_and_read_cmd_line(&cmd_line) == MS_READ_EOF)
+			ms_handle_signals(&ms_env);
+			if (ms_show_prompt_and_read_cmd_line(&ms_env, &cmd_line) == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
 			ms_parse_cmd_line(&ms_env, cmd_line);
 			ms_execute_cmd_line(envp, &ms_env, ms_env.cmd_line);
