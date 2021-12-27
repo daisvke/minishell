@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 06:09:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:57:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@
 typedef struct s_ms
 {
 	char	*current_directory;
-	char	**cmd_line;
+	char	*cmd_line;
+	char	**split_cmd_line;
 	bool	pipe;
 }			t_ms;
 
