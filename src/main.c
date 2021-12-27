@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 06:26:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/27 22:24:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ int	ms_control_arguments(int argc, char *argv[])
 
 void	ms_parse_cmd_line(t_ms *ms_env, char *cmd_line)
 {
-	ms_env->cmd_line = ms_split_and_activate_options(ms_env, cmd_line, '|');
-	if (ms_env->cmd_line == NULL)
+	ms_env->split_cmd_line = ms_split_and_activate_options(ms_env, cmd_line, '|');
+	if (ms_env->split_cmd_line == NULL)
 	{
 		//set error
-		//exit
+		exit(1);
 	}
 }
 
@@ -102,41 +102,47 @@ void	ms_handle_sigint(int signum)
 	rl_redisplay();
 }
 
+void	ms_handle_sigquit(int signum)
+{
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 void	ms_handle_signals(t_ms *ms_env)
 {
 	struct sigaction	signal_action;
+	struct sigaction	signal_action2;
 
 	signal_action.sa_handler = &ms_handle_sigint;
 	sigaction(SIGINT, &signal_action, NULL);
+	signal_action2.sa_handler = &ms_handle_sigquit;
+	sigaction(SIGQUIT, &signal_action2, NULL);
 }
 
 int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
 {
-	*cmd_line = readline("$ ");
-	if (*cmd_line == NULL)
+	ms_env->cmd_line = readline("$ ");
+	if (ms_env->cmd_line == NULL)
 		return (MS_READ_EOF);
-	add_history(*cmd_line);
 	return (MS_READ_LINE);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	ms_env;
-	char	*cmd_line;
 
 	if (ms_control_arguments(argc, argv) == MS_OK)
 	{
 		ms_init_env(&ms_env);
-		cmd_line = NULL;
 		ms_handle_signals(&ms_env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			if (ms_show_prompt_and_read_cmd_line(&ms_env, &cmd_line) == MS_READ_EOF)
+			if (ms_show_prompt_and_read_cmd_line(&ms_env, &ms_env.cmd_line) == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
-			ms_parse_cmd_line(&ms_env, cmd_line);
-			ms_execute_cmd_line(envp, &ms_env, ms_env.cmd_line);
+			ms_parse_cmd_line(&ms_env, ms_env.cmd_line);
+			ms_execute_cmd_line(envp, &ms_env, ms_env.split_cmd_line);
 			// ms_free
-			free(cmd_line);
+			free(ms_env.cmd_line);
 		}
 	}
 	exit(EXIT_SUCCESS);

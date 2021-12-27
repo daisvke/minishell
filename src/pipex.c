@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 07:20:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:59:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 		ppx_env->cmd = ppx_split(argv[ppx_env->pos], ' ');
 		if (!ppx_env->cmd)
 			ppx_exit_with_error_message(ppx_env, 7);
+		if (!*ppx_env->cmd)
+			return (0);
+		add_history(ms_env->cmd_line);
 
 		// check if implm
 		if (ms_check_if_the_cmd_is_implemented(ppx_env, ppx_env->cmd, &cmd_code) == true)
