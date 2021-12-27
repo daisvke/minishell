@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/26 01:00:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/27 05:58:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,18 @@ void	ms_handle_sigint(int signum)
 {
 	(void)signum;
 
-	rl_replace_line("\n", 0);
+	rl_replace_line("", 0);
+	printf("\n");
 	rl_on_new_line();
 	rl_redisplay();
-	signal(SIGINT, ms_handle_sigint);
 }
 
 void	ms_handle_signals(t_ms *ms_env)
 {
-	signal(SIGINT, ms_handle_sigint);
+	struct sigaction	signal_action;
+
+	signal_action.sa_handler = &ms_handle_sigint;
+	sigaction(SIGINT, &signal_action, NULL);
 }
 
 int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
@@ -126,9 +129,9 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		ms_init_env(&ms_env);
 		cmd_line = NULL;
+		ms_handle_signals(&ms_env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			ms_handle_signals(&ms_env);
 			if (ms_show_prompt_and_read_cmd_line(&ms_env, &cmd_line) == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
 			ms_parse_cmd_line(&ms_env, cmd_line);
