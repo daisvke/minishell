@@ -6,23 +6,42 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 12:10:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/27 07:20:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd_and_args[i])
+	{
+		if (i > 1)
+			return (MS_ERROR);
+		++i;
+	}
+	return (MS_OK);
+}
+
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 {
 	char	*current_absolute_path;
 
-	chdir(path);
-	current_absolute_path = getcwd(NULL, 0);
-	if (current_absolute_path == NULL)
-		ppx_exit_with_error_message(ppx_env, 10);
-	//ms_free
-	free(ms_env->current_directory);
-	ms_env->current_directory = current_absolute_path;
+	if (ms_check_if_there_is_not_too_much_args(ppx_env->cmd) == MS_OK)
+	{
+		chdir(path);
+		current_absolute_path = getcwd(NULL, 0);
+		if (current_absolute_path == NULL)
+			ppx_exit_with_error_message(ppx_env, 10);
+		//ms_free
+		free(ms_env->current_directory);
+		ms_env->current_directory = current_absolute_path;
+	}
+	else
+		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);
 }
 
 void	ppx_execute_implemented_cmd(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *arg)
@@ -31,6 +50,8 @@ void	ppx_execute_implemented_cmd(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, 
 		ms_execute_cmd_cd(ms_env, ppx_env, arg);
 	if (cmd_code == MS_CMD_PWD)	
 		printf("%s\n", ms_env->current_directory);
+	if (cmd_code == MS_CMD_EXIT)
+		exit(EXIT_SUCCESS);
 }
 
 void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], char *envp[])
