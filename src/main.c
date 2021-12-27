@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 05:58:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/27 06:26:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
 	while (cmd_and_args[i])
 	{
 		cmd_and_args[i] = ppx_join_three_str(env, curr_abs_path, "/", cmd_and_args[i]);
-	//	strcat(curr_abs_path, cmd_and_args[i]);
 		printf("strcat: %s\n", cmd_and_args[i]);
 		++i;
 	}
