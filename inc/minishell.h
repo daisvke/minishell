@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 21:57:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 03:24:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <termios.h>
 
 # include "pipex.h"
 
 # define MS_SAME			0
 # define MS_OK				0
+# define MS_SUCCESS			0
 # define MS_ERROR			1
 
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
@@ -40,13 +42,19 @@
 # define MS_CMD_EXIT		5
 # define MS_FIRST_ARG_POS	1
 
+// BITWISE FOR S_MS OPTIONS
+# define MS_OPT_PIPE			8
+# define MS_OPT_READ_FROM_FILE	4
+# define MS_OPT_REDIR_OUTPUT	2
+# define MS_OPT_HEREDOC			1
+
 // Main struct
 typedef struct s_ms
 {
 	char	*current_directory;
 	char	*cmd_line;
 	char	**split_cmd_line;
-	bool	pipe;
+	int		options;
 }			t_ms;
 
 

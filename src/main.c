@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 22:24:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 01:48:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,16 @@ void	ms_handle_sigint(int signum)
 
 void	ms_handle_sigquit(int signum)
 {
-	rl_replace_line("", 0);
-	rl_redisplay();
+	struct termios orig_termios_p;
+	struct termios new_termios_p;
+
+// errno is set
+	if (tcgetattr(STDIN_FILENO, &orig_termios_p) != MS_SUCCESS)
+		exit(EXIT_FAILURE);
+	new_termios_p = orig_termios_p;
+	new_termios_p.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_termios_p) != MS_SUCCESS)
+		exit(EXIT_FAILURE);
 }
 
 void	ms_handle_signals(t_ms *ms_env)

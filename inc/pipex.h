@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 09:58:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 03:24:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ typedef struct s_ppx
 	int		argc;
 	int		fd_in;
 	char	**cmd;
-	bool	pipe;
-	bool	read_from_file;
-	bool	redir_output;
-	bool	heredoc;
+	int		options;
 }			t_ppx;
 
 void	ppx_close_and_free_pipe_fds(t_ppx *env);

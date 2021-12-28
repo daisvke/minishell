@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 21:59:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 05:35:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], 
 {
 	char	*path_to_cmd;
 
-	if (ppx_env->pipe == true || ppx_env->redir_output == true)
+	if (ppx_env->options & MS_OPT_PIPE \
+		|| (ppx_env->options & MS_OPT_REDIR_OUTPUT))
 	{
 		ppx_close(ppx_env, ppx_env->pipe_fds[ppx_env->i][0]);
 		ppx_dup2(ppx_env, ppx_env->fd_in, STDIN_FILENO);
@@ -114,15 +115,16 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 	int		err;
 	size_t	cmd_code;
 
-	if (ppx_env->redir_output == true)
+	if (ppx_env->options & MS_OPT_REDIR_OUTPUT)
 		ppx_env->pos += GET_FIRST_CMD;
-	if (ppx_env->heredoc)
+	if (ppx_env->options & MS_OPT_HEREDOC)
 		ppx_input_heredoc(ppx_env, argv);
 //	printf("argc: %d\n", ppx_env->argc);
 	while (ppx_env->pos < ppx_env->argc)
 	{
+	//printf("opt1%d, opt2%d\n",(ppx_env->options & MS_OPT_PIPE), (ms_env->options & MS_OPT_PIPE));
 //	printf("pos: %d\n", ppx_env->pos);
-		if (ppx_env->pipe == true)
+		if (ppx_env->options & MS_OPT_PIPE)
 			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
 
 		// gen cmd
@@ -144,14 +146,15 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 			ppx_spawn_child_to_execute_cmd(ms_env, ppx_env, argv, envp);
 			exit(EXIT_SUCCESS);
 		}
-		if (ppx_env->pipe == true && ppx_env->pos != ppx_env->argc - 1)
+		if ((ppx_env->options & MS_OPT_PIPE)
+			&& ppx_env->pos != ppx_env->argc - 1)
 			ppx_save_data_from_child(ppx_env);
 		}
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
 	err = ppx_wait_for_all_children(ppx_env, pid);
-	if (ppx_env->heredoc)
+	if (ppx_env->options & MS_OPT_HEREDOC)
 		unlink("heredoc_output");
 	ppx_free_pipe_fds(ppx_env);
 	return (err);

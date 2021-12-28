@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/24 06:12:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 05:35:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,25 @@ void	ppx_get_fd(t_ppx *env, char *argv[])
 
 	fd = 0;
 	open_flags = ppx_get_open_flags(env);
-	if (env->heredoc && env->pos == FIRST_CMD_WHEN_HEREDOC)
+	if ((env->options & MS_OPT_HEREDOC) \
+		&& env->pos == FIRST_CMD_WHEN_HEREDOC)
 	{
 		fd = ppx_open_file(env, "heredoc_output", O_RDONLY, 0);
 		ppx_dup2(env, fd, 0);
 	}
-	else if (env->read_from_file == true && env->pos == FIRST_CMD_WHEN_READING_FROM_FILE)
+	else if ((env->options & MS_OPT_READ_FROM_FILE) \
+		&& env->pos == FIRST_CMD_WHEN_READING_FROM_FILE)
 	{
 		fd = ppx_open_file(env, argv[INPUT_FILE], O_RDONLY, 0);
 		ppx_dup2(env, fd, 0);
 	}
-	else if (env->redir_output == false && env->pos == env->argc - 1)
+	else if ((env->options & MS_OPT_REDIR_OUTPUT) == false  \
+		&& env->pos == env->argc - 1)
 	{
 		ppx_dup2(env, STDOUT_FILENO, 1);
 	}
-	else if (env->redir_output == true && env->pos == env->argc - GET_LAST_CMD)
+	else if ((env->options & MS_OPT_REDIR_OUTPUT) \
+		&& env->pos == env->argc - GET_LAST_CMD)
 	{
 		fd = ppx_open_file(env, argv[env->argc - 1], open_flags, 0664);
 		ppx_dup2(env, fd, 1);
