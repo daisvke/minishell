@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 10:37:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 05:29:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ int	ms_split_iter(char *split[], char *s, char c)
 void	ms_activate_option(t_ms *env, int sep)
 {
 	if ((char)sep == '|')
-		env->pipe = true;
+		env->options |= MS_OPT_PIPE;
+//	if ((char)sep == '<<')
+//		env->options |=
 }
 
 size_t	ms_wordcount(t_ms *env, char *s, int sep)
