@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 03:24:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/28 09:21:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@
 # define MS_FIRST_ARG_POS	1
 
 // BITWISE FOR S_MS OPTIONS
-# define MS_OPT_PIPE			8
-# define MS_OPT_READ_FROM_FILE	4
+# define MS_OPT_PIPE			4
 # define MS_OPT_REDIR_OUTPUT	2
 # define MS_OPT_HEREDOC			1
 
