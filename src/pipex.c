@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 05:35:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/29 07:29:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,8 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 		ppx_env->pos += GET_FIRST_CMD;
 	if (ppx_env->options & MS_OPT_HEREDOC)
 		ppx_input_heredoc(ppx_env, argv);
-//	printf("argc: %d\n", ppx_env->argc);
 	while (ppx_env->pos < ppx_env->argc)
 	{
-	//printf("opt1%d, opt2%d\n",(ppx_env->options & MS_OPT_PIPE), (ms_env->options & MS_OPT_PIPE));
-//	printf("pos: %d\n", ppx_env->pos);
 		if (ppx_env->options & MS_OPT_PIPE)
 			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 05:35:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/29 03:29:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ppx_get_fd(t_ppx *env, char *argv[])
 		fd = ppx_open_file(env, "heredoc_output", O_RDONLY, 0);
 		ppx_dup2(env, fd, 0);
 	}
-	else if ((env->options & MS_OPT_READ_FROM_FILE) \
+	else if ((env->options & MS_OPT_HEREDOC) \
 		&& env->pos == FIRST_CMD_WHEN_READING_FROM_FILE)
 	{
 		fd = ppx_open_file(env, argv[INPUT_FILE], O_RDONLY, 0);
