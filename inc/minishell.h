@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 09:21:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2021/12/29 05:07:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ typedef struct s_ms
 int	ms_strncmp(const char *s1, const char *s2, size_t n);
 
 char	*ms_strdup(char *src, size_t size); //used
-char	**ms_split_and_activate_options(t_ms *env, char const *s, char c);
+char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 
 #endif
