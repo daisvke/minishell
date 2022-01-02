@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/29 05:07:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/02 09:49:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@
 # define MS_READ_EOF		1
 
 // CHECK IF THE CMD IS IMPLEMENTED
-# define MS_CMD_CD			1
-# define MS_CMD_PWD			2
-# define MS_CMD_EXPORT		3
-# define MS_CMD_UNSET		4
-# define MS_CMD_ENV			5
-# define MS_CMD_EXIT		6
+# define MS_CMD_ECHO		1
+# define MS_CMD_CD			2
+# define MS_CMD_PWD			3
+# define MS_CMD_EXPORT		4
+# define MS_CMD_UNSET		5
+# define MS_CMD_ENV			6
+# define MS_CMD_EXIT		7
 # define MS_FIRST_ARG_POS	1
 
 // BITWISE FOR S_MS OPTIONS
