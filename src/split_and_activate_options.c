@@ -50,6 +50,8 @@ size_t	ms_handle_quotes(char *str, char quote)
 	i = 1;
 	while (str[i] && str[i] != quote)
 		++i;
+	if (str[i] == '\0')
+		exit(EXIT_FAILURE);
 	return (i + 1);
 }
 
@@ -118,7 +120,7 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 			str += ms_handle_quotes(str, *str);
 		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
 			str++;
-		wc++;
+		++wc;
 	}
 	return (wc);
 }

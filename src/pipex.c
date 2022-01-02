@@ -86,7 +86,7 @@ void	ppx_save_data_from_child(t_ppx *env)
 	env->fd_in = env->pipe_fds[env->i][0];
 }
 
-int	ppx_wait_for_all_children(t_ppx *env, pid_t pid)
+int	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 {
 	int	i;
 	int	size;
@@ -94,10 +94,11 @@ int	ppx_wait_for_all_children(t_ppx *env, pid_t pid)
 	int	status_code;
 
 	i = 0;
-	size = env->cmd_nbr;
+	size = ppx_env->cmd_nbr;
 	while (i < size)
 	{
 		waitpid(pid, &wstatus, WUNTRACED);
+		ms_env->last_pipe_exit_status = wstatus;
 		if (WIFEXITED(wstatus))
 		{
 			status_code = WEXITSTATUS(wstatus);
@@ -150,7 +151,7 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
-	err = ppx_wait_for_all_children(ppx_env, pid);
+	err = ppx_wait_for_all_children(ms_env, ppx_env, pid);
 	if (ppx_env->options & MS_OPT_HEREDOC)
 		unlink("heredoc_output");
 	ppx_free_pipe_fds(ppx_env);

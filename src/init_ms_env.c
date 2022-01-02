@@ -12,11 +12,14 @@
 
 #include "minishell.h"
 
+//void	ms_set_environment_variables(env);
+
 void	ms_init_env(t_ms *env)
 {
 	char	*current_absolute_path;
 
 	ft_memset(env, 0, sizeof(t_ms));
+//	ms_set_environment_variables(env);
 	current_absolute_path = getcwd(NULL, 0);
 //	if (curr_abs_path == NULL)
 //		ppx_exit_with_error_message(env, 10);
