@@ -38,66 +38,75 @@ char	*ppx_strdup(char *src, int size)
 	while (i < size)
 	{
 		dest[i] = src[i];
-		i++;
+		++i;
 	}
 	dest[i] = '\0';
 	return (dest);
 }
 
-int	ppx_split_iter(char *split[], char *s, char c)
+int	ppx_split_iter(char *split[], char *str, char sep)
 {
 	int		i;
 	char	*start;
+	bool	quotes;
 
+	quotes = false;
 	i = 0;
-	while (*s)
+	while (*str)
 	{
-		while (*s == c)
-			s++;
-		if (!*s)
+		while (*str == sep)
+			str++;
+		if (!*str)
 			break ;
-		start = s;
-		while (*s != c && *s)
-			s++;
-		split[i] = ppx_strdup(start, s - start);
+		start = str;
+		if (*str == '\'' || *str == '\"')
+		{
+			quotes = true;
+			str += ms_handle_quotes(str, *str);
+		}
+		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
+			str++;
+		split[i] = ppx_strdup(start + quotes, str - start - (2 * quotes));
 		if (!split[i])
 		{
 			ppx_free_array_of_pointers(split, i);
 			return (ERROR);
 		}
-		i++;
+		++i;
 	}
 	split[i] = 0;
 	return (0);
 }
 
-int	ppx_wordcount(char *s, int sep)
+int	ppx_wordcount(char *str, int sep)
 {
-	int	wc;
+	size_t	wc;
 
 	wc = 0;
-	while (*s)
+	while (*str)
 	{
-		while (*s == (char)sep)
-			s++;
-		if (!*s)
+		while (*str == (char)sep)
+			str++;
+		if (!*str)
 			break ;
-		while (*s != (char)sep && *s)
-			s++;
-		wc++;
+		if (*str == '\'' || *str == '\"')
+			str += ms_handle_quotes(str, *str);
+		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
+			str++;
+		++wc;
 	}
 	return (wc);
 }
 
-char	**ppx_split(char const *s, char c)
+char	**ppx_split(char const *s, char sep)
 {
 	int		res;
 	char	**split;
 
-	split = (char **)malloc(sizeof(*split) * (ppx_wordcount((char *)s, c) + 1));
+	split = (char **)malloc(sizeof(*split) * (ppx_wordcount((char *)s, sep) + 1));
 	if (!split)
 		return (NULL);
-	res = ppx_split_iter(split, (char *)s, c);
+	res = ppx_split_iter(split, (char *)s, sep);
 	if (res == ERROR)
 		return (NULL);
 	return (split);
