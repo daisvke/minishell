@@ -28,6 +28,8 @@ int	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
 
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 {
+	size_t	i;
+	size_t	len;
 	char	*current_absolute_path;
 
 	if (ms_check_if_there_is_not_too_much_args(ppx_env->cmd) == MS_OK)
@@ -36,22 +38,32 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		current_absolute_path = getcwd(NULL, 0);
 		if (current_absolute_path == NULL)
 			ppx_exit_with_error_message(ppx_env, 10);
-		//ms_free
-		free(ms_env->current_directory);
-		ms_env->current_directory = current_absolute_path;
+		i = ppx_get_key_value_from_envp(ms_env->envp, "PWD=").index;
+		free(ms_env->envp[i]);
+		ms_env->envp[i] = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
 	}
 	else
 		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);
 }
 
+void	ms_execute_cmd_pwd(char *envp[])
+{
+	char	*current_path;
+
+	current_path = ppx_get_key_value_from_envp(envp, "PWD=").value;
+	printf("%s\n", current_path);
+}
+
 void	ppx_execute_implemented_cmd(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *arg)
 {
+	//printf("envp :  %c\n", ms_env->envp[17][0]);
 	if (cmd_code == MS_CMD_CD)
 		ms_execute_cmd_cd(ms_env, ppx_env, arg);
-	if (cmd_code == MS_CMD_PWD)	
-		printf("%s\n", ms_env->current_directory);
+	if (cmd_code == MS_CMD_PWD)
+		ms_execute_cmd_pwd(ms_env->envp);
 	if (cmd_code == MS_CMD_EXIT)
 		exit(EXIT_SUCCESS);
+
 }
 
 void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], char *envp[])

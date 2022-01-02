@@ -51,13 +51,11 @@
 typedef struct s_ms
 {
 	char	**envp;
-	char	*current_directory;
 	char	*cmd_line;
 	char	**split_cmd_line;
 	int		options;
 	int		last_pipe_exit_status;
 }			t_ms;
-
 
 /*
 ** utils_strings

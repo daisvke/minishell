@@ -154,7 +154,7 @@ int	main(int argc, char *argv[], char *envp[])
 			if (ms_show_prompt_and_read_cmd_line(&ms_env, &ms_env.cmd_line) == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
 			ms_parse_cmd_line(&ms_env, ms_env.cmd_line);
-			ms_execute_cmd_line(envp, &ms_env, ms_env.split_cmd_line);
+			ms_execute_cmd_line(ms_env.envp, &ms_env, ms_env.split_cmd_line);
 			// ms_free
 			free(ms_env.cmd_line);
 		}

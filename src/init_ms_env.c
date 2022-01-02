@@ -27,7 +27,7 @@ void	ms_set_environment_variables(char *envp[], t_ms *env)
 	while (i < max)
 	{
 		//ppx?
-		len = ppx_strlen(envp[i]);
+		len = ppx_strlen(envp[i]) + 1;
 		env->envp[i] = malloc(sizeof(char) * len);
 		//ppx?
 		ppx_memcpy(env->envp[i], envp[i], len);
@@ -42,8 +42,6 @@ void	ms_init_env(char *envp[], t_ms *env)
 
 	ft_memset(env, 0, sizeof(t_ms));
 	ms_set_environment_variables(envp, env);
-	current_absolute_path = getcwd(NULL, 0);
 //	if (curr_abs_path == NULL)
 //		ppx_exit_with_error_message(env, 10);
-	env->current_directory = current_absolute_path;
 }
