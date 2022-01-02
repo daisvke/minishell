@@ -44,28 +44,31 @@ char	*ms_strdup(char *src, size_t size)
 	return (dest);
 }
 
+size_t	ms_handle_quotes(char *str, char quote)
+{
+	size_t	i;
+	i = 1;
+	while (str[i] && str[i] != quote)
+		++i;
+	return (i + 1);
+}
+
 int	ms_split_iter(char *split[], char *str, char sep)
 {
 	size_t	i;
-	bool	quote;
 	char	*start;
 
 	i = 0;
-	quote = false;
 	while (*str)
 	{
-		if (*str == '\'' || *str == '\"')
-		{
-			quote = true;
-			str++;
-		}
 		while (*str == sep)
 			str++;
 		if (!*str)
 			break ;
 		start = str;
-		while (*str && ((quote == false && *str != sep) \
-			|| (quote == true && *str != '\'' && *str != '\"')))
+		if (*str == '\'' || *str == '\"')
+			str += ms_handle_quotes(str, *str);
+		while (*str && *str != sep)
 			str++;
 		split[i] = ms_strdup(start, str - start);
 		if (!split[i])
@@ -76,6 +79,10 @@ int	ms_split_iter(char *split[], char *str, char sep)
 		i++;
 	}
 	split[i] = 0;
+/*
+	for(i=0;split[i];++i)
+		printf("split%ld: %s\n", i, split[i]);
+*/
 	return (0);
 }
 
@@ -95,18 +102,11 @@ void	ms_activate_option(t_ms *env, char **str, int sep)
 
 size_t	ms_wordcount(t_ms *env, char *str, int sep)
 {
-	size_t	wc;
-	bool	quote;
+	size_t		wc;
 
 	wc = 0;
-	quote = false;
 	while (*str)
 	{
-		if (*str == '\'' || *str == '\"')
-		{
-			quote = true;
-			str++;
-		}
 		while (*str == (char)sep)
 		{
 			ms_activate_option(env, &str, sep);
@@ -114,8 +114,9 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 		}
 		if (!*str)
 			break ;
-		while (*str && ((quote == false && *str != (char)sep) \
-			|| (quote == true && *str != '\'' && *str != '\"')))
+		if (*str == '\'' || *str == '\"')
+			str += ms_handle_quotes(str, *str);
+		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
 			str++;
 		wc++;
 	}
