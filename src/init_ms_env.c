@@ -12,14 +12,36 @@
 
 #include "minishell.h"
 
-//void	ms_set_environment_variables(env);
+void	ms_set_environment_variables(char *envp[], t_ms *env)
+{
+	size_t	i;
+	size_t	max;
+	size_t	len;
 
-void	ms_init_env(t_ms *env)
+	i = 0;
+	while (envp[i])
+		++i;
+	max = i;
+	env->envp = malloc(sizeof(char *) * (max + 1));
+	i = 0;
+	while (i < max)
+	{
+		//ppx?
+		len = ppx_strlen(envp[i]);
+		env->envp[i] = malloc(sizeof(char) * len);
+		//ppx?
+		ppx_memcpy(env->envp[i], envp[i], len);
+		++i;
+	}
+	env->envp[i] = NULL;
+}
+
+void	ms_init_env(char *envp[], t_ms *env)
 {
 	char	*current_absolute_path;
 
 	ft_memset(env, 0, sizeof(t_ms));
-//	ms_set_environment_variables(env);
+	ms_set_environment_variables(envp, env);
 	current_absolute_path = getcwd(NULL, 0);
 //	if (curr_abs_path == NULL)
 //		ppx_exit_with_error_message(env, 10);

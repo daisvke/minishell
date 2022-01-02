@@ -147,7 +147,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (ms_control_arguments(argc, argv) == MS_OK)
 	{
-		ms_init_env(&ms_env);
+		ms_init_env(envp, &ms_env);
 		ms_handle_signals(&ms_env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
