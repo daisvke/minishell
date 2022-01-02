@@ -17,20 +17,27 @@ bool	ppx_check_access(char *path)
 	return (access(path, F_OK) == SUCCESS && access(path, X_OK) == SUCCESS);
 }
 
-char	*ppx_get_key_value_from_envp(char *envp[], char *key)
+t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key)
 {
-	size_t	i;
-	size_t	key_len;
+	t_envp_data	data;
+	size_t		i;
+	size_t		key_len;
 
+	data.index = 0;
+	data.value = NULL;
 	key_len = ppx_strlen(key);
 	i = 0;
 	while (envp[i])
 	{
 		if (ppx_strncmp(envp[i], key, key_len) == SAME)
-			return (envp[i] + key_len);
+		{
+			data.index = i;
+			data.value = envp[i] + key_len;
+			break ;
+		}
 		++i;
 	}
-	return (NULL);
+	return (data);
 }
 
 static char	**ppx_get_path(char *envp[], t_ppx *env, char *key)
@@ -38,7 +45,7 @@ static char	**ppx_get_path(char *envp[], t_ppx *env, char *key)
 	char	*paths_envp;
 	char	**paths_envp_split;
 
-	paths_envp = ppx_get_key_value_from_envp(envp, key);
+	paths_envp = ppx_get_key_value_from_envp(envp, key).value;
 	if (!paths_envp)
 		ppx_exit_with_error_message(env, 9);
 	paths_envp_split = ppx_split(paths_envp, ':');

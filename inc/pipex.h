@@ -48,6 +48,13 @@
 # define SAME					0
 # define DIFFERENT				1
 
+// Data collection when searching inside envp
+typedef struct s_envp_data
+{
+	size_t	index;
+	char	*value;
+}			t_envp_data;
+
 typedef struct s_ppx
 {
 	int		**pipe_fds;
@@ -82,9 +89,9 @@ void	ppx_putstr_fd(char *s, int fd, bool option);
 /*
 ** path
 */
-bool	ppx_check_access(char *path);
-char	*ppx_get_key_value_from_envp(char *envp[], char *key);
-char	*ppx_get_the_right_cmd_path(t_ppx *env, char *envp[], char *key, \
+bool		ppx_check_access(char *path);
+t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key);
+char		*ppx_get_the_right_cmd_path(t_ppx *env, char *envp[], char *key, \
 	char *cmd);
 
 /*
