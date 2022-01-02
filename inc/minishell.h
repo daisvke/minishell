@@ -50,6 +50,7 @@
 // Main struct
 typedef struct s_ms
 {
+	char	**envp;
 	char	*current_directory;
 	char	*cmd_line;
 	char	**split_cmd_line;
