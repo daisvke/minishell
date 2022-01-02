@@ -63,12 +63,29 @@ void	ms_execute_cmd_env(char *envp[])
 		printf("%s\n", envp[i++]);
 }
 
+void    ms_execute_cmd_export(t_ms *env, char *arg)
+{
+    size_t  i;
+    size_t  len;
+
+    i = 0;
+    while (env->envp[i])
+        ++i;
+    len = ppx_strlen(arg) + 1;
+    env->envp[i] = malloc(sizeof(char) * len);
+    ppx_memcpy(env->envp[i], arg, len);
+    env->envp[i + 1] = malloc(sizeof(char));
+    env->envp[i + 1] = 0: 
+}
+
 void	ppx_execute_implemented_cmd(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *arg)
 {
 	if (cmd_code == MS_CMD_CD)
 		ms_execute_cmd_cd(ms_env, ppx_env, arg);
 	if (cmd_code == MS_CMD_PWD)
 		ms_execute_cmd_pwd(ms_env->envp);
+	if (cmd_code == MS_CMD_EXPORT)
+		ms_execute_cmd_export(ms_env, arg);
 	if (cmd_code == MS_CMD_ENV)
 		ms_execute_cmd_env(ms_env->envp);
 	if (cmd_code == MS_CMD_EXIT)
