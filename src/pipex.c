@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/02 10:18:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/02 20:26:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,78 @@ void	ms_execute_cmd_env(char *envp[])
 	while (envp[i])
 		printf("%s\n", envp[i++]);
 }
-/*
-void	ms_execute_unset()
+
+int	ms_cmp_str_with_envp_entry(const char *str, const char *entry, size_t len)
 {
+	if (str && entry)
+	{
+		while ((*str || *entry) && len--)
+		{
+			if (*str != *entry)
+				return ((unsigned char)(*str) - (unsigned char)(*entry));
+			str++;
+			entry++;
+		}
+		if (*str == '=')
+			return (MS_SAME);
+	}
+	return (DIFFERENT);
 }
-*/
+
+void	ms_delete_entry_from_envp(t_ms *env, char *new_entry, size_t index)
+{
+	free(env->envp[index];
+	env->envp[index] = ppx_strdup;
+}
+
+int	ms_get_key_length_from_entry(char *entry)
+{
+	size_t	i;
+
+	i = 0;
+	while (entry[i])
+	{
+		if (entry[i] == '=')
+		{
+			if (i == 0 && entry[i + 1] == ' ')
+				return (-2);
+			if (entry[i + 1] == '\0')
+				return (-1);
+			return (i);
+		}
+		++i;
+	}
+	return (-1);
+}
+
+void	ms_execute_unset(t_ms *env, char *cmd)
+{
+	size_t	i;
+	size_t	j;
+	size_t	len;
+
+	i = 1;
+	while (cmd[i])
+	{
+		len = ms_get_key_length_from_entry(cmd[i]);
+		if (len == -1)
+			return ;
+		else if (len == -2)
+		{
+			printf("export: "%s" : unvalid identifier\n", cmd[i]);
+			return ;
+		}
+		j = 0;
+		while (env->envp[j])
+		{
+			if (ms_cmp_str_with_envp_entry(cmd[i], env->envp[j], len) == MS_SAME)
+				ms_delete_entry_from_envp(ms_env, cmd[i], j);
+			++j;
+		}
+		++i
+	}
+}
+
 void    ms_execute_cmd_export(t_ms *env, char *arg)
 {
     size_t  i;
