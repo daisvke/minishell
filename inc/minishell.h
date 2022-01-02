@@ -39,7 +39,8 @@
 # define MS_CMD_PWD			2
 # define MS_CMD_EXPORT		3
 # define MS_CMD_UNSET		4
-# define MS_CMD_EXIT		5
+# define MS_CMD_ENV			5
+# define MS_CMD_EXIT		6
 # define MS_FIRST_ARG_POS	1
 
 // BITWISE FOR S_MS OPTIONS

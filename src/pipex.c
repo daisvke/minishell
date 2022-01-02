@@ -54,13 +54,23 @@ void	ms_execute_cmd_pwd(char *envp[])
 	printf("%s\n", current_path);
 }
 
+void	ms_execute_cmd_env(char *envp[])
+{
+	size_t	i;
+
+	i = 0;
+	while (envp[i])
+		printf("%s\n", envp[i++]);
+}
+
 void	ppx_execute_implemented_cmd(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *arg)
 {
-	//printf("envp :  %c\n", ms_env->envp[17][0]);
 	if (cmd_code == MS_CMD_CD)
 		ms_execute_cmd_cd(ms_env, ppx_env, arg);
 	if (cmd_code == MS_CMD_PWD)
 		ms_execute_cmd_pwd(ms_env->envp);
+	if (cmd_code == MS_CMD_ENV)
+		ms_execute_cmd_env(ms_env->envp);
 	if (cmd_code == MS_CMD_EXIT)
 		exit(EXIT_SUCCESS);
 

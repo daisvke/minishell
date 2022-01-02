@@ -33,20 +33,6 @@ void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
 //	if (curr_abs_path == NULL)
 	//	ppx_exit_with_error_message(env, 10);
 	i = MS_FIRST_ARG_POS;
-	/*
-	if (cmd_and_args[i] == NULL)
-	{
-		ms_free_split(cmd_and_args);
-		//protect
-		cmd_and_args = malloc(sizeof(char *) * 3);
-		cmd_and_args[0] = "ls";
-//		strcat(curr_abs_path, cmd_and_args[i]);
-		cmd_and_args[1] = curr_abs_path;
-		cmd_and_args[2] = NULL;
-		//free cmd after use 
-		return ;
-	}
-	*/
 	while (cmd_and_args[i])
 	{
 		cmd_and_args[i] = ppx_join_three_str(env, curr_abs_path, "/", cmd_and_args[i]);
@@ -67,6 +53,8 @@ bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd
 		*cmd_code = MS_CMD_EXPORT;
 	else if (ms_strcmp(cmd_line[0], "unset") == MS_SAME)
 		*cmd_code = MS_CMD_UNSET;
+	else if (ms_strcmp(cmd_line[0], "env") == MS_SAME)
+		*cmd_code = MS_CMD_ENV;
 	else if (ms_strcmp(cmd_line[0], "exit") == MS_SAME)
 		*cmd_code = MS_CMD_EXIT;
 	return (*cmd_code);
