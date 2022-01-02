@@ -81,11 +81,17 @@ int	ms_control_arguments(int argc, char *argv[])
 	}
 	return (MS_OK);
 }
-
-void	ms_parse_cmd_line(t_ms *ms_env, char *cmd_line)
+/*
+void	ms_expand_variables(t_ms *env, char *cmd_line)
 {
-	ms_env->split_cmd_line = ms_split_and_activate_options(ms_env, cmd_line, '|');
-	if (ms_env->split_cmd_line == NULL)
+	while ()
+}
+*/
+void	ms_parse_cmd_line(t_ms *env, char *cmd_line)
+{
+//	ms_expand_variables(env, cmd_line);
+	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');
+	if (env->split_cmd_line == NULL)
 	{
 		//set error
 		exit(1);

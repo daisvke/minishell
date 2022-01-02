@@ -54,6 +54,7 @@ typedef struct s_ms
 	char	*cmd_line;
 	char	**split_cmd_line;
 	int		options;
+	int		last_pipe_exit_status;
 }			t_ms;
 
 
