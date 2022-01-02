@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 03:24:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/02 09:41:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@
 
 # define SAME					0
 # define DIFFERENT				1
+
+# define PPX_PROC_PARENT		0
+# define PPX_PROC_CHILD			1
 
 // Data collection when searching inside envp
 typedef struct s_envp_data

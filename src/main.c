@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 01:48:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/02 10:02:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,29 @@ void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
 		// ms_free
 }
 
-bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd_code)
+bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd_code, bool process)
 {
 	*cmd_code = 0;
-	if (ms_strcmp(cmd_line[0], "cd") == MS_SAME)
-		*cmd_code = MS_CMD_CD;
-	else if (ms_strcmp(cmd_line[0], "pwd") == MS_SAME)
-		*cmd_code = MS_CMD_PWD;
-	else if (ms_strcmp(cmd_line[0], "export") == MS_SAME)
-		*cmd_code = MS_CMD_EXPORT;
-	else if (ms_strcmp(cmd_line[0], "unset") == MS_SAME)
-		*cmd_code = MS_CMD_UNSET;
-	else if (ms_strcmp(cmd_line[0], "env") == MS_SAME)
-		*cmd_code = MS_CMD_ENV;
-	else if (ms_strcmp(cmd_line[0], "exit") == MS_SAME)
-		*cmd_code = MS_CMD_EXIT;
+	if (process == PPX_PROC_PARENT)
+	{
+		if (ms_strcmp(cmd_line[0], "cd") == MS_SAME)
+			*cmd_code = MS_CMD_CD;
+		else if (ms_strcmp(cmd_line[0], "exit") == MS_SAME)
+			*cmd_code = MS_CMD_EXIT;
+		else if (ms_strcmp(cmd_line[0], "export") == MS_SAME)
+			*cmd_code = MS_CMD_EXPORT;
+		else if (ms_strcmp(cmd_line[0], "unset") == MS_SAME)
+			*cmd_code = MS_CMD_UNSET;
+	}
+	else if (process == PPX_PROC_CHILD)
+	{
+		if (ms_strcmp(cmd_line[0], "pwd") == MS_SAME)
+			*cmd_code = MS_CMD_PWD;
+		else if (ms_strcmp(cmd_line[0], "echo") == MS_SAME)
+			*cmd_code = MS_CMD_ECHO;
+		else if (ms_strcmp(cmd_line[0], "env") == MS_SAME)
+			*cmd_code = MS_CMD_ENV;
+	}
 	return (*cmd_code);
 }
 
