@@ -131,7 +131,7 @@ void	ms_handle_signals(t_ms *ms_env)
 
 int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
 {
-	ms_env->cmd_line = readline("$ ");
+	ms_env->cmd_line = readline("\033[0;32m$\033[0;37m ");
 	if (ms_env->cmd_line == NULL)
 		return (MS_READ_EOF);
 	return (MS_READ_LINE);
