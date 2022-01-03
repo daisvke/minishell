@@ -44,6 +44,8 @@
 # define MS_CMD_EXIT		7
 # define MS_FIRST_ARG_POS	1
 
+# define MS_NO_EXPORT		1
+
 // BITWISE FOR S_MS OPTIONS
 # define MS_OPT_PIPE			4
 # define MS_OPT_REDIR_OUTPUT	2
