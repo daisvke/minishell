@@ -33,6 +33,7 @@
 // READ FROM PROMPT
 # define MS_READ_LINE		0
 # define MS_READ_EOF		1
+# define MS_READ_NONE		2
 
 // CHECK IF THE CMD IS IMPLEMENTED
 # define MS_CMD_ECHO		1
@@ -51,9 +52,17 @@
 # define MS_OPT_REDIR_OUTPUT	2
 # define MS_OPT_HEREDOC			1
 
+// Linked list containing env entries
+typedef struct s_env_lst
+{
+	char	*entry;
+	void	*next;
+}			t_env_lst;
+
 // Main struct
 typedef struct s_ms
 {
+	t_env_lst	*envp_lst;
 	char	**envp;
 	char	*cmd_line;
 	char	**split_cmd_line;
