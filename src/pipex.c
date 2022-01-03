@@ -189,7 +189,8 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
     size_t  i;
 	size_t	j;
     size_t  len;
-	char	*tmp;
+	t_env_lst   *node;
+	t_env_lst   *new;
 
 	if (ms_check_export_args(env, cmd_line) == MS_NO_EXPORT \
 		|| ms_check_export_args(env, cmd_line) == MS_ERROR)
@@ -197,19 +198,21 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 	i = MS_FIRST_ARG_POS;
 	while (cmd_line[i])
 	{
-		
-		j = 0;
-		while (env->envp[j] && ms_compare_with_envp_key(env->envp[j], cmd_line[i]) != MS_SAME)
-			++j;
-		len = ppx_strlen(cmd_line[i]) + 1;
-		tmp = ms_strdup(cmd_line[i], len - 1);
+        node = env->envp_lst;
+		while (node && ms_compare_with_envp_key(node->entry, cmd_line[i]) != MS_SAME)
+			node = node->next;
+		new = ms_lst_create_new_node(cmd_line[i]);
 		if (cmd_line[i])
 			free(cmd_line[i]);
-		env->envp[j] = malloc(sizeof(char) * len);
-		ppx_memcpy(env->envp[j], tmp, len);
-		free(tmp);
+        if (node->next == NULL)
+            ms_lst_add_back(env->envp_lst, new);
+        else
+        {
+            free(node->entry);
+            len = ppx_strlen(cmd_line[i]);
+            node->entry = ms_strdup(cmd_line[i], len);
+        }
 		++i;
-		++j;
 	}
 	env->envp[j] = malloc(sizeof(char));
 	env->envp[j] = 0;
