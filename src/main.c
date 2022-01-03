@@ -142,8 +142,8 @@ int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	size_t	res;
 	t_ms	ms_env;
+	size_t	res;
 
 	if (ms_control_arguments(argc, argv) == MS_OK)
 	{
