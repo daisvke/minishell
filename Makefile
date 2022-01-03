@@ -18,6 +18,7 @@ SRC_FILES			=	exit.c \
 						pipex.c \
 						system_calls.c \
 						utils_fd.c \
+						utils_linked_list.c \
 						utils_str.c \
 						utils_strings.c
 SRC					=	$(addprefix $(SRC_DIR), $(SRC_FILES))

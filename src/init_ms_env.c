@@ -47,6 +47,8 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 		++i;
 	max = i;
 	env->envp_lst = malloc(sizeof(t_env_lst));
+	env->envp_lst->entry = envp[0];
+	env->envp_lst->next = NULL;
 	i = 0;
 	while (i < max)
 	{
