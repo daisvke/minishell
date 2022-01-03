@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/02 20:26:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/03 10:34:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,23 +199,21 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 	while (cmd_line[i])
 	{
         node = env->envp_lst;
-		while (node && ms_compare_with_envp_key(node->entry, cmd_line[i]) != MS_SAME)
+		while (node->next && ms_compare_with_envp_key(node->entry, cmd_line[i]) != MS_SAME)
 			node = node->next;
 		new = ms_lst_create_new_node(cmd_line[i]);
-		if (cmd_line[i])
-			free(cmd_line[i]);
-        if (node->next == NULL)
-            ms_lst_add_back(env->envp_lst, new);
-        else
+        if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
         {
             free(node->entry);
             len = ppx_strlen(cmd_line[i]);
             node->entry = ms_strdup(cmd_line[i], len);
         }
+		else
+            ms_lst_add_back(env->envp_lst, new);
+		if (cmd_line[i])
+			free(cmd_line[i]);
 		++i;
 	}
-	env->envp[j] = malloc(sizeof(char));
-	env->envp[j] = 0;
 }
 
 void	ms_execute_cmd_echo(char *cmd[])
@@ -285,7 +283,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], 
 
 		//if (ms_strcmp(ppx_env->cmd[0], "ls") == MS_SAME)
 		//	ms_add_curr_path_to_ls_cmd(ppx_env, ppx_env->cmd);
-		path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, envp, "PATH=", ppx_env->cmd[0]);
+		path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, env->envp_lst, "PATH=", ppx_env->cmd[0]);
 		if (execve(path_to_cmd, ppx_env->cmd, envp) == ERROR)
 			ppx_exit_when_cmd_not_found(ppx_env, ppx_env->cmd[0]);
 	}

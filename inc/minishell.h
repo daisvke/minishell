@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/02 09:49:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/03 10:34:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@
 typedef struct s_env_lst
 {
 	char	*entry;
+	char	*key;
+	char	*value;
 	void	*next;
 }			t_env_lst;
 

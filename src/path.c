@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/24 01:45:37 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/03 10:35:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key)
 	return (data);
 }
 
-static char	**ppx_get_path(char *envp[], t_ppx *env, char *key)
+static char	**ppx_get_path(t_env_lst *envp_lst, t_ppx *env, char *key)
 {
 	char	*paths_envp;
 	char	**paths_envp_split;
 
-	paths_envp = ppx_get_key_value_from_envp(envp, key).value;
+	paths_envp = ppx_get_key_value_from_envp(envp_lst, key).value;
 	if (!paths_envp)
 		ppx_exit_with_error_message(env, 9);
 	paths_envp_split = ppx_split(paths_envp, ':');
@@ -54,7 +54,7 @@ static char	**ppx_get_path(char *envp[], t_ppx *env, char *key)
 	return (paths_envp_split);
 }
 
-char	*ppx_get_the_right_cmd_path(t_ppx *env, char *envp[], \
+char	*ppx_get_the_right_cmd_path(t_ppx *env, t_env_lst *envp_lst, \
 	char *key, char *cmd)
 {
 	char	**paths_envp_split;
@@ -63,7 +63,7 @@ char	*ppx_get_the_right_cmd_path(t_ppx *env, char *envp[], \
 
 	if (ppx_check_access(cmd) == OK)
 		return (cmd);
-	paths_envp_split = ppx_get_path(envp, env, key);
+	paths_envp_split = ppx_get_path(envp_lst, env, key);
 	i = 0;
 	cmd_path_at_i = NULL;
 	while (paths_envp_split[i])
