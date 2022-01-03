@@ -63,16 +63,16 @@ void	ms_execute_cmd_env(char *envp[])
 		printf("%s\n", envp[i++]);
 }
 
-int	ms_cmp_str_with_envp_entry(const char *str, const char *entry, size_t len)
+int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
 {
-	if (str && entry)
+	if (str && envp_entry)
 	{
-		while ((*str || *entry) && len--)
+		while (*str && *envp_entry && *envp_entry != '=')
 		{
-			if (*str != *entry)
-				return ((unsigned char)(*str) - (unsigned char)(*entry));
+			if (*str != *envp_entry)
+				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
 			str++;
-			entry++;
+			envp_entry++;
 		}
 		if (*str == '=')
 			return (MS_SAME);
@@ -162,23 +162,30 @@ int	ms_check_export_args(t_ms *env, char *cmd[])
 	return (0);
 }
 
-void    ms_execute_cmd_export(t_ms *env, char *cmd[])
+void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 {
     size_t  i;
 	size_t	j;
     size_t  len;
+	char	*tmp;
 
-	if (ms_check_export_args(env, cmd) == MS_NO_EXPORT ||ms_check_export_args(env, cmd) == MS_ERROR)
+	if (ms_check_export_args(env, cmd_line) == MS_NO_EXPORT \
+		|| ms_check_export_args(env, cmd_line) == MS_ERROR)
 		return ;
 	i = MS_FIRST_ARG_POS;
-	j = 0;
-	while (env->envp[j])
-		++j;
-	while (cmd[i])
+	while (cmd_line[i])
 	{
-		len = ppx_strlen(cmd[i]) + 1;
+		
+		j = 0;
+		while (env->envp[j] && ms_compare_with_envp_key(env->envp[j], cmd_line[i]) != MS_SAME)
+			++j;
+		len = ppx_strlen(cmd_line[i]) + 1;
+		tmp = ms_strdup(cmd_line[i], len - 1);
+		if (cmd_line[i])
+			free(cmd_line[i]);
 		env->envp[j] = malloc(sizeof(char) * len);
-		ppx_memcpy(env->envp[j], cmd[i], len);
+		ppx_memcpy(env->envp[j], tmp, len);
+		free(tmp);
 		++i;
 		++j;
 	}
@@ -317,12 +324,9 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 			ppx_execute_implemented_cmd_in_parent(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 		else
 		{
-			if (ppx_env->options & MS_OPT_PIPE)
-			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
+		if (ppx_env->options & MS_OPT_PIPE)
+		ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
 
-
-		//else
-		//{
 		pid = ppx_fork(ppx_env);
 		if (pid == CHILD)
 		{
@@ -332,7 +336,6 @@ int	ppx_pipex(char *argv[], char *envp[], t_ppx *ppx_env, t_ms *ms_env)
 		if ((ppx_env->options & MS_OPT_PIPE)
 			&& ppx_env->pos != ppx_env->argc - 1)
 			ppx_save_data_from_child(ppx_env);
-	//	}
 		}
 		++ppx_env->pos;
 		++ppx_env->i;
