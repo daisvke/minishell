@@ -54,13 +54,16 @@ void	ms_execute_cmd_pwd(char *envp[])
 	printf("%s\n", current_path);
 }
 
-void	ms_execute_cmd_env(char *envp[])
+void	ms_execute_cmd_env(t_env_lst *envp_head)
 {
-	size_t	i;
+	t_env_lst *node;
 
-	i = 0;
-	while (envp[i])
-		printf("%s\n", envp[i++]);
+	node = envp_head;
+	while (node)
+	{
+		printf("%s\n", node->entry);
+		node = node->next;
+	}
 }
 bool	ft_isdigit(int c)
 {
@@ -239,7 +242,7 @@ void	ppx_execute_implemented_cmd_in_child(t_ms *ms_env, t_ppx *ppx_env, size_t c
 	else if (cmd_code == MS_CMD_PWD)
 		ms_execute_cmd_pwd(ms_env->envp);
 	else if (cmd_code == MS_CMD_ENV)
-		ms_execute_cmd_env(ms_env->envp);
+		ms_execute_cmd_env(ms_env->envp_lst);
 }
 
 void	ppx_execute_implemented_cmd_in_parent(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *cmd[])

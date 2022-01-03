@@ -58,13 +58,6 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 		//ppx?
 		++i;
 	}
-	t_env_lst *l;
-	l = env->envp_lst;
-	while (l)
-	{
-		printf(": %s\n", l->entry);
-		l = l->next;
-	}
 }
 
 void	ms_init_env(char *envp[], t_ms *env)
