@@ -70,6 +70,7 @@ bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd
 
 int	ms_control_arguments(int argc, char *argv[])
 {
+	//check if envp is true
 	(void)argv;
 	if (argc > 1)
 	{
@@ -134,11 +135,14 @@ int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
 	ms_env->cmd_line = readline("\033[0;32m$\033[0;37m ");
 	if (ms_env->cmd_line == NULL)
 		return (MS_READ_EOF);
+	if (ms_env->cmd_line[0] == '\0')
+		return (MS_READ_NONE);
 	return (MS_READ_LINE);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	size_t	res;
 	t_ms	ms_env;
 
 	if (ms_control_arguments(argc, argv) == MS_OK)
@@ -147,12 +151,16 @@ int	main(int argc, char *argv[], char *envp[])
 		ms_handle_signals(&ms_env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			if (ms_show_prompt_and_read_cmd_line(&ms_env, &ms_env.cmd_line) == MS_READ_EOF)
+			if (ms_env.cmd_line)
+				free(ms_env.cmd_line);
+			res = ms_show_prompt_and_read_cmd_line(&ms_env, &ms_env.cmd_line);
+			if (res == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
+			if (res == MS_READ_NONE)
+				continue ;
 			ms_parse_cmd_line(&ms_env, ms_env.cmd_line);
 			ms_execute_cmd_line(ms_env.envp, &ms_env, ms_env.split_cmd_line);
 			// ms_free
-			free(ms_env.cmd_line);
 		}
 	}
 	exit(EXIT_SUCCESS);

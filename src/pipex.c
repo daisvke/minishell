@@ -62,6 +62,20 @@ void	ms_execute_cmd_env(char *envp[])
 	while (envp[i])
 		printf("%s\n", envp[i++]);
 }
+bool	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+bool	ft_isalpha(int c)
+{
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+}
+
+bool	ft_isalnum(int c)
+{
+	return (ft_isalpha(c) || ft_isdigit(c));
+}
 
 int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
 {
@@ -120,7 +134,7 @@ void	ms_execute_unset(t_ms *env, char *cmd)
 			return ;
 		else if (len == -2)
 		{
-			printf("export: "%s" : not a valid identifier\n", cmd[i]);
+			printf("minishell: unset: `%s' : not a valid identifier\n", cmd[i]);
 			return ;
 		}
 		j = 0;
@@ -144,19 +158,24 @@ int	ms_check_export_args(t_ms *env, char *cmd[])
 	{
 		j = 0;
 		while (cmd[i][j] && cmd[i][j] != '=')
+		{
+			if (ft_isalnum(cmd[i][j]) == false)
+			{
+				printf("minishell: export: `%s' : not a valid identifier\n", cmd[i]);
+				return (MS_ERROR);
+			}
 			++j;
+		}
 		if (cmd[i][j] == '=')
 		{
 			if (j == 0 || cmd[i][j - 1] == ' ')
 			{
-				// go through pipe ?
 				printf("minishell: export: `%s' : not a valid identifier\n", cmd[i]);
-			//	exit(EXIT_FAILURE);
 				return (MS_ERROR);
 			}
 		}
 		else
-			return (MS_NO_EXPORT);//no export
+			return (MS_NO_EXPORT);
 		++i;
 	}
 	return (0);
