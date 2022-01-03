@@ -40,12 +40,12 @@ t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key)
 	return (data);
 }
 
-static char	**ppx_get_path(t_env_lst *envp_lst, t_ppx *env, char *key)
+static char	**ppx_get_path(char *envp[], t_ppx *env, char *key)
 {
 	char	*paths_envp;
 	char	**paths_envp_split;
 
-	paths_envp = ppx_get_key_value_from_envp(envp_lst, key).value;
+	paths_envp = ppx_get_key_value_from_envp(envp, key).value;
 	if (!paths_envp)
 		ppx_exit_with_error_message(env, 9);
 	paths_envp_split = ppx_split(paths_envp, ':');
@@ -54,7 +54,7 @@ static char	**ppx_get_path(t_env_lst *envp_lst, t_ppx *env, char *key)
 	return (paths_envp_split);
 }
 
-char	*ppx_get_the_right_cmd_path(t_ppx *env, t_env_lst *envp_lst, \
+char	*ppx_get_the_right_cmd_path(t_ppx *env, char *envp[], \
 	char *key, char *cmd)
 {
 	char	**paths_envp_split;
@@ -63,7 +63,7 @@ char	*ppx_get_the_right_cmd_path(t_ppx *env, t_env_lst *envp_lst, \
 
 	if (ppx_check_access(cmd) == OK)
 		return (cmd);
-	paths_envp_split = ppx_get_path(envp_lst, env, key);
+	paths_envp_split = ppx_get_path(envp, env, key);
 	i = 0;
 	cmd_path_at_i = NULL;
 	while (paths_envp_split[i])
