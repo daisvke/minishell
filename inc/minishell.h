@@ -73,11 +73,16 @@ typedef struct s_ms
 }			t_ms;
 
 /*
-** utils_strings
+** Strings utils
 */
 int	ms_strncmp(const char *s1, const char *s2, size_t n);
 
 char	*ms_strdup(char *src, size_t size); //used
 char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
+
+/*
+** Linked lists
+*/
+t_env_lst	*ms_lst_create_new_node(char *data);
 
 #endif

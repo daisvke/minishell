@@ -204,7 +204,8 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 		new = ms_lst_create_new_node(cmd_line[i]);
         if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
         {
-            free(node->entry);
+			if (node->entry)
+	            free(node->entry);
             len = ppx_strlen(cmd_line[i]);
             node->entry = ms_strdup(cmd_line[i], len);
         }
@@ -283,7 +284,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], 
 
 		//if (ms_strcmp(ppx_env->cmd[0], "ls") == MS_SAME)
 		//	ms_add_curr_path_to_ls_cmd(ppx_env, ppx_env->cmd);
-		path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, env->envp_lst, "PATH=", ppx_env->cmd[0]);
+		path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, envp, "PATH=", ppx_env->cmd[0]);
 		if (execve(path_to_cmd, ppx_env->cmd, envp) == ERROR)
 			ppx_exit_when_cmd_not_found(ppx_env, ppx_env->cmd[0]);
 	}

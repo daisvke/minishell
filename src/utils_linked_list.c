@@ -6,7 +6,7 @@ t_env_lst	*ms_lst_create_new_node(char *data)
 	t_env_lst	*new;
 	size_t		len;
 
-	new = malloc(sizeof(t_env_lst *));
+	new = malloc(sizeof(t_env_lst));
 	if (!new)
 		return (NULL);
 	len = ppx_strlen(data);
