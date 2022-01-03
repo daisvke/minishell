@@ -38,9 +38,10 @@ void	ms_set_environment_variables(char *envp[], t_ms *env)
 
 void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 {
-	size_t	i;
-	size_t	max;
-	size_t	len;
+	size_t		i;
+	size_t		max;
+	size_t		len;
+	t_env_lst	*new;
 
 	i = 0;
 	while (envp[i])
@@ -49,17 +50,21 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 	env->envp_lst = malloc(sizeof(t_env_lst));
 	env->envp_lst->entry = envp[0];
 	env->envp_lst->next = NULL;
-	i = 0;
+	i = 1;
 	while (i < max)
 	{
+		new = ms_lst_create_new_node(envp[i]);
+		ms_lst_add_back(env->envp_lst, new);
 		//ppx?
-		len = ppx_strlen(envp[i]) + 1;
-		env->envp[i] = malloc(sizeof(char) * len);
-		//ppx?
-		ppx_memcpy(env->envp[i], envp[i], len);
 		++i;
 	}
-	env->envp[i] = NULL;
+	t_env_lst *l;
+	l = env->envp_lst;
+	while (l)
+	{
+		printf(": %s\n", l->entry);
+		l = l->next;
+	}
 }
 
 void	ms_init_env(char *envp[], t_ms *env)
