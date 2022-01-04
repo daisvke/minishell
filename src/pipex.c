@@ -28,9 +28,11 @@ int	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
 
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 {
-	size_t	i;
-	size_t	len;
-	char	*current_absolute_path;
+	size_t		i;
+	size_t		len;
+	char		*current_absolute_path;
+	t_env_lst	*node;
+	char		*new_path;
 
 	if (ms_check_if_there_is_not_too_much_args(ppx_env->cmd) == MS_OK)
 	{
@@ -38,9 +40,9 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		current_absolute_path = getcwd(NULL, 0);
 		if (current_absolute_path == NULL)
 			ppx_exit_with_error_message(ppx_env, 10);
-		i = ppx_get_key_value_from_envp(ms_env->envp, "PWD=").index;
-		free(ms_env->envp[i]);
-		ms_env->envp[i] = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
+		node = ppx_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
+		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
+		ms_lst_assign_entry_to_node(node, new_path);
 	}
 	else
 		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);
@@ -94,7 +96,7 @@ int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
 		if (*str == '=')
 			return (MS_SAME);
 	}
-	return (DIFFERENT);
+	return (MS_DIFFERENT);
 }
 /*
 void	ms_delete_entry_from_envp(t_ms *env, char *new_entry, size_t index)
@@ -284,7 +286,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[], 
 
 		//if (ms_strcmp(ppx_env->cmd[0], "ls") == MS_SAME)
 		//	ms_add_curr_path_to_ls_cmd(ppx_env, ppx_env->cmd);
-		path_to_cmd = ppx_get_the_right_cmd_path(ppx_env, envp, "PATH=", ppx_env->cmd[0]);
+		path_to_cmd = ppx_get_the_right_cmd_path(ms_env, ppx_env, envp, "PATH=", ppx_env->cmd[0]);
 		if (execve(path_to_cmd, ppx_env->cmd, envp) == ERROR)
 			ppx_exit_when_cmd_not_found(ppx_env, ppx_env->cmd[0]);
 	}
