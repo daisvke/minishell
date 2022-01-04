@@ -31,7 +31,7 @@ char	*ms_strdup(char *src, size_t size)
 	size_t	i;
 	char	*dest;
 
-	dest = (char *)malloc(sizeof(*dest) * (size + 1));
+	dest = malloc(sizeof(char) * (size + 1));
 	if (!dest)
 		return (NULL);
 	i = 0;
@@ -132,7 +132,7 @@ char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep)
 	size_t	wordcount;
 
 	wordcount = ms_wordcount(env, (char *)s, sep);
-	split = (char **)malloc(sizeof(*split) * (wordcount + 1));
+	split = malloc(sizeof(char *) * (wordcount + 1));
 	if (!split)
 		return (NULL);
 	res = ms_split_iter(split, (char *)s, sep);
