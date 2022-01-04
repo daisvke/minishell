@@ -43,16 +43,22 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		node = ppx_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
 		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
 		ms_lst_assign_entry_to_node(node, new_path);
+		if (new_path)
+			free(new_path);
 	}
 	else
 		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);
 }
 
-void	ms_execute_cmd_pwd(char *envp[])
+void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 {
-	char	*current_path;
+	size_t		key_len;
+	t_env_lst	*node;
+	char		*current_path;
 
-	current_path = ppx_get_key_value_from_envp(envp, "PWD=").value;
+	node = ppx_get_node_with_the_same_key(envp_lst, "PWD=");
+	key_len = 4;
+	current_path = node->entry + key_len; 
 	printf("%s\n", current_path);
 }
 
@@ -244,7 +250,7 @@ void	ppx_execute_implemented_cmd_in_child(t_ms *ms_env, t_ppx *ppx_env, size_t c
 	if (cmd_code == MS_CMD_ECHO)
 		ms_execute_cmd_echo(ppx_env->cmd);
 	else if (cmd_code == MS_CMD_PWD)
-		ms_execute_cmd_pwd(ms_env->envp);
+		ms_execute_cmd_pwd(ms_env->envp_lst);
 	else if (cmd_code == MS_CMD_ENV)
 		ms_execute_cmd_env(ms_env->envp_lst);
 }
