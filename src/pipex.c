@@ -86,6 +86,23 @@ bool	ms_isalnum(int c)
 	return (ms_isalpha(c) || ms_isdigit(c));
 }
 
+int	ms_compare_with_envp_key_for_unset(const char *envp_entry, const char *str)
+{
+	if (str && envp_entry)
+	{
+		while (*str && *envp_entry)
+		{
+			if (*str != *envp_entry)
+				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
+			str++;
+			envp_entry++;
+		}
+		if (*envp_entry == '=')
+			return (MS_SAME);
+	}
+	return (MS_DIFFERENT);
+}
+
 int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
 {
 	if (str && envp_entry)
@@ -169,14 +186,13 @@ void    ms_execute_cmd_unset(t_ms *env, char *cmd_line[])
         node = env->envp_lst;
 		while (node)
 		{
-			if (node->next && ms_compare_with_envp_key(((t_env_lst *)node->next)->entry, cmd_line[i]) == MS_SAME)
+			if (node->next && ms_compare_with_envp_key_for_unset(((t_env_lst *)node->next)->entry, cmd_line[i]) == MS_SAME)
 			{
 				tmp_before = node;
 				node = node->next;
 				tmp_next = node->next;
+				tmp_before->next = tmp_next;
 				ms_lst_del_node(node);
-				tmp_before->next = node;
-				node->next = tmp_next;
 				break ;
 			}
 			node = node->next;
