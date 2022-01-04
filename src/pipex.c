@@ -61,7 +61,7 @@ void	ms_execute_cmd_env(t_env_lst *envp_head)
 	node = envp_head;
 	while (node)
 	{
-		printf("%s\n", node->entry);
+		printf("%s=%s\n", node->key, node->value);
 		node = node->next;
 	}
 }
@@ -80,16 +80,16 @@ bool	ft_isalnum(int c)
 	return (ft_isalpha(c) || ft_isdigit(c));
 }
 
-int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
+int	ms_compare_with_envp_key(const char *envp_key, const char *str)
 {
-	if (str && envp_entry)
+	if (str && envp_key)
 	{
-		while (*str && *envp_entry && *envp_entry != '=')
+		while (*str && *envp_key)
 		{
-			if (*str != *envp_entry)
-				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
+			if (*str != *envp_key)
+				return ((unsigned char)(*str) - (unsigned char)(*envp_key));
 			str++;
-			envp_entry++;
+			envp_key++;
 		}
 		if (*str == '=')
 			return (MS_SAME);
@@ -199,18 +199,15 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 	while (cmd_line[i])
 	{
         node = env->envp_lst;
-		while (node->next && ms_compare_with_envp_key(node->entry, cmd_line[i]) != MS_SAME)
+		while (node->next && ms_compare_with_envp_key(node->key, cmd_line[i]) != MS_SAME)
 			node = node->next;
-		new = ms_lst_create_new_node(cmd_line[i]);
-        if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
-        {
-			if (node->entry)
-	            free(node->entry);
-            len = ppx_strlen(cmd_line[i]);
-            node->entry = ms_strdup(cmd_line[i], len);
-        }
+        if (ms_compare_with_envp_key(node->key, cmd_line[i]) == MS_SAME)
+			ms_lst_assign_entry_to_node(node, cmd_line[i]);
 		else
+		{
+			new = ms_lst_create_new_node(cmd_line[i]);
             ms_lst_add_back(env->envp_lst, new);
+		}
 		if (cmd_line[i])
 			free(cmd_line[i]);
 		++i;
