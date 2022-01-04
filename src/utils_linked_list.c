@@ -3,23 +3,12 @@
 
 void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
 {
-	size_t	i;
-	size_t	equal_len;
-	size_t	key_len;
-	size_t	val_len;
+	size_t	len;
 
-	if (node->key)
-		free(node->key);
-	if (node->value)
-		free(node->value);
-	i = 0;
-	while (entry[i] != '=')
-		++i;
-	key_len = i;
-	node->key = ms_strdup(entry, key_len);
-	equal_len = 1;
-	val_len = ppx_strlen(entry) - key_len - equal_len;
-	node->value = ms_strdup(entry + key_len + equal_len, val_len);
+	if (node->entry)
+		free(node->entry);
+	len = ppx_strlen(entry);
+	node->entry = ms_strdup(entry, len);
 }
 
 t_env_lst	*ms_lst_create_new_node(char *data)
@@ -29,6 +18,7 @@ t_env_lst	*ms_lst_create_new_node(char *data)
 	new = malloc(sizeof(t_env_lst));
 	if (!new)
 		return (NULL);
+	new->entry = NULL;
 	ms_lst_assign_entry_to_node(new, data);
 	new->next = NULL;
 	return (new);

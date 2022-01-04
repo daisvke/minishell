@@ -56,8 +56,6 @@
 typedef struct s_env_lst
 {
 	char	*entry;
-	char	*key;
-	char	*value;
 	void	*next;
 }			t_env_lst;
 
