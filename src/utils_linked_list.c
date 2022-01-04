@@ -1,6 +1,21 @@
 
 #include "minishell.h"
 
+int	ms_lst_lstsize(t_env_lst *head)
+{
+	t_env_lst	*node;
+	size_t		i;
+
+	node = head;
+	i = 0;
+	while (node)
+	{
+		node = node->next;
+		++i;
+	}
+	return (i);
+}
+
 void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
 {
 	size_t	len;
@@ -46,3 +61,25 @@ void	ms_lst_add_back(t_env_lst *head, t_env_lst *new)
 		node->next = new;
 	}
 }
+
+char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_size)
+{
+	t_env_lst	*node;
+	char		**array;
+	size_t		i;
+	size_t		len;
+
+	array = malloc(sizeof(char *) * (lst_size + 1));
+	node = envp_lst;
+	i = 0;
+	while (node)
+	{
+		len = ppx_strlen(node->entry);
+		array[i] = ms_strdup(node->entry, len);
+		node = node->next;
+		++i;
+	}
+	array[i] = NULL;
+	return (array);
+}
+

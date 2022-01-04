@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ms_execute_cmd_line(char *envp[], t_ms *ms_env, char **cmd_line)
+void	ms_execute_cmd_line(t_ms *ms_env, char **cmd_line)
 {
 	size_t	i;
 	size_t	cmd_and_file_nbr;
@@ -21,7 +21,7 @@ void	ms_execute_cmd_line(char *envp[], t_ms *ms_env, char **cmd_line)
 	while (cmd_line[i])
 		++i;
 	cmd_and_file_nbr = i;
-	ppx_main(cmd_and_file_nbr, cmd_line, envp, ms_env);
+	ppx_main(cmd_and_file_nbr, cmd_line, ms_env);
 }
 // add env for err
 void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
@@ -98,7 +98,6 @@ void	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 void	ms_handle_sigint(int signum)
 {
 	(void)signum;
-
 	rl_replace_line("", 0);
 	printf("\n");
 	rl_on_new_line();
@@ -107,6 +106,7 @@ void	ms_handle_sigint(int signum)
 
 void	ms_handle_sigquit(int signum)
 {
+	(void)signum;
 	struct termios orig_termios_p;
 	struct termios new_termios_p;
 
@@ -125,6 +125,7 @@ void	ms_handle_signals(t_ms *ms_env)
 	struct sigaction	signal_action2;
 
 	signal_action.sa_handler = &ms_handle_sigint;
+	//errors
 	sigaction(SIGINT, &signal_action, NULL);
 	signal_action2.sa_handler = &ms_handle_sigquit;
 	sigaction(SIGQUIT, &signal_action2, NULL);
@@ -159,7 +160,7 @@ int	main(int argc, char *argv[], char *envp[])
 			if (res == MS_READ_NONE)
 				continue ;
 			ms_parse_cmd_line(&ms_env, ms_env.cmd_line);
-			ms_execute_cmd_line(ms_env.envp, &ms_env, ms_env.split_cmd_line);
+			ms_execute_cmd_line(&ms_env, ms_env.split_cmd_line);
 			// ms_free
 		}
 	}

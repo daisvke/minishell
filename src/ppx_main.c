@@ -56,7 +56,7 @@ void	ppx_init_ppx(int argc, char *argv[], t_ppx *ppx_env, t_ms *ms_env)
 	ppx_init_pipe_fds(ppx_env);
 }
 
-int	ppx_main(int argc, char *argv[], char *envp[], t_ms *ms_env)
+int	ppx_main(int argc, char *argv[], t_ms *ms_env)
 {
 	t_ppx	ppx_env;
 	int		res;
@@ -64,6 +64,6 @@ int	ppx_main(int argc, char *argv[], char *envp[], t_ms *ms_env)
 //	if (argc < 5)
 //		ppx_exit_with_error_message(&env, 0);
 	ppx_init_ppx(argc, argv, &ppx_env, ms_env);
-	res = ppx_pipex(argv, envp, &ppx_env, ms_env);
+	res = ppx_pipex(argv, &ppx_env, ms_env);
 	return (SUCCESS);
 }
