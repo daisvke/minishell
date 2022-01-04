@@ -83,3 +83,10 @@ char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_
 	return (array);
 }
 
+void	ms_lst_del_node(t_env_lst *node)
+{
+	if (node->entry)
+		free(node->entry);
+	if (node)
+		free(node);
+}

@@ -71,19 +71,19 @@ void	ms_execute_cmd_env(t_env_lst *envp_head)
 		node = node->next;
 	}
 }
-bool	ft_isdigit(int c)
+bool	ms_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
 
-bool	ft_isalpha(int c)
+bool	ms_isalpha(int c)
 {
 	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
 
-bool	ft_isalnum(int c)
+bool	ms_isalnum(int c)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
+	return (ms_isalpha(c) || ms_isdigit(c));
 }
 
 int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
@@ -128,35 +128,63 @@ int	ms_get_key_length_from_entry(char *entry)
 	}
 	return (-1);
 }
+*/
 
-void	ms_execute_unset(t_ms *env, char *cmd)
+int	ms_check_unset_args(t_ms *env, char *cmd[])
 {
 	size_t	i;
 	size_t	j;
-	size_t	len;
 
-	i = 1;
+	i = MS_FIRST_ARG_POS;
 	while (cmd[i])
 	{
-		len = ms_get_key_length_from_entry(cmd[i]);
-		if (len == -1)
-			return ;
-		else if (len == -2)
-		{
-			printf("minishell: unset: `%s' : not a valid identifier\n", cmd[i]);
-			return ;
-		}
 		j = 0;
-		while (env->envp[j])
+		while (cmd[i][j])
 		{
-			if (ms_cmp_str_with_envp_entry(cmd[i], env->envp[j], len) == MS_SAME)
-				ms_delete_entry_from_envp(ms_env, cmd[i], j);
+			if ((j == 0 && ms_isdigit(cmd[i][j]) == true) \
+				|| ms_isalnum(cmd[i][j]) == false && cmd[i][j] != '_')
+			{
+				printf("minishell: unset: `%s' : not a valid identifier\n", cmd[i]);
+				return (MS_ERROR);
+			}
 			++j;
 		}
-		++i
+		++i;
+	}
+	return (MS_SUCCESS);
+}
+
+void    ms_execute_cmd_unset(t_ms *env, char *cmd_line[])
+{
+    size_t  i;
+	t_env_lst   *node;
+	t_env_lst	*tmp_before;
+	t_env_lst	*tmp_next;
+
+	if (ms_check_unset_args(env, cmd_line) == MS_ERROR)
+		return ;
+	i = MS_FIRST_ARG_POS;
+	while (cmd_line[i])
+	{
+        node = env->envp_lst;
+		while (node)
+		{
+			if (node->next && ms_compare_with_envp_key(((t_env_lst *)node->next)->entry, cmd_line[i]) == MS_SAME)
+			{
+				tmp_before = node;
+				node = node->next;
+				tmp_next = node->next;
+				ms_lst_del_node(node);
+				tmp_before->next = node;
+				node->next = tmp_next;
+				break ;
+			}
+			node = node->next;
+		}
+		++i;
 	}
 }
-*/
+
 int	ms_check_export_args(t_ms *env, char *cmd[])
 {
 	size_t	i;
@@ -168,7 +196,8 @@ int	ms_check_export_args(t_ms *env, char *cmd[])
 		j = 0;
 		while (cmd[i][j] && cmd[i][j] != '=')
 		{
-			if (ft_isalnum(cmd[i][j]) == false)
+			if ((j == 0 && ms_isdigit(cmd[i][j]) == true) \
+				|| (ms_isalnum(cmd[i][j]) == false && cmd[i][j] != '_'))
 			{
 				printf("minishell: export: `%s' : not a valid identifier\n", cmd[i]);
 				return (MS_ERROR);
@@ -247,8 +276,8 @@ void	ppx_execute_implemented_cmd_in_parent(t_ms *ms_env, t_ppx *ppx_env, size_t 
 		ms_execute_cmd_cd(ms_env, ppx_env, cmd[1]);
 	else if (cmd_code == MS_CMD_EXPORT)
 		ms_execute_cmd_export(ms_env, cmd);
-//	else if (cmd_code == MS_CMD_UNSET)
-//		ms_execute_cmd_unset(ms_env, cmd);
+	else if (cmd_code == MS_CMD_UNSET)
+		ms_execute_cmd_unset(ms_env, cmd);
 	else if (cmd_code == MS_CMD_EXIT)
 		exit(EXIT_SUCCESS);
 }
