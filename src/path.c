@@ -39,7 +39,29 @@ t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key)
 	}
 	return (data);
 }
+/*
+t_env_lst	ppx_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
+{
+	t_env_lst	*node;
+	size_t		i;
+	size_t		key_len;
 
+	node = envp_lst;
+	while (node)
+	{
+		if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
+		{
+			data.index = i;
+			data.value = envp[i] + key_len;
+			break ;
+		}
+		if (node->next == NULL)
+			break ;
+		node = node->next;
+	}
+	return (node);
+}
+*/
 static char	**ppx_get_path(char *envp[], t_ppx *env, char *key)
 {
 	char	*paths_envp;
