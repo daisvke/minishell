@@ -92,7 +92,7 @@ void	ppx_putstr_fd(char *s, int fd, bool option);
 */
 bool		ppx_check_access(char *path);
 t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key);
-char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, char *envp[], \
+char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	char *key, char *cmd);
 
 /*
