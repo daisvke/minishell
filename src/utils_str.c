@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
 {
