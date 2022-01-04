@@ -199,17 +199,20 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 	while (cmd_line[i])
 	{
         node = env->envp_lst;
-		while (node->next && ms_compare_with_envp_key(node->entry, cmd_line[i]) != MS_SAME)
-			node = node->next;
-        if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
-			ms_lst_assign_entry_to_node(node, cmd_line[i]);
-		else
+		while (node)
 		{
-			new = ms_lst_create_new_node(cmd_line[i]);
-            ms_lst_add_back(env->envp_lst, new);
+			if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
+			{
+				ms_lst_assign_entry_to_node(node, cmd_line[i]);
+				break ;
+			}
+			else if (node->next == NULL)
+			{
+				new = ms_lst_create_new_node(cmd_line[i]);
+				ms_lst_add_back(env->envp_lst, new);
+			}
+			node = node->next;
 		}
-		if (cmd_line[i])
-			free(cmd_line[i]);
 		++i;
 	}
 }
