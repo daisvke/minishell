@@ -4,6 +4,7 @@ CC					=	clang $(INC) $(WFLAGS) -g3
 WFLAGS				=	-Wall -Wextra #-Werror
 READ				=	-lreadline	
 INC					=	-I inc/
+MEM					=	fsanitize=address fsanitize=undefined
 
 SRC_DIR				=	src/
 SRC_FILES			=	exit.c \
@@ -32,11 +33,12 @@ RM					= rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) $(READ) -o $(NAME)
+	$(CC) $(OBJ) $(READ) -o $(NAME)
+	@echo "\n\033[32m[COMPILATION FINISHED]\033[0m\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p obj/
-	@$(CC) -c $< -o $@
+	mkdir -p obj/
+	$(CC) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ_DIR)
