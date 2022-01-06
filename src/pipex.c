@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/03 10:34:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:45:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,33 +119,6 @@ int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
 	}
 	return (MS_DIFFERENT);
 }
-/*
-void	ms_delete_entry_from_envp(t_ms *env, char *new_entry, size_t index)
-{
-	free(env->envp[index]);
-	env->envp[index] = ppx_strdup;
-}
-
-int	ms_get_key_length_from_entry(char *entry)
-{
-	size_t	i;
-
-	i = 0;
-	while (entry[i])
-	{
-		if (entry[i] == '=')
-		{
-			if (i == 0 && entry[i + 1] == '=')
-				return (-2);
-			if (entry[i + 1] == '\0')
-				return (-1);
-			return (i);
-		}
-		++i;
-	}
-	return (-1);
-}
-*/
 
 int	ms_check_unset_args(t_ms *env, char *cmd[])
 {
