@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/08 06:54:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/08 07:23:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ bool	ppx_check_if_there_is_any_redirection(t_ppx *env)
 {
 	int	fd;
 	size_t	i;
+	int	open_flags;
+
+	fd = 0;
 	
 	i = 0;
 	while (env->cmd[i])
@@ -90,9 +93,12 @@ bool	ppx_check_if_there_is_any_redirection(t_ppx *env)
 		}
 		else if (env->cmd[i][0] == '>')
 		{
+			ppx_check_redirection_arg(env, env->cmd, i);
 			env->options |= MS_OPT_REDIR_OUTPUT;
-			if (env->pos == env->argc - 1)
-				//
+			open_flags = ppx_get_open_flags(env);
+			fd = ppx_open_file(env, env->cmd[env->pos + 1], open_flags, 0664);
+			ppx_dup2(env, fd, 1);
+			env->cmd = ppx_del_redirection_section_at_i(env, i);
 			return (true);
 		}
 		++i;
@@ -103,10 +109,10 @@ bool	ppx_check_if_there_is_any_redirection(t_ppx *env)
 void	ppx_get_fd(t_ppx *env, char *argv[])
 {
 	int	fd;
-	int	open_flags;
+//	int	open_flags;
 
 	fd = 0;
-	open_flags = ppx_get_open_flags(env);
+//	open_flags = ppx_get_open_flags(env);
 	if ((env->options & MS_OPT_HEREDOC) \
 		&& env->pos == FIRST_CMD_WHEN_HEREDOC)
 	{
@@ -126,12 +132,13 @@ void	ppx_get_fd(t_ppx *env, char *argv[])
 	{
 		ppx_dup2(env, STDOUT_FILENO, 1);
 	}
+	/*
 	else if ((env->options & MS_OPT_REDIR_OUTPUT) \
 		&& env->pos == env->argc - GET_LAST_CMD)
 	{
 		fd = ppx_open_file(env, argv[env->argc - 1], open_flags, 0664);
 		ppx_dup2(env, fd, 1);
-	}
+	}*/
 }
 
 void	ppx_putstr_fd(char *s, int fd, bool option)
