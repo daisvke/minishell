@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/06 22:58:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/08 06:22:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,57 +20,12 @@ int	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
 	while (cmd_and_args[i])
 	{
 		if (i > 1)
-			return (MS_ERROR);
+			return (MS_ERROR); //error
 		++i;
 	}
 	return (MS_OK);
 }
 
-void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
-{
-	char		*current_absolute_path;
-	t_env_lst	*node;
-	char		*new_path;
-
-	if (ms_check_if_there_is_not_too_much_args(ppx_env->cmd) == MS_OK)
-	{
-		chdir(path);
-		current_absolute_path = getcwd(NULL, 0);
-		if (current_absolute_path == NULL)
-			ppx_exit_with_error_message(ppx_env, 10);
-		node = ppx_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
-		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
-		ms_lst_assign_entry_to_node(node, new_path);
-		if (new_path)
-			free(new_path);
-	}
-	else
-		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);
-}
-
-void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
-{
-	size_t		key_len;
-	t_env_lst	*node;
-	char		*current_path;
-
-	node = ppx_get_node_with_the_same_key(envp_lst, "PWD=");
-	key_len = 4;
-	current_path = node->entry + key_len; 
-	printf("%s\n", current_path);
-}
-
-void	ms_execute_cmd_env(t_env_lst *envp_head)
-{
-	t_env_lst *node;
-
-	node = envp_head;
-	while (node)
-	{
-		printf("%s\n", node->entry);
-		node = node->next;
-	}
-}
 bool	ms_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
@@ -86,177 +41,25 @@ bool	ms_isalnum(int c)
 	return (ms_isalpha(c) || ms_isdigit(c));
 }
 
-int	ms_compare_with_envp_key_for_unset(const char *envp_entry, const char *str)
+int	ms_compare_with_envp_key(const char *envp_entry, const char *str, int cmd)
 {
 	if (str && envp_entry)
 	{
 		while (*str && *envp_entry)
 		{
+			if (cmd != MS_CMD_UNSET && *envp_entry == '=')
+				break ;
 			if (*str != *envp_entry)
 				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
 			str++;
 			envp_entry++;
 		}
-		if (*envp_entry == '=')
+		if (cmd != MS_CMD_UNSET && *str == '=')
+			return (MS_SAME);
+		else if (cmd == MS_CMD_UNSET && *envp_entry == '=')
 			return (MS_SAME);
 	}
 	return (MS_DIFFERENT);
-}
-
-int	ms_compare_with_envp_key(const char *envp_entry, const char *str)
-{
-	if (str && envp_entry)
-	{
-		while (*str && *envp_entry && *envp_entry != '=')
-		{
-			if (*str != *envp_entry)
-				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
-			str++;
-			envp_entry++;
-		}
-		if (*str == '=')
-			return (MS_SAME);
-	}
-	return (MS_DIFFERENT);
-}
-
-int	ms_check_unset_args(t_ms *env, char *cmd[])
-{
-	size_t	i;
-	size_t	j;
-
-	i = MS_FIRST_ARG_POS;
-	while (cmd[i])
-	{
-		j = 0;
-		while (cmd[i][j])
-		{
-			if ((j == 0 && ms_isdigit(cmd[i][j]) == true) \
-				|| ms_isalnum(cmd[i][j]) == false && cmd[i][j] != '_')
-			{
-				printf("minishell: unset: `%s' : not a valid identifier\n", cmd[i]);
-				return (MS_ERROR);
-			}
-			++j;
-		}
-		++i;
-	}
-	return (MS_SUCCESS);
-}
-
-void    ms_execute_cmd_unset(t_ms *env, char *cmd_line[])
-{
-    size_t  i;
-	t_env_lst   *node;
-	t_env_lst	*tmp_before;
-	t_env_lst	*tmp_next;
-
-	if (ms_check_unset_args(env, cmd_line) == MS_ERROR)
-		return ;
-	i = MS_FIRST_ARG_POS;
-	while (cmd_line[i])
-	{
-        node = env->envp_lst;
-		while (node)
-		{
-			if (node->next && ms_compare_with_envp_key_for_unset(((t_env_lst *)node->next)->entry, cmd_line[i]) == MS_SAME)
-			{
-				tmp_before = node;
-				node = node->next;
-				tmp_next = node->next;
-				tmp_before->next = tmp_next;
-				ms_lst_del_node(node);
-				break ;
-			}
-			node = node->next;
-		}
-		++i;
-	}
-}
-
-int	ms_check_export_args(t_ms *env, char *cmd[])
-{
-	size_t	i;
-	size_t	j;
-
-	i = MS_FIRST_ARG_POS;
-	while (cmd[i])
-	{
-		j = 0;
-		while (cmd[i][j] && cmd[i][j] != '=')
-		{
-			if ((j == 0 && ms_isdigit(cmd[i][j]) == true) \
-				|| (ms_isalnum(cmd[i][j]) == false && cmd[i][j] != '_'))
-			{
-				printf("minishell: export: `%s' : not a valid identifier\n", cmd[i]);
-				return (MS_ERROR);
-			}
-			++j;
-		}
-		if (cmd[i][j] == '=')
-		{
-			if (j == 0 || cmd[i][j - 1] == ' ')
-			{
-				printf("minishell: export: `%s' : not a valid identifier\n", cmd[i]);
-				return (MS_ERROR);
-			}
-		}
-		else
-			return (MS_NO_EXPORT);
-		++i;
-	}
-	return (0);
-}
-
-void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
-{
-    size_t  i;
-	t_env_lst   *node;
-	t_env_lst   *new;
-
-	if (ms_check_export_args(env, cmd_line) == MS_NO_EXPORT \
-		|| ms_check_export_args(env, cmd_line) == MS_ERROR)
-		return ;
-	i = MS_FIRST_ARG_POS;
-	while (cmd_line[i])
-	{
-        node = env->envp_lst;
-		while (node)
-		{
-			if (ms_compare_with_envp_key(node->entry, cmd_line[i]) == MS_SAME)
-			{
-				ms_lst_assign_entry_to_node(node, cmd_line[i]);
-				break ;
-			}
-			else if (node->next == NULL)
-			{
-				new = ms_lst_create_new_node(cmd_line[i]);
-				ms_lst_add_back(env->envp_lst, new);
-			}
-			node = node->next;
-		}
-		++i;
-	}
-}
-
-void	ms_execute_cmd_echo(char *cmd[])
-{
-	bool	opt_n;	
-	size_t	i;
-
-	opt_n = false;
-	if (ms_strcmp(cmd[1], "-n") == MS_SAME)
-		opt_n = true;
-	i = MS_FIRST_ARG_POS + opt_n;
-	while (cmd[i])
-	{
-		printf("%s", cmd[i]);
-		if (cmd[i + 1] != NULL)
-			printf(" ");
-		++i;
-	}
-	if (opt_n == false)
-		printf("\n");
 }
 
 void	ppx_execute_implemented_cmd_in_parent(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *cmd[])
@@ -289,6 +92,11 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[])
 	size_t	lst_size;
 	char	**envp;
 
+	
+	if (ppx_check_if_there_is_any_redirection(ppx_env, argv))
+	{
+		//get fd on next arg
+	}
 	if (ppx_env->options & MS_OPT_PIPE \
 		|| (ppx_env->options & MS_OPT_REDIR_OUTPUT))
 	{
@@ -369,18 +177,18 @@ int	ppx_pipex(char *argv[], t_ppx *ppx_env, t_ms *ms_env)
 			ppx_execute_implemented_cmd_in_parent(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 		else
 		{
-		if (ppx_env->options & MS_OPT_PIPE)
-		ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
+			if (ppx_env->options & MS_OPT_PIPE)
+			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
 
-		pid = ppx_fork(ppx_env);
-		if (pid == CHILD)
-		{
-			ppx_spawn_child_to_execute_cmd(ms_env, ppx_env, argv);
-			exit(EXIT_SUCCESS);
-		}
-		if ((ppx_env->options & MS_OPT_PIPE)
-			&& ppx_env->pos != ppx_env->argc - 1)
-			ppx_save_data_from_child(ppx_env);
+			pid = ppx_fork(ppx_env);
+			if (pid == CHILD)
+			{
+				ppx_spawn_child_to_execute_cmd(ms_env, ppx_env, argv);
+				exit(EXIT_SUCCESS);
+			}
+			if ((ppx_env->options & MS_OPT_PIPE)
+				&& ppx_env->pos != ppx_env->argc - 1)
+				ppx_save_data_from_child(ppx_env);
 		}
 		++ppx_env->pos;
 		++ppx_env->i;

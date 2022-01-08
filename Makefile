@@ -7,7 +7,9 @@ INC					=	-I inc/
 MEM					=	fsanitize=address fsanitize=undefined
 
 SRC_DIR				=	src/
-SRC_FILES			=	exit.c \
+SRC_FILES			=	execute_builtin_cmds_1.c \
+						execute_builtin_cmds_2.c \
+						exit.c \
 						init_ms_env.c \
 						main.c \
 						path.c \

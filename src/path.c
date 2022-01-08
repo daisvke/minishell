@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/03 10:35:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/08 02:18:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env_lst	*ppx_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
 	node = envp_lst;
 	while (node)
 	{
-		if (ms_compare_with_envp_key(node->entry, key) == MS_SAME)
+		if (ms_compare_with_envp_key(node->entry, key, 0) == MS_SAME)
 			return (node);
 		node = node->next;
 	}
