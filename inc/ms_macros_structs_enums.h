@@ -18,6 +18,8 @@ enum e_return
 
 # define MS_NO_EXPORT		1
 
+# define MS_REDIRECTION_SECTION	2
+
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 # define MS_FIRST_ARG_POS		1
 
@@ -62,7 +64,8 @@ enum e_cmds
 // BITWISE FOR S_MS OPTIONS
 enum e_options
 {
-	MS_OPT_PIPE	= 4,
+	MS_OPT_PIPE	= 8,
+	MS_OPT_READ_FROM_FILE = 4,
 	MS_OPT_REDIR_OUTPUT	= 2,
 	MS_OPT_HEREDOC = 1
 };
