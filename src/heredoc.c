@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/28 05:35:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/08 07:09:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int	ppx_get_open_flags(t_ppx *env)
 	int	flags;
 
 	flags = 0;
-	if ((env->options & MS_OPT_HEREDOC) \
+	if (env->options & MS_OPT_REDIR_OUTPUT)
+		flags = O_CREAT | O_WRONLY | O_TRUNC;
+	else if ((env->options & MS_OPT_HEREDOC) \
 		&& env->pos == env->argc - GET_LAST_CMD)
 		flags = O_CREAT | O_WRONLY | O_APPEND;
-	else if (env->pos == env->argc - GET_LAST_CMD)
-		flags = O_CREAT | O_WRONLY | O_TRUNC;
+//	else if (env->pos == env->argc - GET_LAST_CMD)
+//		flags = O_CREAT | O_WRONLY | O_TRUNC;
 	return (flags);
 }
 
