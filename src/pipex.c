@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/08 07:27:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/09 08:22:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,9 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env, char *argv[])
 	char	*path_to_cmd;
 	size_t	lst_size;
 	char	**envp;
-
 	
-	if (ppx_check_if_there_is_any_redirection(ppx_env, argv))
-	{
-		//get fd on next arg
-	}
-	if (ppx_env->options & MS_OPT_PIPE \
-		|| (ppx_env->options & MS_OPT_REDIR_OUTPUT))
+	ppx_check_if_there_is_any_redirection(ppx_env, argv);
+	if (ppx_env->options & MS_OPT_PIPE)
 	{
 		ppx_close(ppx_env, ppx_env->pipe_fds[ppx_env->i][0]);
 		ppx_dup2(ppx_env, ppx_env->fd_in, STDIN_FILENO);

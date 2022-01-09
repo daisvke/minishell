@@ -18,8 +18,6 @@ enum e_return
 
 # define MS_NO_EXPORT		1
 
-# define MS_REDIRECTION_SECTION	2
-
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 # define MS_FIRST_ARG_POS		1
 
