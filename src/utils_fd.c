@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/09 10:31:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/09 21:35:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 		}
 		++i;
 	}
+	if (*new_argv[0] == '\0')
+	{
+		free(new_argv);
+		new_argv = NULL;
+	}
 	return (new_argv);
 }
 
@@ -114,7 +119,7 @@ void	ppx_apply_redirection(t_ppx *env, char c, char *file)
 	}
 }
 
-void	ppx_check_if_there_is_any_redirection(t_ppx *env)
+void	ppx_handle_redirections(t_ppx *env)
 {
 	size_t	i;
 	size_t	j;
@@ -127,14 +132,18 @@ void	ppx_check_if_there_is_any_redirection(t_ppx *env)
 		j = 0;
 		while (env->cmd[i][j])
 		{
+	//		printf("cmd: %c\n", env->cmd[i][j]);
 			if (env->cmd[i][j] == '<' || env->cmd[i][j] == '>')
 			{
+				//open stdin if >t and nothing before/after or execve cat
 				file = ppx_get_redirection_out_file(env, env->cmd, i, &lines_to_del);
 				ppx_apply_redirection(env, env->cmd[i][j], file);
 				env->cmd = ppx_del_redirection_section_at_i(env, i, j, lines_to_del);
 				i = 0;
+				j = 0;
 			}
-			++j;
+			else
+				++j;
 		}
 		++i;
 	}
