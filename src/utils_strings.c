@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:21:17 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/10 10:33:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/10 11:04:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,6 @@ int	ms_strncmp(const char *s1, const char *s2, size_t n)
 		s2++;
 	}
 	return (0);
-}
-
-void	ms_get_array_of_redirection_symbols(char *array[])
-{
-	array[0] = "<";
-	array[1] = ">";
-	array[2] = "<<";
-	array[3] = ">>";
-	array[4] = NULL;
 }
 
 char	ms_check_if_char_is_a_redir_symbol(int c)
@@ -76,20 +67,3 @@ char	*ms_search_redir_symbol(char *str)
 	}
 	return (0);
 }
-/*
-char	*ms_get_outfile_when_redir_symbol_is_not_at_the_begining(char *str)
-{
-	char	*file;
-
-	while (*str)
-	{
-		if (ms_search_redir_symbol(str))
-		{
-			file = ms_search_redir_symbol(str);
-			return (file);
-		}
-		str++;
-	}
-	return (NULL);
-}
-*/
