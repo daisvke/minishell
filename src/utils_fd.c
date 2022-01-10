@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/10 12:31:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/10 12:41:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 	{
 		env->options |= MS_OPT_HEREDOC;
 		ppx_request_heredoc_input(env, file);
-		fd = ppx_open_file(env, "heredoc_output", O_RDONLY, 0);
-		ppx_dup2(env, fd, STDIN_FILENO);
+//		fd = ppx_open_file(env, "heredoc_output", O_RDONLY, 0);
+//		ppx_dup2(env, fd, STDIN_FILENO);
 //		if (env->options & MS_OPT_HEREDOC)
-		unlink("heredoc_output");
+	//	unlink("heredoc_output");
 	}
 	else if (*str == '>' && *(str + 1) == '>')
 	{
