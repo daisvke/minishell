@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/10 09:58:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/10 12:17:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,15 @@ int	ppx_get_open_flags(t_ppx *env)
 	return (flags);
 }
 
-void	ppx_input_heredoc(t_ppx *env, char *argv[])
+void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 {
 	int		fd;
 	char	*line;
-	char	*limiter;
 
 	line = NULL;
-	limiter = argv[2];
 	fd = ppx_open_file(env, "heredoc_output", \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	ppx_dup2(env, fd, 1);
+	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(0, &line) >= 0)
 	{
 		if (ppx_strncmp(line, limiter, ppx_strlen(limiter)) == SAME)
