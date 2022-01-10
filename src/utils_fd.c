@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/09 21:35:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/10 09:47:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,13 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 		len += 1;
 	len -= lines_to_del;
 	new_argv = malloc(sizeof(char *) * (len + 1));
-	new_argv[len] = NULL;
+	ft_memset(new_argv, 0, sizeof(char **) * (len + 1));
 	i = 0;
 	j = 0;
 	while (env->cmd[i])
 	{
 		if (del_line == 0 && env->cmd[0][0] != '<' && env->cmd[0][0] != '>' && env->cmd[0][1] != '\0')
-		{
 			new_argv[j] = ms_strdup(env->cmd[0], del_pos);
-		}
 		else if ((lines_to_del == 1 && i != del_line) \
 			|| (lines_to_del == 2 && i != del_line && i != del_line + 1))
 		{
@@ -74,28 +72,27 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 	return (new_argv);
 }
 
-char	*ppx_get_redirection_out_file(t_ppx *env, char *cmd[], size_t i, size_t *lines_to_del)
+char	*ppx_get_redirection_out_file(t_ppx *env, char *cmd[], size_t i, size_t j, size_t *lines_to_del)
 {
 	char	*file;
+	size_t	symbol_len;
 
 	*lines_to_del = 1;
-	if (cmd[i][1] == '\0')
+	if (cmd[i][j + 1] == '\0')
 	{
 		if (cmd[i + 1] == NULL)
 		{
-			printf("syntax error near unexpected token `newline'\n");
+			printf("syntax error near unexpected token `newline'\n" );
 			exit(EXIT_FAILURE);
 		}
 		*lines_to_del = 2;
 		return (cmd[i + 1]);
 	}
-	else if (cmd[0][0] != '<' && cmd[0][0] != '>' && ms_strchr(cmd[i], "<>"))
-	{
-		file = ms_strchr(cmd[i], "<>");
-		return (file + 1);
-	}
 	else
-		return (&cmd[i][1]);
+	{
+		file = ms_get_outfile_when_redir_symbol_is_not_at_the_begining(cmd[i]);
+		return (file);
+	}
 }
 
 void	ppx_apply_redirection(t_ppx *env, char c, char *file)
@@ -132,11 +129,10 @@ void	ppx_handle_redirections(t_ppx *env)
 		j = 0;
 		while (env->cmd[i][j])
 		{
-	//		printf("cmd: %c\n", env->cmd[i][j]);
-			if (env->cmd[i][j] == '<' || env->cmd[i][j] == '>')
+			if (ms_search_redir_symbol(&env->cmd[i][j], NULL))
 			{
-				//open stdin if >t and nothing before/after or execve cat
-				file = ppx_get_redirection_out_file(env, env->cmd, i, &lines_to_del);
+				file = ppx_get_redirection_out_file(env, env->cmd, i, j, &lines_to_del);
+				printf("FILE: %s\n", file);
 				ppx_apply_redirection(env, env->cmd[i][j], file);
 				env->cmd = ppx_del_redirection_section_at_i(env, i, j, lines_to_del);
 				i = 0;

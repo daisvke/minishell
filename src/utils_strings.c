@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:21:17 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/09 10:01:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/10 09:47:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,65 @@ int	ms_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-char	*ms_strchr(const char *s, char *to_find)
+void	ms_get_array_of_redirection_symbols(char *array[])
 {
-	size_t	i;
+	array[0] = "<";
+	array[1] = ">";
+	array[2] = "<<";
+	array[3] = ">>";
+	array[4] = NULL;
+}
 
-	if (to_find == NULL)
-		return ((char *)s);
-	while (*s)
+char	ms_check_if_char_is_a_redir_symbol(int c)
+{
+	char	*symbols;
+
+	if (!(char)c)
+		return ('\0');
+	symbols = "<>";
+	while (*symbols)
 	{
-		i = 0;
-		while (to_find[i])
+		if ((char)c == *symbols)
+			return (*symbols);
+		symbols++;
+	}
+	return ('\0');
+}
+
+char	*ms_search_redir_symbol(char *str, int *index)
+{
+	char	symbol;
+	
+	if (!str)
+		return (NULL);
+	if (ms_check_if_char_is_a_redir_symbol(*str))
+	{
+		symbol = ms_check_if_char_is_a_redir_symbol(*str);
+		if (*(str + 1) == symbol)
 		{
-			if (*s == to_find[i])
-				return ((char *)s);
-			++i;
+			if (index)
+				*index += 2;
+			return (str + 2);
 		}
-		s++;
+		if (index)
+			*index += 1;
+		return (str + 1);
 	}
 	return (0);
+}
+
+char	*ms_get_outfile_when_redir_symbol_is_not_at_the_begining(char *str)
+{
+	char	*file;
+
+	while (*str)
+	{
+		if (ms_search_redir_symbol(str, NULL))
+		{
+			file = ms_search_redir_symbol(str, NULL);
+			return (file);
+		}
+		str++;
+	}
+	return (NULL);
 }
