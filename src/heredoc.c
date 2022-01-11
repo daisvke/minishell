@@ -30,7 +30,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	char	*line;
 
 	line = NULL;
-	fd = ppx_open_file(env, "heredoc_output", \
+	fd = ppx_open_file(env, "heredoc_tmp", \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(0, &line) >= 0)
