@@ -51,25 +51,23 @@ bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool 
 	return (*cmd_code);
 }
 
-int	ms_control_arguments(int argc, char *argv[])
+int	ms_control_arguments(int argc, char *argv[], char *envp[])
 {
-	//check if envp is true
 	(void)argv;
-	if (argc > 1)
-	{
+	if (argc > 1 \
+		|| envp == NULL)
 		return (MS_ERROR);
-	}
 	return (MS_OK);
 }
 
 int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 {
-	cmd_line = ms_expand_variables(env, cmd_line);
-	if (cmd_line == NULL)
-		return (1);
-	if (cmd_line[0] == '\0')
-		return (1);
 	size_t	len;
+
+	cmd_line = ms_expand_variables(env, cmd_line);
+	if (cmd_line == NULL \
+		|| cmd_line[0] == '\0')
+		return (1);
 	len = ppx_strlen(env->cmd_line);
 	if (env->cmd_line[0] == '|' \
 	    || env->cmd_line[len - 1] == '|')
@@ -83,7 +81,7 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 		//set error
 		exit(1);
 	}
-	return (0);
+	return (MS_SUCCESS);
 }
 
 int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
@@ -94,15 +92,6 @@ int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
 		return (MS_READ_EOF);
 	if (*cmd_line[0] == '\0')
 		return (MS_READ_NONE);
-	/*
-	printf("cmd: %c\n", *cmd_line[len - 1]);
-	if (*cmd_line[0] == '|' \
-	    || *cmd_line[len - 1] == '|')
-	{
-		printf("syntax error near unexpected token `|'\n" );
-		return (MS_READ_NONE);
-	}
-	*/
 	return (MS_READ_LINE);
 }
 
@@ -111,7 +100,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ms	env;
 	size_t	res;
 
-	if (ms_control_arguments(argc, argv) == MS_OK)
+	if (ms_control_arguments(argc, argv, envp) == MS_OK)
 	{
 		ms_init_env(envp, &env);
 		ms_handle_signals(&env);

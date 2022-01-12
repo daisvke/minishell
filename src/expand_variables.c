@@ -173,6 +173,6 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 		++i;
 	}
 	new_cmd_line[k] = '\0';
-//	printf("str: %s\n", new_cmd_line);
+//	printf("str: |%s|\n", new_cmd_line);
 	return (new_cmd_line); 
 }
