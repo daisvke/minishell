@@ -41,22 +41,22 @@ bool	ms_isalnum(int c)
 	return (ms_isalpha(c) || ms_isdigit(c));
 }
 
-int	ms_compare_with_envp_key(const char *envp_entry, const char *str, int cmd)
+int	ms_compare_with_envp_key(const char *envp_entry, const char *str, bool equal_in_str)
 {
 	if (str && envp_entry)
 	{
 		while (*str && *envp_entry)
 		{
-			if (cmd != MS_CMD_UNSET && *envp_entry == '=')
+			if (equal_in_str == true && *envp_entry == '=')
 				break ;
 			if (*str != *envp_entry)
 				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
 			str++;
 			envp_entry++;
 		}
-		if (cmd != MS_CMD_UNSET && *str == '=')
+		if (equal_in_str == true && *str == '=')
 			return (MS_SAME);
-		else if (cmd == MS_CMD_UNSET && *envp_entry == '=')
+		else if (equal_in_str == false && *envp_entry == '=')
 			return (MS_SAME);
 	}
 	return (MS_DIFFERENT);

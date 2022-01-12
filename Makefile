@@ -10,6 +10,7 @@ SRC_DIR				=	src/
 SRC_FILES			=	execute_builtin_cmds_1.c \
 						execute_builtin_cmds_2.c \
 						exit.c \
+						expand_variables.c \
 						init_ms_env.c \
 						main.c \
 						path.c \
@@ -20,6 +21,7 @@ SRC_FILES			=	execute_builtin_cmds_1.c \
 						heredoc.c \
 						pipex.c \
 						system_calls.c \
+						system_calls_pipex.c \
 						utils_fd.c \
 						utils_linked_list.c \
 						utils_str.c \

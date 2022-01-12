@@ -78,21 +78,19 @@ int	ms_control_arguments(int argc, char *argv[])
 	}
 	return (MS_OK);
 }
-/*
-void	ms_expand_variables(t_ms *env, char *cmd_line)
+
+int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 {
-	while ()
-}
-*/
-void	ms_parse_cmd_line(t_ms *env, char *cmd_line)
-{
-//	ms_expand_variables(env, cmd_line);
+	cmd_line = ms_expand_variables(env, cmd_line);
+	if (cmd_line[0] == '\0')
+		return (1);
 	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');
 	if (env->split_cmd_line == NULL)
 	{
 		//set error
 		exit(1);
 	}
+	return (0);
 }
 
 void	ms_handle_sigint(int signum)
@@ -157,9 +155,9 @@ int	main(int argc, char *argv[], char *envp[])
 			res = ms_show_prompt_and_read_cmd_line(&ms_env, &ms_env.cmd_line);
 			if (res == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
-			if (res == MS_READ_NONE)
+			if (res == MS_READ_NONE \
+				|| ms_parse_cmd_line(&ms_env, ms_env.cmd_line) == 1)
 				continue ;
-			ms_parse_cmd_line(&ms_env, ms_env.cmd_line);
 			ms_execute_cmd_line(&ms_env, ms_env.split_cmd_line);
 			// ms_free
 		}
