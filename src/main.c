@@ -69,6 +69,14 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 		return (1);
 	if (cmd_line[0] == '\0')
 		return (1);
+	size_t	len;
+	len = ppx_strlen(env->cmd_line);
+	if (env->cmd_line[0] == '|' \
+	    || env->cmd_line[len - 1] == '|')
+	{
+		printf("syntax error near unexpected token `|'\n" );
+		return (MS_ERROR);
+	}
 	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');
 	if (env->split_cmd_line == NULL)
 	{
@@ -78,23 +86,23 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	return (0);
 }
 
-int	ms_show_prompt_and_read_cmd_line(t_ms *env, char **cmd_line)
+int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
 {
-	size_t	len;
 
-	env->cmd_line = readline("\033[0;32m$\033[0;37m ");
-	if (env->cmd_line == NULL)
+	*cmd_line = readline("\033[0;32m$\033[0;37m ");
+	if (*cmd_line == NULL)
 		return (MS_READ_EOF);
-	if (env->cmd_line[0] == '\0')
+	if (*cmd_line[0] == '\0')
 		return (MS_READ_NONE);
-	len = ppx_strlen(env->cmd_line);
-    printf("len: %s\n",len);
-	if (env->cmd_line[0] == '|' \
-	    || env->cmd_line[len] == '|')
+	/*
+	printf("cmd: %c\n", *cmd_line[len - 1]);
+	if (*cmd_line[0] == '|' \
+	    || *cmd_line[len - 1] == '|')
 	{
 		printf("syntax error near unexpected token `|'\n" );
 		return (MS_READ_NONE);
 	}
+	*/
 	return (MS_READ_LINE);
 }
 
@@ -110,7 +118,7 @@ int	main(int argc, char *argv[], char *envp[])
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
 			env.cmd_line = ms_free(env.cmd_line);
-			res = ms_show_prompt_and_read_cmd_line(&env, &env.cmd_line);
+			res = ms_show_prompt_and_read_cmd_line(&env.cmd_line);
 			if (res == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
 			if (res == MS_READ_NONE \
