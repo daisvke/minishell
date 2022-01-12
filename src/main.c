@@ -87,13 +87,10 @@ int	ms_show_prompt_and_read_cmd_line(t_ms *env, char **cmd_line)
 		return (MS_READ_EOF);
 	if (env->cmd_line[0] == '\0')
 		return (MS_READ_NONE);
-	if (env->cmd_line[0] == '|')
-	{
-		printf("syntax error near unexpected token `|'\n" );
-		return (MS_READ_NONE);
-	}
 	len = ppx_strlen(env->cmd_line);
-	if (env->cmd_line[len] == '|')
+    printf("len: %s\n",len);
+	if (env->cmd_line[0] == '|' \
+	    || env->cmd_line[len] == '|')
 	{
 		printf("syntax error near unexpected token `|'\n" );
 		return (MS_READ_NONE);
