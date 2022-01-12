@@ -72,7 +72,7 @@ int	gnl_get_line(char **data, int fd)
 		tmp = gnl_concatenate(*data, buffer, OFF, false);
 		if (!tmp)
 			return (ERROR);
-		free(*data);
+		*data = ms_free(*data);
 		*data = tmp;
 	}
 	return (res);
@@ -99,7 +99,7 @@ int	gnl_run_and_return(char **data, char **line, int fd)
 		gnl_get_char_index(*data, '\0', true) - index - 1, is_empty);
 	if (!tmp)
 		return (ERROR);
-	free(*data);
+	*data = ms_free(*data);
 	*data = tmp;
 	if (res == REACHED_EOF && is_empty)
 		return (REACHED_EOF);
@@ -119,7 +119,7 @@ int	get_next_line(int fd, char **line)
 	res = gnl_run_and_return(&data_cpy, line, fd);
 	if (res == REACHED_EOF || res == ERROR)
 	{
-		free(data_cpy);
+		data_cpy = ms_free(data_cpy);
 		data_cpy = NULL;
 	}
 	data = data_cpy;

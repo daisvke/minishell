@@ -27,8 +27,7 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		node = ppx_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
 		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
 		ms_lst_assign_entry_to_node(node, new_path);
-		if (new_path)
-			free(new_path);
+		new_path = ms_free(new_path);
 	}
 	else
 		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);

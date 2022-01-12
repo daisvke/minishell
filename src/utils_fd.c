@@ -67,10 +67,7 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 		++i;
 	}
 	if (*new_argv[0] == '\0')
-	{
-		free(new_argv);
-		new_argv = NULL;
-	}
+		new_argv = ms_free(new_argv);
 	return (new_argv);
 }
 

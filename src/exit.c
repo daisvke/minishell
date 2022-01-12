@@ -23,10 +23,10 @@ void	ppx_free_pipe_fds(t_ppx *env)
 	i = 0;
 	while (i < size)
 	{
-		free(env->pipe_fds[i]);
+		env->pipe_fds[i] = ms_free(env->pipe_fds[i]);
 		++i;
 	}
-	free(env->pipe_fds);
+	env->pipe_fds = ms_free(env->pipe_fds);
 }
 
 char	**ppx_get_array_of_error_messages(char *errors[])

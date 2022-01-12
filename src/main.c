@@ -88,25 +88,24 @@ int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_ms	ms_env;
+	t_ms	env;
 	size_t	res;
 
 	if (ms_control_arguments(argc, argv) == MS_OK)
 	{
-		ms_init_env(envp, &ms_env);
-		ms_handle_signals(&ms_env);
+		ms_init_env(envp, &env);
+		ms_handle_signals(&env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			if (ms_env.cmd_line)
-				free(ms_env.cmd_line);
-			res = ms_show_prompt_and_read_cmd_line(&ms_env, &ms_env.cmd_line);
+			env.cmd_line = ms_free(env.cmd_line);
+			res = ms_show_prompt_and_read_cmd_line(&env, &env.cmd_line);
 			if (res == MS_READ_EOF)
 				exit(EXIT_SUCCESS);
 			if (res == MS_READ_NONE \
-				|| ms_parse_cmd_line(&ms_env, ms_env.cmd_line) == 1)
+				|| ms_parse_cmd_line(&env, env.cmd_line) == 1)
 				continue ;
-			ms_execute_cmd_line(&ms_env, ms_env.split_cmd_line);
-			// ms_free
+			ms_execute_cmd_line(&env, env.split_cmd_line);
+			// ppx_free
 		}
 	}
 	exit(EXIT_SUCCESS);

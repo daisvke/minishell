@@ -33,3 +33,9 @@ void	*ms_memset(void *s, int c, size_t n)
 	return (s);
 }
 
+void	*ms_free(void *data)
+{
+	if (data)
+		free(data);
+	return (NULL);
+}

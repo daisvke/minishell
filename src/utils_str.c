@@ -21,7 +21,7 @@ void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
 	{
 		while (i < arr_size)
 		{
-			free(array_of_pointers[i]);
+			array_of_pointers[i] = ms_free(array_of_pointers[i]);
 			++i;
 		}
 	}
@@ -29,12 +29,11 @@ void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
 	{
 		while (array_of_pointers[i])
 		{
-			free(array_of_pointers[i]);
+			array_of_pointers[i] = ms_free(array_of_pointers[i]);
 			++i;
 		}
 	}
-	free(array_of_pointers);
-	array_of_pointers = NULL;
+	array_of_pointers = ms_free(array_of_pointers);
 }
 
 size_t	ppx_strlen(const char *s)
