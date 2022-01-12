@@ -49,25 +49,6 @@
 # define PPX_PROC_PARENT		0
 # define PPX_PROC_CHILD			1
 
-// Data collection when searching inside envp
-typedef struct s_envp_data
-{
-	size_t	index;
-	char	*value;
-}			t_envp_data;
-
-typedef struct s_ppx
-{
-	int		**pipe_fds;
-	int		pos;
-	int		cmd_nbr;
-	int		i;
-	int		argc;
-	int		fd_in;
-	char	**cmd;
-	int		options;
-}			t_ppx;
-
 void	ppx_close_and_free_pipe_fds(t_ppx *env);
 //int		ppx_pipex(char *argv[], char *envp[], t_ppx *env, t_ms *ms_env);
 
@@ -91,7 +72,6 @@ void	ppx_putstr_fd(char *s, int fd, bool option);
 ** path
 */
 bool		ppx_check_access(char *path);
-t_envp_data	ppx_get_key_value_from_envp(char *envp[], char *key);
 char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	char *key, char *cmd);
 
