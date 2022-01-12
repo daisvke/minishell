@@ -34,7 +34,6 @@ typedef struct s_ppx
 	int		pos;
 	int		cmd_nbr;
 	int		i;
-	int		argc;
 	int		fd_in;
 	char	**cmd;
 	int		options;

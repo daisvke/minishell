@@ -35,6 +35,6 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 
 void	ms_init_env(char *envp[], t_ms *env)
 {
-	ft_memset(env, 0, sizeof(t_ms));
+	ms_memset(env, 0, sizeof(t_ms));
 	ms_convert_envp_into_linked_list(envp, env);
 }
