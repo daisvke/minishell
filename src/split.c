@@ -19,11 +19,10 @@ void	ppx_free_split(char *split[])
 	i = 0;
 	while (split[i])
 	{
-		free(split[i]);
+		split[i] = ms_free(split[i]);
 		++i;
 	}
-	free(split);
-	split = NULL;
+	split = ms_free(split);
 }
 
 char	*ppx_strdup(char *src, int size)

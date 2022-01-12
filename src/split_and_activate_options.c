@@ -19,11 +19,10 @@ void	ms_free_split(char *split[])
 	i = 0;
 	while (split[i])
 	{
-		free(split[i]);
+		split[i] = ms_free(split[i]);
 		++i;
 	}
-	free(split);
-	split = NULL;
+	split = ms_free(split);
 }
 
 char	*ms_strdup(char *src, size_t size)

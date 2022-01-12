@@ -46,7 +46,7 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 			}
 			key = ms_strdup(&cmd_line[start], j - start); // check error
 			value = ms_get_envp_value_from_key(env, key);
-			free(key);
+			key = ms_free(key);
 			if (value)
 			{
 				len += ppx_strlen(value) - 1;
@@ -97,7 +97,7 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 			}
 			key = ms_strdup(&cmd_line[start], j - start); // check error
 			value = ms_get_envp_value_from_key(env, key);
-			free(key);
+			key = ms_free(key);
 			if (value)
 				value++;
 			//	ppx_memcpy(&new_cmd_line[k], value, ppx_strlen(value));

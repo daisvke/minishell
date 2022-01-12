@@ -20,8 +20,7 @@ void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
 {
 	size_t	len;
 
-	if (node->entry)
-		free(node->entry);
+	ms_free(node->entry);
 	len = ppx_strlen(entry);
 	node->entry = ms_strdup(entry, len);
 }
@@ -85,8 +84,6 @@ char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_
 
 void	ms_lst_del_node(t_env_lst *node)
 {
-	if (node->entry)
-		free(node->entry);
-	if (node)
-		free(node);
+	node->entry = ms_free(node->entry);
+	node = ms_free(node);
 }

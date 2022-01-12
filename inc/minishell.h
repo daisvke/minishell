@@ -26,7 +26,12 @@
 # include "pipex.h"
 
 /*
-** utils_strings
+** system calls
+*/
+void	*ms_free(void *data);
+
+/*
+** utils: strings
 */
 int	ms_strncmp(const char *s1, const char *s2, size_t n);
 

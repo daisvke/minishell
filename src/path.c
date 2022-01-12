@@ -62,7 +62,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 		cmd_path_at_i = ppx_join_three_str(ppx_env, paths_envp_split[i], "/", cmd);
 		if (ppx_check_access(cmd_path_at_i) == OK)
 			break ;
-		free(cmd_path_at_i);
+		cmd_path_at_i = ms_free(cmd_path_at_i);
 		cmd_path_at_i = NULL;
 		++i;
 	}
