@@ -78,13 +78,26 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	return (0);
 }
 
-int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
+int	ms_show_prompt_and_read_cmd_line(t_ms *env, char **cmd_line)
 {
-	ms_env->cmd_line = readline("\033[0;32m$\033[0;37m ");
-	if (ms_env->cmd_line == NULL)
+	size_t	len;
+
+	env->cmd_line = readline("\033[0;32m$\033[0;37m ");
+	if (env->cmd_line == NULL)
 		return (MS_READ_EOF);
-	if (ms_env->cmd_line[0] == '\0')
+	if (env->cmd_line[0] == '\0')
 		return (MS_READ_NONE);
+	if (env->cmd_line[0] == '|')
+	{
+		printf("syntax error near unexpected token `|'\n" );
+		return (MS_READ_NONE);
+	}
+	len = ppx_strlen(env->cmd_line);
+	if (env->cmd_line[len] == '|')
+	{
+		printf("syntax error near unexpected token `|'\n" );
+		return (MS_READ_NONE);
+	}
 	return (MS_READ_LINE);
 }
 
