@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ms_execute_cmd_line(t_ms *ms_env, char **cmd_line)
+void	ms_execute_cmd_line(t_ms *env, char **cmd_line)
 {
 	size_t	i;
 	size_t	cmd_and_file_nbr;
@@ -21,7 +21,8 @@ void	ms_execute_cmd_line(t_ms *ms_env, char **cmd_line)
 	while (cmd_line[i])
 		++i;
 	cmd_and_file_nbr = i;
-	ppx_main(cmd_and_file_nbr, cmd_line, ms_env);
+	ppx_init_ppx(env, &env->ppx_env, cmd_and_file_nbr);
+	ppx_pipex(env, &env->ppx_env, cmd_line);
 }
 
 bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool process)
