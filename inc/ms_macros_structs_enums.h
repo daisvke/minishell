@@ -28,9 +28,22 @@ typedef struct s_env_lst
 	void	*next;
 }			t_env_lst;
 
+typedef struct s_ppx
+{
+	int		**pipe_fds;
+	int		pos;
+	int		cmd_nbr;
+	int		i;
+	int		argc;
+	int		fd_in;
+	char	**cmd;
+	int		options;
+}			t_ppx;
+
 // Main struct
 typedef struct s_ms
 {
+	t_ppx	ppx_env;
 	t_env_lst	*envp_lst;
 	char	**envp;
 	char	*cmd_line;
