@@ -27,6 +27,7 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 	char	*key;
 	char	*value;
 	bool	found_var;
+	bool	double_quote;
 
 	found_var = false;
 	len = 0;
@@ -39,25 +40,21 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 			found_var = true;
 			start = i + 1;
 			j = start;
-			while (cmd_line[j] != ' ' && cmd_line[j] != '\0')
+			while (cmd_line[j] != ' ' && cmd_line[j] != '\0' && cmd_line[j] != '\"')
 			{
 				++i;
 				++j;
 			}
+			double_quote = cmd_line[j] == '\"';
 			key = ms_strdup(&cmd_line[start], j - start); // check error
 			value = ms_get_envp_value_from_key(env, key);
 			key = ms_free(key);
 			if (value)
-			{
-				len += ppx_strlen(value) - 1;
-				i += 1 + j - start;
-			}
+				len += ppx_strlen(value) - 1 + double_quote;
 		}
 		else
-		{
 			++len;
-			++i;
-		}
+		++i;
 	}
 	if (found_var == false)
 		return (-1);
@@ -74,11 +71,12 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 	char	*key;
 	char	*value;
 	char	*new_cmd_line;
+	bool	double_quote;
 
 	len = ms_get_new_expanded_cmd_line_length(env, cmd_line);
 	if (len < 0)
 		return (cmd_line);
-//	printf("len: %ld\n", len);
+	printf("len: %ld\n", len);
 	new_cmd_line = malloc(sizeof(char) * (len + 1));
 	i = 0;
 	k = 0;
@@ -90,11 +88,12 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 		{
 			start = i + 1;
 			j = start;
-			while (cmd_line[j] != ' ' && cmd_line[j] != '\0')
+			while (cmd_line[j] != ' ' && cmd_line[j] != '\0' && cmd_line[j] != '\"')
 			{
 				++i;
 				++j;
 			}
+			double_quote = cmd_line[j] == '\"';
 			key = ms_strdup(&cmd_line[start], j - start); // check error
 			value = ms_get_envp_value_from_key(env, key);
 			key = ms_free(key);
@@ -107,15 +106,17 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 				++k;
 				value++;
 			}
-			i += j - start;
+			printf("i: %ld, j: %ld, start: %ld\n", i, j , start);
+		//	i += j - start;
 		}
 		else
 		{
 			new_cmd_line[k] = cmd_line[i];
-			++i;
 			++k;
 		}
+		++i;
 	}
 	new_cmd_line[k] = '\0';
+	printf("str: %s\n", new_cmd_line);
 	return (new_cmd_line); 
 }
