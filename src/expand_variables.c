@@ -117,7 +117,5 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 		}
 	}
 	new_cmd_line[k] = '\0';
-//	printf("new: %s\n", new_cmd_line);
-	free(cmd_line);
 	return (new_cmd_line); 
 }

@@ -7,19 +7,20 @@ INC					=	-I inc/
 MEM					=	fsanitize=address fsanitize=undefined
 
 SRC_DIR				=	src/
-SRC_FILES			=	execute_builtin_cmds_1.c \
-						execute_builtin_cmds_2.c \
+SRC_FILES			=	builtin_cmds_1.c \
+						builtin_cmds_2.c \
 						exit.c \
 						expand_variables.c \
-						init_ms_env.c \
 						main.c \
 						path.c \
-						ppx_main.c \
 						split.c \
 						split_and_activate_options.c \
 						get_next_line.c \
 						heredoc.c \
+						ms_init_env.c \
 						pipex.c \
+						ppx_init_env.c \
+						signals.c \
 						system_calls.c \
 						system_calls_pipex.c \
 						utils_fd.c \

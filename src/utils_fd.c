@@ -49,7 +49,7 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 		len += 1;
 	len -= lines_to_del;
 	new_argv = malloc(sizeof(char *) * (len + 1));
-	ft_memset(new_argv, 0, sizeof(char **) * (len + 1));
+	ms_memset(new_argv, 0, sizeof(char **) * (len + 1));
 	i = 0;
 	j = 0;
 	while (env->cmd[i])

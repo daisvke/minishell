@@ -21,4 +21,15 @@ void	*ppx_malloc(t_ppx *env, size_t num, size_t size)
 	return (ptr);
 }
 
-//void	*ms_
+void	*ms_memset(void *s, int c, size_t n)
+{
+	size_t	i;
+	char	*str;
+
+	str = s;
+	i = 0;
+	while (i < n)
+		str[i++] = (unsigned char)c;
+	return (s);
+}
+

@@ -23,26 +23,8 @@ void	ms_execute_cmd_line(t_ms *ms_env, char **cmd_line)
 	cmd_and_file_nbr = i;
 	ppx_main(cmd_and_file_nbr, cmd_line, ms_env);
 }
-// add env for err
-void	ms_add_curr_path_to_ls_cmd(t_ppx *env, char **cmd_and_args)
-{
-	size_t	i;
-	char	*curr_abs_path;
 
-	curr_abs_path = getcwd(NULL, 0);
-//	if (curr_abs_path == NULL)
-	//	ppx_exit_with_error_message(env, 10);
-	i = MS_FIRST_ARG_POS;
-	while (cmd_and_args[i])
-	{
-		cmd_and_args[i] = ppx_join_three_str(env, curr_abs_path, "/", cmd_and_args[i]);
-		printf("strcat: %s\n", cmd_and_args[i]);
-		++i;
-	}
-		// ms_free
-}
-
-bool	ms_check_if_the_cmd_is_implemented(t_ppx *env, char **cmd_line, size_t *cmd_code, bool process)
+bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool process)
 {
 	*cmd_code = 0;
 	if (process == PPX_PROC_PARENT)
@@ -91,42 +73,6 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 		exit(1);
 	}
 	return (0);
-}
-
-void	ms_handle_sigint(int signum)
-{
-	(void)signum;
-	rl_replace_line("", 0);
-	printf("\n");
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ms_handle_sigquit(int signum)
-{
-	(void)signum;
-	struct termios orig_termios_p;
-	struct termios new_termios_p;
-
-// errno is set
-	if (tcgetattr(STDIN_FILENO, &orig_termios_p) != MS_SUCCESS)
-		exit(EXIT_FAILURE);
-	new_termios_p = orig_termios_p;
-	new_termios_p.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_termios_p) != MS_SUCCESS)
-		exit(EXIT_FAILURE);
-}
-
-void	ms_handle_signals(t_ms *ms_env)
-{
-	struct sigaction	signal_action;
-	struct sigaction	signal_action2;
-
-	signal_action.sa_handler = &ms_handle_sigint;
-	//errors
-	sigaction(SIGINT, &signal_action, NULL);
-	signal_action2.sa_handler = &ms_handle_sigquit;
-	sigaction(SIGQUIT, &signal_action2, NULL);
 }
 
 int	ms_show_prompt_and_read_cmd_line(t_ms *ms_env, char **cmd_line)
