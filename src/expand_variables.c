@@ -139,6 +139,7 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 			if (cmd_line[i + 1] == '?' && (cmd_line[i + 2] == ' ' || cmd_line[i + 2] == '\0'))
 			{
 				value = ms_itoa(env, env->last_pipe_exit_status);
+				add_history("$?");
 				printf("%s\n", value);
 				return (NULL);
 			}
