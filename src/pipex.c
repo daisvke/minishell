@@ -128,7 +128,7 @@ void	ppx_save_data_from_child(t_ppx *env)
 	env->fd_in = env->pipe_fds[env->i][0];
 }
 
-int	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
+void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 {
 	int	i;
 	int	size;
@@ -140,36 +140,32 @@ int	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 	while (i < size)
 	{
 		waitpid(pid, &wstatus, WUNTRACED);
-		ms_env->last_pipe_exit_status = wstatus;
 		if (WIFEXITED(wstatus))
 		{
 			status_code = WEXITSTATUS(wstatus);
-			if (status_code != 0)
-				return (status_code);
+			ms_env->last_pipe_exit_status = status_code; //or wstatus ?
+			return ;
 		}
 		++i;
 	}
-	return (0);
+	return ;
 }
 
-int	ppx_pipex(char *argv[], t_ppx *ppx_env, t_ms *ms_env)
+void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
 	pid_t	pid;
-	int		err;
 	size_t	cmd_code;
 
 	if (ppx_env->options & MS_OPT_REDIR_OUTPUT)
 		ppx_env->pos += GET_FIRST_CMD;
-//	if (ppx_env->options & MS_OPT_HEREDOC)
-//		ppx_input_heredoc(ppx_env, argv);
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
 		// gen cmd
-		ppx_env->cmd = ppx_split(argv[ppx_env->pos], ' ');
+		ppx_env->cmd = ppx_split(cmd_line[ppx_env->pos], ' ');
 		if (!ppx_env->cmd)
 			ppx_exit_with_error_message(ppx_env, 7);
 		if (!*ppx_env->cmd)
-			return (0);
+			return ;
 		add_history(ms_env->cmd_line);
 		// if no pipe + builtin
 		if ((ppx_env->options & MS_OPT_PIPE) == false \
@@ -183,7 +179,7 @@ int	ppx_pipex(char *argv[], t_ppx *ppx_env, t_ms *ms_env)
 			pid = ppx_fork(ppx_env);
 			if (pid == CHILD)
 			{
-				ppx_spawn_child_to_execute_cmd(ms_env, ppx_env, argv);
+				ppx_spawn_child_to_execute_cmd(ms_env, ppx_env, cmd_line);
 				exit(EXIT_SUCCESS);
 			}
 			if ((ppx_env->options & MS_OPT_PIPE)
@@ -193,10 +189,8 @@ int	ppx_pipex(char *argv[], t_ppx *ppx_env, t_ms *ms_env)
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
-	err = 0;
 	if (!((ppx_env->options & MS_OPT_PIPE) == false \
 		&& ms_check_if_the_cmd_is_implemented(ppx_env, ppx_env->cmd, &cmd_code, PPX_PROC_PARENT) == true))
-		err = ppx_wait_for_all_children(ms_env, ppx_env, pid);
+		ppx_wait_for_all_children(ms_env, ppx_env, pid);
 	ppx_free_pipe_fds(ppx_env);
-	return (err);
 }

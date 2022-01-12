@@ -29,20 +29,10 @@ void	ppx_init_pipe_fds(t_ppx *env)
 	}
 }
 
-void	ppx_init_ppx(int argc, t_ppx *ppx_env, t_ms *ms_env)
+void	ppx_init_ppx(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_and_file_nbr)
 {
 	ms_memset(ppx_env, 0, sizeof(t_ppx));
 	ppx_env->options = ms_env->options;
-	ppx_env->cmd_nbr = argc;
+	ppx_env->cmd_nbr = cmd_and_file_nbr;
 	ppx_init_pipe_fds(ppx_env);
-}
-
-int	ppx_main(int argc, char *argv[], t_ms *ms_env)
-{
-	t_ppx	ppx_env;
-	int		res;
-
-	ppx_init_ppx(argc, &ppx_env, ms_env);
-	res = ppx_pipex(argv, &ppx_env, ms_env);
-	return (SUCCESS);
 }
