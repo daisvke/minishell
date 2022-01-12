@@ -24,7 +24,7 @@ t_env_lst	*ppx_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
 	node = envp_lst;
 	while (node)
 	{
-		if (ms_compare_with_envp_key(node->entry, key, 0) == MS_SAME)
+		if (ms_compare_with_envp_key(node->entry, key, true) == MS_SAME)
 			return (node);
 		node = node->next;
 	}

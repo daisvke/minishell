@@ -61,7 +61,7 @@ void    ms_execute_cmd_export(t_ms *env, char *cmd_line[])
         node = env->envp_lst;
 		while (node)
 		{
-			if (ms_compare_with_envp_key(node->entry, cmd_line[i], 0) == MS_SAME)
+			if (ms_compare_with_envp_key(node->entry, cmd_line[i], true) == MS_SAME)
 			{
 				ms_lst_assign_entry_to_node(node, cmd_line[i]);
 				break ;
@@ -116,7 +116,7 @@ void    ms_execute_cmd_unset(t_ms *env, char *cmd_line[])
         node = env->envp_lst;
 		while (node)
 		{
-			if (node->next && ms_compare_with_envp_key(((t_env_lst *)node->next)->entry, cmd_line[i], MS_CMD_UNSET) == MS_SAME)
+			if (node->next && ms_compare_with_envp_key(((t_env_lst *)node->next)->entry, cmd_line[i], false) == MS_SAME)
 			{
 				tmp_before = node;
 				node = node->next;
