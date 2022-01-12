@@ -65,6 +65,8 @@ int	ms_control_arguments(int argc, char *argv[])
 int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 {
 	cmd_line = ms_expand_variables(env, cmd_line);
+	if (cmd_line == NULL)
+		return (1);
 	if (cmd_line[0] == '\0')
 		return (1);
 	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');

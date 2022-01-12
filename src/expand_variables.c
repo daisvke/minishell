@@ -61,6 +61,53 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 	return (len);
 }
 
+int	ms_nbrlen(long long int n)
+{
+	int	len;
+
+	if (n == 0)
+		return (1);
+	len = 0;
+	if (n < 0)
+	{
+		n = -n;
+		len = ms_nbrlen(n) + 1;
+	}
+	else
+	{
+		while (n > 0)
+		{
+			len += 1;
+			n = n / 10;
+		}
+	}
+	return (len);
+}
+
+char	*ms_itoa(t_ms *env, int n)
+{
+	char	*res;
+	int		len;
+	long	nb;
+
+	nb = n;
+	len = ms_nbrlen(nb);
+	res = (char *)malloc(sizeof(*res) * (len + 1));
+	if (!res)
+		return (NULL);
+	res[len] = '\0';
+	if (nb < 0)
+		nb = -nb;
+	while (len--)
+	{
+		res[len] = nb % 10 + '0';
+		nb /= 10;
+	}
+	if (n < 0)
+		res[0] = '-';
+	return (res);
+}
+
 char	*ms_expand_variables(t_ms *env, char *cmd_line)
 {
 	size_t	i;
@@ -76,7 +123,7 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 	len = ms_get_new_expanded_cmd_line_length(env, cmd_line);
 	if (len < 0)
 		return (cmd_line);
-	printf("len: %ld\n", len);
+//	printf("len: %ld\n", len);
 	new_cmd_line = malloc(sizeof(char) * (len + 1));
 	i = 0;
 	k = 0;
@@ -86,28 +133,36 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 		if ((i == 0 && cmd_line[i] == '$') \
 			|| (i != 0 && cmd_line[i - 1] != '\'' && cmd_line[i] == '$'))
 		{
+			if (cmd_line[i + 1] == ' ' || cmd_line[i + 1] == '\0')
+				return ("$");
 			start = i + 1;
-			j = start;
-			while (cmd_line[j] != ' ' && cmd_line[j] != '\0' && cmd_line[j] != '\"')
+			if (cmd_line[i + 1] == '?' && (cmd_line[i + 2] == ' ' || cmd_line[i + 2] == '\0'))
 			{
-				++i;
-				++j;
+				value = ms_itoa(env, env->last_pipe_exit_status);
+				printf("%s\n", value);
+				return (NULL);
 			}
-			double_quote = cmd_line[j] == '\"';
-			key = ms_strdup(&cmd_line[start], j - start); // check error
-			value = ms_get_envp_value_from_key(env, key);
-			key = ms_free(key);
-			if (value)
-				value++;
-			//	ppx_memcpy(&new_cmd_line[k], value, ppx_strlen(value));
+			else
+			{
+				j = start;
+				while (cmd_line[j] != ' ' && cmd_line[j] != '\0' && cmd_line[j] != '\"')
+				{
+					++i;
+					++j;
+				}
+				double_quote = cmd_line[j] == '\"';
+				key = ms_strdup(&cmd_line[start], j - start); // check error
+				value = ms_get_envp_value_from_key(env, key);
+				key = ms_free(key);
+				if (value)
+					value++;
+			}
 			while (value && *value)
 			{
 				new_cmd_line[k] = *value;
 				++k;
 				value++;
 			}
-			printf("i: %ld, j: %ld, start: %ld\n", i, j , start);
-		//	i += j - start;
 		}
 		else
 		{
@@ -117,6 +172,6 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 		++i;
 	}
 	new_cmd_line[k] = '\0';
-	printf("str: %s\n", new_cmd_line);
+//	printf("str: %s\n", new_cmd_line);
 	return (new_cmd_line); 
 }
