@@ -10,7 +10,7 @@ char	*ms_get_envp_value_from_key(t_ms *env, char *key)
 	{
 		if (ms_compare_with_envp_key(node->entry, key, false) == MS_SAME)
 		{
-			key_len = ppx_strlen(key);
+			key_len = ms_strlen(key);
 			return (node->entry + key_len);
 		}
 		node = node->next;
@@ -50,7 +50,7 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 			value = ms_get_envp_value_from_key(env, key);
 			key = ms_free(key);
 			if (value)
-				len += ppx_strlen(value) - 1 + double_quote;
+				len += ms_strlen(value) - 1 + double_quote;
 		}
 		else
 			++len;

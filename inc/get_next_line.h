@@ -17,19 +17,22 @@
 #  define BUFFER_SIZE 	32
 # endif
 
-# define NOT_FOUND		0
-# define OFF			-1
+# include <stdbool.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+# define GNL_NOT_FOUND	0
+
+# define GNL_OFF		-1
 
 /*
 ** return values
 */
-# define ERROR 			-1
-# define REACHED_EOF 	0
-# define LINE_READ		1
-
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
+enum e_gnl_return
+{
+	GNL_REACHED_EOF, 
+	GNL_READ_LINE
+};
 
 int		get_next_line(int fd, char **line);
 

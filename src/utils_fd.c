@@ -61,7 +61,7 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 		else if ((lines_to_del == 1 && i != del_line) \
 			|| (lines_to_del == 2 && i != del_line && i != del_line + 1))
 		{
-			new_argv[j] = ms_strdup(env->cmd[i], ppx_strlen(env->cmd[i]));
+			new_argv[j] = ms_strdup(env->cmd[i], ms_strlen(env->cmd[i]));
 			++j;
 		}
 		++i;
@@ -161,7 +161,7 @@ void	ppx_putstr_fd(char *s, int fd, bool option)
 {
 	if (s)
 	{
-		write(fd, s, ppx_strlen(s));
+		write(fd, s, ms_strlen(s));
 		if (option == PUT_NEWLINE)
 			write(fd, "\n", 1);
 	}
