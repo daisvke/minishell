@@ -151,8 +151,35 @@ void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 	return ;
 }
 
-int	ppx_generate_array_of_commands(t_ms *ms_env, t_ppx *ppx_env)
+int	ppx_generate_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
+	ppx_env->cmd = ppx_split(cmd_line[ppx_env->pos], ' ');
+	if (!ppx_env->cmd)
+		ms_exit_with_error_message(ppx_env, 7);
+	if (!*ppx_env->cmd)
+		return (MS_READ_NONE);
+	return (MS_SUCCESS);
+}
+
+void	ppx_execute_pipe_and_run_cmd_in_child_process(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[], pid_t *pid)
+{
+	if (ppx_env->options & MS_OPT_PIPE)
+		ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
+	*pid = ppx_fork(ppx_env);
+	if (*pid == PPX_PROC_CHILD)
+	{
+		ppx_spawn_child_to_execute_cmd(ms_env, ppx_env);
+		exit(EXIT_SUCCESS);
+	}
+	if ((ppx_env->options & MS_OPT_PIPE)
+		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
+		ppx_save_data_from_child(ppx_env);
+}
+
+bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code)
+{
+	return ((env->options & MS_OPT_PIPE) == false \
+		&& ms_check_if_the_cmd_is_implemented(env->cmd, &cmd_code, PPX_PROC_PARENT) == true);
 }
 
 void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
@@ -162,37 +189,17 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
-		// gen cmd
-		ppx_env->cmd = ppx_split(cmd_line[ppx_env->pos], ' ');
-		if (!ppx_env->cmd)
-			ppx_exit_with_error_message(ppx_env, 7);
-		if (!*ppx_env->cmd)
+		if (ppx_generate_array_of_commands(ms_env, ppx_env, cmd_line) == MS_READ_NONE)
 			return ;
 		add_history(ms_env->cmd_line);
-		// if no pipe + builtin
-		if ((ppx_env->options & MS_OPT_PIPE) == false \
-			&& ms_check_if_the_cmd_is_implemented(ppx_env->cmd, &cmd_code, PPX_PROC_PARENT) == true)
+		if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == true)
 			ppx_execute_implemented_cmd_in_parent(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 		else
-		{
-			if (ppx_env->options & MS_OPT_PIPE)
-			ppx_pipe(ppx_env, ppx_env->pipe_fds[ppx_env->i]);
-
-			pid = ppx_fork(ppx_env);
-			if (pid == PPX_PROC_CHILD)
-			{
-				ppx_spawn_child_to_execute_cmd(ms_env, ppx_env);
-				exit(EXIT_SUCCESS);
-			}
-			if ((ppx_env->options & MS_OPT_PIPE)
-				&& ppx_env->pos != ppx_env->cmd_nbr - 1)
-				ppx_save_data_from_child(ppx_env);
-		}
+			ppx_execute_pipe_and_run_cmd_in_child_process(ms_env, ppx_env, cmd_line, &pid);
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
-	if (!((ppx_env->options & MS_OPT_PIPE) == false \
-		&& ms_check_if_the_cmd_is_implemented(ppx_env->cmd, &cmd_code, PPX_PROC_PARENT) == true))
+	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
 		ppx_wait_for_all_children(ms_env, ppx_env, pid);
 	ppx_free_pipe_fds(ppx_env);
 }
