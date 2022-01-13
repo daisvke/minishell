@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ms_execute_cmd_line(t_ms *env, char **cmd_line)
+void	ms_execute_cmd_line_with_pipex(t_ms *env, char **cmd_line)
 {
 	size_t	i;
 	size_t	cmd_and_file_nbr;
@@ -51,12 +51,15 @@ bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool 
 	return (*cmd_code);
 }
 
-int	ms_control_arguments(int argc, char *argv[], char *envp[])
+int	ms_check_arguments(int argc, char *argv[], char *envp[])
 {
 	(void)argv;
 	if (argc > 1 \
 		|| envp == NULL)
-		return (MS_ERROR);
+	{
+		printf("minishell: %s: No such file or directory\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
 	return (MS_OK);
 }
 
@@ -72,15 +75,12 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	if (env->cmd_line[0] == '|' \
 	    || env->cmd_line[len - 1] == '|')
 	{
-		printf("syntax error near unexpected token `|'\n" );
+		ms_print_error_message(env, 2);
 		return (MS_ERROR);
 	}
 	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');
 	if (env->split_cmd_line == NULL)
-	{
-		//set error
-		exit(1);
-	}
+		ms_exit_with_error_message(env, 7);
 	return (MS_SUCCESS);
 }
 
@@ -100,7 +100,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ms	env;
 	size_t	res;
 
-	if (ms_control_arguments(argc, argv, envp) == MS_OK)
+	if (ms_check_arguments(argc, argv, envp) == MS_OK)
 	{
 		ms_init_env(envp, &env);
 		ms_handle_signals(&env);
@@ -113,7 +113,7 @@ int	main(int argc, char *argv[], char *envp[])
 			if (res == MS_READ_NONE \
 				|| ms_parse_cmd_line(&env, env.cmd_line) == 1)
 				continue ;
-			ms_execute_cmd_line(&env, env.split_cmd_line);
+			ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
 			// ppx_free
 		}
 	}

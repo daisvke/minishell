@@ -151,6 +151,10 @@ void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 	return ;
 }
 
+int	ppx_generate_array_of_commands(t_ms *ms_env, t_ppx *ppx_env)
+{
+}
+
 void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
 	pid_t	pid;

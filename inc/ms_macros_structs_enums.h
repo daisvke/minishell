@@ -1,6 +1,8 @@
 #ifndef MS_MACROS_AND_STRUCTS_H
 # define MS_MACROS_AND_STRUCTS_H
 
+# define MS_ERR_MAX						10
+
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 
 # define MS_NO_EXPORT					1
