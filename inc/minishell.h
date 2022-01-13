@@ -45,6 +45,7 @@ void		ms_lst_add_back(t_env_lst *head, t_env_lst *new);
 void		ms_lst_assign_entry_to_node(t_env_lst *node, char *entry);
 t_env_lst	*ms_lst_create_new_node(char *data);
 void		ms_lst_del_node(t_env_lst *node);
+t_env_lst	*ms_lst_get_last_node(t_env_lst *node);
 int			ms_lst_lstsize(t_env_lst *head);
 
 /*
@@ -57,7 +58,7 @@ char		*ms_expand_variables(t_ms *env, char *cmd_line);
 ** commands
 */
 bool		ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool process);
-int			ms_check_if_there_is_not_too_much_args(char **cmd_and_args);
+bool		ms_check_if_there_is_not_too_much_args(char **cmd_and_args);
 void		ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path);
 void		ms_execute_cmd_echo(char *cmd[]);
 void		ms_execute_cmd_env(t_env_lst *envp_head);
@@ -80,5 +81,11 @@ int			ms_strncmp(const char *s1, const char *s2, size_t n);
 char		*ms_strdup(char *src, size_t size); //used
 size_t		ms_strlen(const char *s);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
+
+/*
+** exit
+*/
+void		ms_exit_with_error_message(t_ms *env, int err_code);
+void		ms_print_error_message(int err_code);
 
 #endif

@@ -36,7 +36,7 @@ char	*ms_get_err_message_from_err_code(int err_code)
 	return (err_messages[err_code]);
 }
 
-void	ms_print_error_message(t_ms *env, int err_code)
+void	ms_print_error_message(int err_code)
 {
 	char	*err_message;
 
@@ -48,17 +48,12 @@ void	ms_print_error_message(t_ms *env, int err_code)
 
 void	ms_exit_with_error_message(t_ms *env, int err_code)
 {
-	char	*err_message;
-
-	err_message = NULL;
-	err_message = ms_get_err_message_from_err_code(err_code);
-	ppx_putstr_fd("minishell: ", STDERR_FILENO, NONE);
-	ppx_putstr_fd(err_message, STDERR_FILENO, PUT_NEWLINE);
+	ms_print_error_message(err_code);
 	if (err_code > 0)
 	{
 		rl_clear_history();
 		ppx_free_array_of_pointers(env->ppx_env.cmd, 0);
-		ppx_free_pipe_fds(env);
+		ppx_free_pipe_fds(&env->ppx_env);
 	}
 	exit(EXIT_FAILURE);
 }
