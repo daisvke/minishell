@@ -39,17 +39,6 @@ void	ppx_execute_implemented_cmd_in_parent(t_ms *ms_env, t_ppx *ppx_env, size_t 
 		exit(EXIT_SUCCESS);
 }
 
-void	ppx_execute_implemented_cmd(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *cmd[])
-{
-	if (cmd_code == MS_CMD_ECHO)
-		ms_execute_cmd_echo(ppx_env->cmd);
-	else if (cmd_code == MS_CMD_PWD)
-		ms_execute_cmd_pwd(ms_env->envp_lst);
-	else if (cmd_code == MS_CMD_ENV)
-		ms_execute_cmd_env(ms_env->envp_lst);
-	ppx_execute_implemented_cmd_in_parent(ms_env, ppx_env, cmd_code, cmd);
-}
-
 void	ppx_save_data_from_child(t_ppx *env)
 {
 	if (env->i > 0)

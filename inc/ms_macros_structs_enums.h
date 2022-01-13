@@ -2,12 +2,8 @@
 # define MS_MACROS_AND_STRUCTS_H
 
 # define MS_ERR_MAX						10
-
-# define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
-
-# define MS_NO_EXPORT					1
-
 # define MS_FIRST_ARG_POS				1
+# define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 
 // RETURNS
 enum e_comparison
@@ -62,7 +58,10 @@ enum e_read
 	MS_READ_NONE
 };
 
-// CHECK IF THE CMD IS IMPLEMENTED
+// IMPLEMENTED COMMANDS
+# define MS_SPACE_TO_SEP_PRINTED_ARGS	" "
+# define MS_NO_EXPORT					1
+
 enum e_cmds
 {
 	MS_CMD_ECHO,

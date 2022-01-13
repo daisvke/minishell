@@ -37,7 +37,7 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		chdir(path);
 		current_absolute_path = getcwd(NULL, 0);
 		if (current_absolute_path == NULL)
-			ppx_exit_with_error_message(ppx_env, 10);
+			ms_exit_with_error_message(ms_env, 3);
 		node = ms_lst_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
 		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
 		ms_lst_assign_entry_to_node(node, new_path);
@@ -84,7 +84,7 @@ void	ms_execute_cmd_echo(char *cmd[])
 	{
 		printf("%s", cmd[i]);
 		if (cmd[i + 1] != NULL)
-			printf(" ");
+			write(STDOUT_FILENO, MS_SPACE_TO_SEP_PRINTED_ARGS, 1);
 		++i;
 	}
 	if (opt_n == false)
