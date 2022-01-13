@@ -21,6 +21,16 @@ void	*ppx_malloc(t_ppx *env, size_t num, size_t size)
 	return (ptr);
 }
 
+void	*ms_malloc(t_ms *env, size_t num, size_t size)
+{
+	void	*ptr;
+
+	ptr = (void *)malloc(num * size);
+	if (!ptr)
+		ms_exit_with_error_message(env, 1);
+	return (ptr);
+}
+
 void	*ms_memset(void *s, int c, size_t n)
 {
 	size_t	i;

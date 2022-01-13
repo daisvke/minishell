@@ -17,7 +17,7 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[0] = "";
 	errors[1] = "malloc failed";
 	errors[2] = "syntax error near unexpected token `|'";
-	errors[3] = "pipe failed";
+	errors[3] = "getcwd failed";
 	errors[4] = "dup2 failed"; 
 	errors[5] = "close failed";
 	errors[6] = "get_next_line failed";

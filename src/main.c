@@ -51,15 +51,33 @@ bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool 
 	return (*cmd_code);
 }
 
-int	ms_check_arguments(int argc, char *argv[], char *envp[])
+void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
+{
+	int		i;
+	size_t	j;
+
+	env->split_cmd_line = ms_malloc(env, argc, sizeof(char *)); 
+	i = MS_FIRST_ARG_POS;
+	j = 0;
+	while (i < argc)
+	{
+		env->split_cmd_line[j] = ms_strdup(argv[i], ms_strlen(argv[i]));
+		++j;
+		++i;
+	}
+	env->split_cmd_line[j] = NULL;
+}
+
+int	ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env)
 {
 	(void)argv;
-	if (argc > 1 \
-		|| envp == NULL)
+	if (envp == NULL)
 	{
-		printf("minishell: %s: No such file or directory\n", argv[1]);
+		printf("minishell: envp is set to NULL\n");
 		exit(EXIT_FAILURE);
 	}
+	if (argc > 1)
+		ms_use_argv_to_create_cmd_line(argc, argv, env);
 	return (MS_OK);
 }
 
@@ -100,20 +118,28 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ms	env;
 	size_t	res;
 
-	if (ms_check_arguments(argc, argv, envp) == MS_OK)
+	ms_init_env(envp, &env);
+	if (ms_check_arguments(argc, argv, envp, &env) == MS_OK)
 	{
-		ms_init_env(envp, &env);
 		ms_handle_signals(&env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
-			env.cmd_line = ms_free(env.cmd_line);
-			res = ms_show_prompt_and_read_cmd_line(&env.cmd_line);
-			if (res == MS_READ_EOF)
-				exit(EXIT_SUCCESS);
-			if (res == MS_READ_NONE \
-				|| ms_parse_cmd_line(&env, env.cmd_line) == 1)
-				continue ;
-			ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
+			if (argc == 1)
+			{
+				env.cmd_line = ms_free(env.cmd_line);
+				res = ms_show_prompt_and_read_cmd_line(&env.cmd_line);
+				if (res == MS_READ_EOF)
+					exit(EXIT_SUCCESS);
+				if (res == MS_READ_NONE \
+					|| ms_parse_cmd_line(&env, env.cmd_line) == 1)
+					continue ;
+				ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
+			}
+			else
+			{
+				ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
+				break ;
+			}
 			// ppx_free
 		}
 	}
