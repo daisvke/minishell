@@ -31,8 +31,7 @@ void	ppx_free_pipe_fds(t_ppx *env)
 
 char	**ppx_get_array_of_error_messages(char *errors[])
 {
-	errors[0] = "\nUsage1: ./pipex [input file] [cmd1] [cmd2] [output file]\n" \
-		"Usage2: ./pipex here_doc [limiter] [cmd] [cmd1] [output file]";
+	errors[0] = "";
 	errors[1] = "malloc failed";
 	errors[2] = "failed to fork child process";
 	errors[3] = "pipe failed";
@@ -48,7 +47,7 @@ char	**ppx_get_array_of_error_messages(char *errors[])
 
 char	*ppx_get_err_message_from_err_code(int err_code)
 {
-	char	*err_messages[ERR_MAX + 1];
+	char	*err_messages[PPX_ERR_MAX + 1];
 
 	ppx_get_array_of_error_messages(err_messages);
 	return (err_messages[err_code]);

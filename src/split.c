@@ -69,7 +69,7 @@ int	ppx_split_iter(char *split[], char *str, char sep)
 		if (!split[i])
 		{
 			ppx_free_array_of_pointers(split, i);
-			return (ERROR);
+			return (MS_ERROR);
 		}
 		++i;
 	}
@@ -106,7 +106,7 @@ char	**ppx_split(char const *s, char sep)
 	if (!split)
 		return (NULL);
 	res = ppx_split_iter(split, (char *)s, sep);
-	if (res == ERROR)
+	if (res == MS_ERROR)
 		return (NULL);
 	return (split);
 }

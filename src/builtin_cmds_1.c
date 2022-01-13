@@ -24,7 +24,7 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		current_absolute_path = getcwd(NULL, 0);
 		if (current_absolute_path == NULL)
 			ppx_exit_with_error_message(ppx_env, 10);
-		node = ppx_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
+		node = ms_lst_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
 		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
 		ms_lst_assign_entry_to_node(node, new_path);
 		new_path = ms_free(new_path);
@@ -39,7 +39,7 @@ void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 	t_env_lst	*node;
 	char		*current_path;
 
-	node = ppx_get_node_with_the_same_key(envp_lst, "PWD=");
+	node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
 	key_len = 4;
 	current_path = node->entry + key_len; 
 	printf("%s\n", current_path);

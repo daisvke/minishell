@@ -110,7 +110,7 @@ int	ppx_strncmp(const char *s1, const char *s2, size_t n)
 			s1++;
 			s2++;
 		}
-		return (SAME);
+		return (MS_SAME);
 	}
-	return (DIFFERENT);
+	return (MS_DIFFERENT);
 }

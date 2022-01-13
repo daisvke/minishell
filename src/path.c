@@ -14,10 +14,13 @@
 
 bool	ppx_check_access(char *path)
 {
-	return (access(path, F_OK) == SUCCESS && access(path, X_OK) == SUCCESS);
+	if (access(path, F_OK) == MS_SUCCESS \
+		&& access(path, X_OK) == MS_SUCCESS)
+		return (MS_SUCCESS);
+	return (MS_ERROR);
 }
 
-t_env_lst	*ppx_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
+t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
 {
 	t_env_lst	*node;
 
@@ -36,7 +39,7 @@ static char	**ppx_get_path(t_ms *ms_env, t_ppx *ppx_env, char *key)
 	char	*paths_envp;
 	char	**paths_envp_split;
 
-	paths_envp = ppx_get_node_with_the_same_key(ms_env->envp_lst, key)->entry;
+	paths_envp = ms_lst_get_node_with_the_same_key(ms_env->envp_lst, key)->entry;
 	if (!paths_envp)
 		ppx_exit_with_error_message(ppx_env, 9);
 	paths_envp_split = ppx_split(paths_envp, ':');
@@ -52,7 +55,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	char	*cmd_path_at_i;
 	size_t	i;
 
-	if (ppx_check_access(cmd) == OK)
+	if (ppx_check_access(cmd) == MS_SUCCESS)
 		return (cmd);
 	paths_envp_split = ppx_get_path(ms_env, ppx_env, key);
 	i = 0;
@@ -60,7 +63,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	while (paths_envp_split[i])
 	{
 		cmd_path_at_i = ppx_join_three_str(ppx_env, paths_envp_split[i], "/", cmd);
-		if (ppx_check_access(cmd_path_at_i) == OK)
+		if (ppx_check_access(cmd_path_at_i) == MS_SUCCESS)
 			break ;
 		cmd_path_at_i = ms_free(cmd_path_at_i);
 		cmd_path_at_i = NULL;

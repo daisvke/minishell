@@ -35,7 +35,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(0, &line) >= 0)
 	{
-		if (ppx_strncmp(line, limiter, ppx_strlen(limiter)) == SAME)
+		if (ppx_strncmp(line, limiter, ppx_strlen(limiter)) == MS_SAME)
 		{
 			line = ms_free(line);
 			line = NULL;
