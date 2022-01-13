@@ -78,6 +78,7 @@ char		*ms_search_redir_symbol(char *str);
 int			ms_strcmp(const char *s1, const char *s2);
 int			ms_strncmp(const char *s1, const char *s2, size_t n);
 char		*ms_strdup(char *src, size_t size); //used
+size_t		ms_strlen(const char *s);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 
 #endif

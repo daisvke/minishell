@@ -69,8 +69,6 @@ void	ppx_free_pipe_fds(t_ppx *env);
 */
 void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size);
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3);
-size_t	ppx_strlen(const char *s);
-int		ppx_strncmp(const char *s1, const char *s2, size_t n);
 void	*ppx_memcpy(void *dest, const void *src, size_t n);
 
 /*

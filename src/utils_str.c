@@ -36,16 +36,6 @@ void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
 	array_of_pointers = ms_free(array_of_pointers);
 }
 
-size_t	ppx_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
 void	*ppx_memcpy(void *dest, const void *src, size_t n)
 {
 	char		*d;
@@ -67,8 +57,8 @@ char	*ppx_join_two_str(t_ppx *env, char *str1, char *str2)
 	size_t	str1_len;
 	size_t	str2_len;
 
-	str1_len = ppx_strlen(str1);
-	str2_len = ppx_strlen(str2);
+	str1_len = ms_strlen(str1);
+	str2_len = ms_strlen(str2);
 	joined_len = str1_len + str2_len;
 	joined = ppx_malloc(env, joined_len + 1, sizeof(*joined));
 	ppx_memcpy(joined, str1, str1_len);
@@ -87,9 +77,9 @@ char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)
 
 	if (!str1 || !str2 || !str3)
 		ppx_exit_with_error_message(env, 8);
-	str1_len = ppx_strlen(str1);
-	str2_len = ppx_strlen(str2);
-	str3_len = ppx_strlen(str3);
+	str1_len = ms_strlen(str1);
+	str2_len = ms_strlen(str2);
+	str3_len = ms_strlen(str3);
 	joined_len = str1_len + str2_len + str3_len;
 	joined = ppx_malloc(env, joined_len + 1, sizeof(*joined));
 	ppx_memcpy(joined, str1, str1_len);
@@ -99,18 +89,3 @@ char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)
 	return (joined);
 }
 
-int	ppx_strncmp(const char *s1, const char *s2, size_t n)
-{
-	if (s1 && s2)
-	{
-		while ((*s1 || *s2) && n--)
-		{
-			if (*s1 != *s2)
-				return ((unsigned char)(*s1) - (unsigned char)(*s2));
-			s1++;
-			s2++;
-		}
-		return (MS_SAME);
-	}
-	return (MS_DIFFERENT);
-}

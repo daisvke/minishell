@@ -9,7 +9,7 @@ MEM					=	fsanitize=address fsanitize=undefined
 SRC_DIR				=	src/
 SRC_FILES			=	builtin_cmds_1.c \
 						builtin_cmds_2.c \
-						exit.c \
+						exit_pipex.c \
 						expand_variables.c \
 						main.c \
 						path.c \

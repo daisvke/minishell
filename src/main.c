@@ -68,7 +68,7 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	if (cmd_line == NULL \
 		|| cmd_line[0] == '\0')
 		return (1);
-	len = ppx_strlen(env->cmd_line);
+	len = ms_strlen(env->cmd_line);
 	if (env->cmd_line[0] == '|' \
 	    || env->cmd_line[len - 1] == '|')
 	{

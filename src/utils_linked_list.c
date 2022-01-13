@@ -21,7 +21,7 @@ void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
 	size_t	len;
 
 	ms_free(node->entry);
-	len = ppx_strlen(entry);
+	len = ms_strlen(entry);
 	node->entry = ms_strdup(entry, len);
 }
 
@@ -73,7 +73,7 @@ char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_
 	i = 0;
 	while (node)
 	{
-		len = ppx_strlen(node->entry);
+		len = ms_strlen(node->entry);
 		array[i] = ms_strdup(node->entry, len);
 		node = node->next;
 		++i;
