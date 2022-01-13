@@ -113,10 +113,24 @@ int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
 	return (MS_READ_LINE);
 }
 
+int	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
+{
+	size_t	res;
+
+	env->cmd_line = ms_free(env->cmd_line);
+	res = ms_show_prompt_and_read_cmd_line(&env->cmd_line);
+	if (res == MS_READ_EOF)
+		exit(EXIT_SUCCESS);
+	if (res == MS_READ_NONE \
+		|| ms_parse_cmd_line(env, env->cmd_line) == 1)
+		return (1);
+	ms_execute_cmd_line_with_pipex(env, env->split_cmd_line);
+	return (0);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	env;
-	size_t	res;
 
 	ms_init_env(envp, &env);
 	if (ms_check_arguments(argc, argv, envp, &env) == MS_OK)
@@ -126,21 +140,14 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			if (argc == 1)
 			{
-				env.cmd_line = ms_free(env.cmd_line);
-				res = ms_show_prompt_and_read_cmd_line(&env.cmd_line);
-				if (res == MS_READ_EOF)
-					exit(EXIT_SUCCESS);
-				if (res == MS_READ_NONE \
-					|| ms_parse_cmd_line(&env, env.cmd_line) == 1)
+				if (ms_prompt_and_execute_cmd_line_with_pipex(&env) == 1)
 					continue ;
-				ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
 			}
 			else
 			{
 				ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
 				break ;
 			}
-			// ppx_free
 		}
 	}
 	exit(EXIT_SUCCESS);
