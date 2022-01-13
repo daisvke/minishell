@@ -28,14 +28,56 @@
 /*
 ** system calls
 */
-void	*ms_free(void *data);
+void		*ms_free(void *data);
+void		*ms_memset(void *s, int c, size_t n);
+
+/*
+** init
+*/
+void		ms_init_env(char *envp[], t_ms *env);
+
+/*
+** envp
+*/
+char		**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_size);
+t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key);
+void		ms_lst_add_back(t_env_lst *head, t_env_lst *new);
+void		ms_lst_assign_entry_to_node(t_env_lst *node, char *entry);
+t_env_lst	*ms_lst_create_new_node(char *data);
+void		ms_lst_del_node(t_env_lst *node);
+int			ms_lst_lstsize(t_env_lst *head);
+
+/*
+** parsing
+*/
+int			ms_compare_with_envp_key(const char *envp_entry, const char *str, bool equal_in_str);
+char		*ms_expand_variables(t_ms *env, char *cmd_line);
+
+/*
+** commands
+*/
+bool		ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool process);
+int			ms_check_if_there_is_not_too_much_args(char **cmd_and_args);
+void		ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path);
+void		ms_execute_cmd_echo(char *cmd[]);
+void		ms_execute_cmd_env(t_env_lst *envp_head);
+void		ms_execute_cmd_export(t_ms *env, char *cmd_line[]);
+void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
+void    	ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 
 /*
 ** utils: strings
 */
-int	ms_strncmp(const char *s1, const char *s2, size_t n);
-
-char	*ms_strdup(char *src, size_t size); //used
-char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
+char		ms_check_if_char_is_a_redir_symbol(int c);
+size_t		ms_handle_quotes(char *str, char quote);
+bool		ms_isalnum(int c);
+bool		ms_isalpha(int c);
+bool		ms_isdigit(int c);
+char		*ms_itoa(t_ms *env, int n);
+char		*ms_search_redir_symbol(char *str);
+int			ms_strcmp(const char *s1, const char *s2);
+int			ms_strncmp(const char *s1, const char *s2, size_t n);
+char		*ms_strdup(char *src, size_t size); //used
+char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 
 #endif

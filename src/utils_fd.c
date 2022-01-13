@@ -21,7 +21,7 @@ int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 		fd = open(file_name, flags, mod);
 	else
 		fd = open(file_name, flags);
-	if (fd == ERROR)
+	if (fd == PPX_ERROR)
 	{
 		err_message = strerror(errno);
 		ppx_putstr_fd("pipex: ", STDERR_FILENO, NONE);
@@ -71,7 +71,7 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_
 	return (new_argv);
 }
 
-char	*ppx_check_outfile(t_ppx *env, char *file, size_t i, size_t j, size_t *lines_to_del)
+char	*ppx_check_outfile(t_ppx *env, char *file, size_t i, size_t *lines_to_del)
 {
 	*lines_to_del = 1;
 	if (*file == '\0')
@@ -144,7 +144,7 @@ void	ppx_handle_redirections(t_ppx *env)
 			if (ms_search_redir_symbol(&env->cmd[i][j]))
 			{
 				file = ms_search_redir_symbol(&env->cmd[i][j]);
-				file = ppx_check_outfile(env, file, i, j, &lines_to_del);
+				file = ppx_check_outfile(env, file, i, &lines_to_del);
 				ppx_apply_redirection(env, &env->cmd[i][j], file);
 				env->cmd = ppx_del_redirection_section_at_i(env, i, j, lines_to_del);
 				i = 0;
@@ -156,20 +156,7 @@ void	ppx_handle_redirections(t_ppx *env)
 		++i;
 	}
 }
-/*
-void	ppx_get_fd(t_ppx *env, char *argv[])
-{
-	int	fd;
 
-	fd = 0;
-	if ((env->options & MS_OPT_HEREDOC) \
-		&& env->pos == FIRST_CMD_WHEN_HEREDOC)
-	{
-		fd = ppx_open_file(env, "heredoc_tmp", O_RDONLY, 0);
-		ppx_dup2(env, fd, 0);
-	}
-}
-*/
 void	ppx_putstr_fd(char *s, int fd, bool option)
 {
 	if (s)

@@ -75,30 +75,18 @@ int	ms_split_iter(char *split[], char *str, char sep)
 		if (!split[i])
 		{
 			ppx_free_array_of_pointers(split, i);
-			return (ERROR);
+			return (MS_ERROR);
 		}
 		i++;
 	}
 	split[i] = 0;
-/*
-	for(i=0;split[i];++i)
-		printf("split%ld: %s\n", i, split[i]);
-*/
 	return (0);
 }
 
-void	ms_activate_option(t_ms *env, char **str, int sep)
+void	ms_activate_option(t_ms *env, int sep)
 {
 	if ((char)sep == '|')
 		env->options |= MS_OPT_PIPE;
-/*	if ((char)sep == '<' && *(*str + 1) == '<')
-	{
-		env->options |= MS_OPT_HEREDOC;
-		++str;
-		printf("str++ <<\n");
-	}
-//	if ((char)sep == '>>')
-		env->options |= MS_OPT_REDIR_OUTPUT;*/
 }
 
 size_t	ms_wordcount(t_ms *env, char *str, int sep)
@@ -110,7 +98,7 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 	{
 		while (*str == (char)sep)
 		{
-			ms_activate_option(env, &str, sep);
+			ms_activate_option(env, sep);
 			str++;
 		}
 		if (!*str)
@@ -135,7 +123,7 @@ char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep)
 	if (!split)
 		return (NULL);
 	res = ms_split_iter(split, (char *)s, sep);
-	if (res == ERROR)
+	if (res == MS_ERROR)
 		return (NULL);
 	return (split);
 }

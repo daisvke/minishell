@@ -1,6 +1,12 @@
 #ifndef MS_MACROS_AND_STRUCTS_H
 # define MS_MACROS_AND_STRUCTS_H
 
+# define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
+
+# define MS_NO_EXPORT					1
+
+# define MS_FIRST_ARG_POS				1
+
 // RETURNS
 enum e_comparison
 {
@@ -10,24 +16,19 @@ enum e_comparison
 
 enum e_return
 {
-	MS_SUCCESS,
-	MS_ERROR
+	MS_OK = 0,
+	MS_SUCCESS = 0,
+	MS_ERROR = 1
 };
 
-# define MS_OK				0
-
-# define MS_NO_EXPORT		1
-
-# define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
-# define MS_FIRST_ARG_POS		1
-
-// Linked list containing env entries
+// LINKED LIST CONTAINING ENV ENTRIES
 typedef struct s_env_lst
 {
 	char	*entry;
 	void	*next;
 }			t_env_lst;
 
+// MAIN STRUCT FROM PIPEX
 typedef struct s_ppx
 {
 	int		**pipe_fds;
@@ -39,7 +40,7 @@ typedef struct s_ppx
 	int		options;
 }			t_ppx;
 
-// Main struct
+// MAIN STRUCT
 typedef struct s_ms
 {
 	t_ppx	ppx_env;
@@ -79,6 +80,29 @@ enum e_options
 	MS_OPT_READ_FROM_FILE = 4,
 	MS_OPT_REDIR_OUTPUT	= 2,
 	MS_OPT_HEREDOC = 1
+};
+
+
+/*
+** FROM PIPEX
+*/
+# define PPX_ERROR 				-1
+
+// ERROR HANDLING
+# define PPX_ERR_MAX			10
+// ms_ ? ppx_ ?
+enum e_error_print_options
+{
+	PUT_NEWLINE,	
+// ms_ ? ppx_ ?
+	NONE
+};
+
+// PROCESSES WHILE FORKING
+enum e_processes
+{
+	PPX_PROC_CHILD,
+	PPX_PROC_PARENT
 };
 
 #endif
