@@ -22,12 +22,12 @@
 
 # include "get_next_line.h"
 
+void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[]);
+
 /*
 ** init
 */
 void	ppx_init_ppx(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_and_file_nbr);
-
-//int		ppx_pipex(char *argv[], char *envp[], t_ppx *env, t_ms *ms_env);
 
 /*
 ** system calls
@@ -49,6 +49,11 @@ void	ms_handle_signals(t_ms *ms_env);
 void	ppx_get_fd(t_ppx *env, char *argv[]);
 int		ppx_open_file(t_ppx *env, char *file_name, int flags, int mod);
 void	ppx_putstr_fd(char *s, int fd, bool option);
+
+/*
+** execute command
+*/
+void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env);
 
 /*
 ** path

@@ -75,7 +75,7 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	if (env->cmd_line[0] == '|' \
 	    || env->cmd_line[len - 1] == '|')
 	{
-		ms_print_error_message(env, 2);
+		ms_print_error_message(2);
 		return (MS_ERROR);
 	}
 	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');

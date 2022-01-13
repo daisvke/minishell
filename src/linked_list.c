@@ -1,21 +1,6 @@
 
 #include "minishell.h"
 
-int	ms_lst_lstsize(t_env_lst *head)
-{
-	t_env_lst	*node;
-	size_t		i;
-
-	node = head;
-	i = 0;
-	while (node)
-	{
-		node = node->next;
-		++i;
-	}
-	return (i);
-}
-
 void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
 {
 	size_t	len;
@@ -36,14 +21,6 @@ t_env_lst	*ms_lst_create_new_node(char *data)
 	ms_lst_assign_entry_to_node(new, data);
 	new->next = NULL;
 	return (new);
-}
-
-t_env_lst	*ms_lst_get_last_node(t_env_lst *node)
-{
-	if (node)
-		while (node->next)
-			node = node->next;
-	return (node);
 }
 
 void	ms_lst_add_back(t_env_lst *head, t_env_lst *new)
@@ -82,8 +59,23 @@ char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_
 	return (array);
 }
 
-void	ms_lst_del_node(t_env_lst *node)
+int	ms_compare_with_envp_key(const char *envp_entry, const char *str, bool equal_in_str)
 {
-	node->entry = ms_free(node->entry);
-	node = ms_free(node);
+	if (str && envp_entry)
+	{
+		while (*str && *envp_entry)
+		{
+			if (equal_in_str == true && *envp_entry == '=')
+				break ;
+			if (*str != *envp_entry)
+				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
+			str++;
+			envp_entry++;
+		}
+		if (equal_in_str == true && *str == '=')
+			return (MS_SAME);
+		else if (equal_in_str == false && *envp_entry == '=')
+			return (MS_SAME);
+	}
+	return (MS_DIFFERENT);
 }
