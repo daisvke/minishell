@@ -12,6 +12,32 @@
 
 #include "minishell.h"
 
+bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool process)
+{
+	*cmd_code = 0;
+	if (process == PPX_PROC_PARENT)
+	{
+		if (ms_strcmp(cmd_line[0], "cd") == MS_SAME)
+			*cmd_code = MS_CMD_CD;
+		else if (ms_strcmp(cmd_line[0], "exit") == MS_SAME)
+			*cmd_code = MS_CMD_EXIT;
+		else if (ms_strcmp(cmd_line[0], "export") == MS_SAME)
+			*cmd_code = MS_CMD_EXPORT;
+		else if (ms_strcmp(cmd_line[0], "unset") == MS_SAME)
+			*cmd_code = MS_CMD_UNSET;
+	}
+	else if (process == PPX_PROC_CHILD)
+	{
+		if (ms_strcmp(cmd_line[0], "pwd") == MS_SAME)
+			*cmd_code = MS_CMD_PWD;
+		else if (ms_strcmp(cmd_line[0], "echo") == MS_SAME)
+			*cmd_code = MS_CMD_ECHO;
+		else if (ms_strcmp(cmd_line[0], "env") == MS_SAME)
+			*cmd_code = MS_CMD_ENV;
+	}
+	return (*cmd_code);
+}
+
 bool	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
 {
 	size_t	i;
@@ -37,7 +63,7 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		chdir(path);
 		current_absolute_path = getcwd(NULL, 0);
 		if (current_absolute_path == NULL)
-			ms_exit_with_error_message(ms_env, 3);
+			ms_exit_with_error_message(ms_env, 5);
 		node = ms_lst_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
 		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
 		ms_lst_assign_entry_to_node(node, new_path);

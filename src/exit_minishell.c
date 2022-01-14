@@ -17,14 +17,14 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[0] = "";
 	errors[1] = "malloc failed";
 	errors[2] = "syntax error near unexpected token `|'";
-	errors[3] = "getcwd failed";
-	errors[4] = "dup2 failed"; 
-	errors[5] = "close failed";
-	errors[6] = "get_next_line failed";
-	errors[7] = "split failed";
-	errors[8] = "permission denied:";
-	errors[9] = "execve failed: No such file or directory";
-	errors[10] = "getcwd failed";
+	errors[3] = "syntax error near unexpected token `<<'";
+	errors[4] = "syntax error near unexpected token `>>'";
+	errors[5] = "getcwd failed";
+	errors[6] = "minishell: envp is set to NULL";
+	errors[7] = "close failed";
+	errors[8] = "get_next_line failed";
+	errors[9] = "split failed";
+	errors[10] = "permission denied:";
 	return (errors);
 }
 

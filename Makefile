@@ -15,7 +15,8 @@ SRC_FILES			=	builtin_cmds_1.c \
 						expand_variables.c \
 						linked_list.c \
 						linked_list_utils.c \
-						main.c \
+						minishell.c \
+						minishell_utils.c \
 						path.c \
 						split.c \
 						split_and_activate_options.c \
