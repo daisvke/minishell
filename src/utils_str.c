@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 05:36:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 06:08:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
 		}
 	}
 	array_of_pointers = ms_free(array_of_pointers);
-}
-
-void	*ppx_memcpy(void *dest, const void *src, size_t n)
-{
-	char		*d;
-	const char	*s;
-
-	d = dest;
-	s = src;
-	if (!dest && !src)
-		return (NULL);
-	while (n--)
-		*d++ = *s++;
-	return (dest);
 }
 
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)

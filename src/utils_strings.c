@@ -6,61 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:21:17 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/10 11:04:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 06:41:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t	ms_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int	ms_strcmp(const char *s1, const char *s2)
-{
-	while (*s1 || *s2)
-	{
-		if (*s1 != *s2)
-			return ((unsigned char)(*s1) - (unsigned char)(*s2));
-		s1++;
-		s2++;
-	}
-	return (0);
-}
-/*
-int	m_strncmp(const char *s1, const char *s2, size_t n)
-{
-	if (s1 && s2)
-	{
-		while ((*s1 || *s2) && n--)
-		{
-			if (*s1 != *s2)
-				return ((unsigned char)(*s1) - (unsigned char)(*s2));
-			s1++;
-			s2++;
-		}
-		return (MS_SAME);
-	}
-	return (MS_DIFFERENT);
-}
-*/
-int	ms_strncmp(const char *s1, const char *s2, size_t n)
-{
-	while ((*s1 || *s2) && n--)
-	{
-		if (*s1 != *s2)
-			return ((unsigned char)(*s1) - (unsigned char)(*s2));
-		s1++;
-		s2++;
-	}
-	return (MS_SAME);
-}
 
 char	ms_check_if_char_is_a_redir_symbol(int c)
 {

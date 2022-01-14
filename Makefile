@@ -28,7 +28,8 @@ SRC_FILES			=	builtin_cmds_1.c \
 						pipex_utils.c \
 						ppx_init_env.c \
 						signals.c \
-						system_calls.c \
+						system_calls_stdlib.c \
+						system_calls_string.c \
 						system_calls_pipex.c \
 						system_calls_unistd.c \
 						utils_fd.c \
