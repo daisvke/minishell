@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/14 07:23:04 by dtanigaw          #+#    #+#             */
+/*   Updated: 2022/01/14 07:24:03 by dtanigaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ms_handle_sigint(int signum)
@@ -11,10 +23,10 @@ void	ms_handle_sigint(int signum)
 
 void	ms_handle_sigquit(int signum)
 {
-	(void)signum;
-	struct termios orig_termios_p;
-	struct termios new_termios_p;
+	struct termios	orig_termios_p;
+	struct termios	new_termios_p;
 
+	(void)signum;
 // errno is set
 	if (tcgetattr(STDIN_FILENO, &orig_termios_p) != MS_SUCCESS)
 		exit(EXIT_FAILURE);
@@ -35,4 +47,3 @@ void	ms_handle_signals(t_ms *ms_env)
 	signal_action2.sa_handler = &ms_handle_sigquit;
 	sigaction(SIGQUIT, &signal_action2, NULL);
 }
-

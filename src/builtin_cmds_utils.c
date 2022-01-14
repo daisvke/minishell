@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:58:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 07:10:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 07:20:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	ms_isalnum(int c)
 {
 	return (ms_isalpha(c) || ms_isdigit(c));
 }
+
 bool	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
 {
 	size_t	i;

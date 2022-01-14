@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/11 08:31:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 07:26:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ppx_check_outfile(t_ppx *env, char *file, size_t i, size_t *lines_to_del)
 	{
 		if (env->cmd[i + 1] == NULL)
 		{
-			printf("syntax error near unexpected token `newline'\n" );
+			ppx_putstr_fd("minishell: syntax error near unexpected token `newline'", STDERR_FILENO, PUT_NEWLINE);
 			exit(EXIT_FAILURE);
 		}
 		file = env->cmd[i + 1];
