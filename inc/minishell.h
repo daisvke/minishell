@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/06 22:49:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 03:25:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <termios.h>
 
 # include "ms_macros_structs_enums.h"
-
 # include "pipex.h"
 
 /*
@@ -55,7 +54,6 @@ int			ms_lst_lstsize(t_env_lst *head);
 int			ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env);
 int			ms_compare_with_envp_key(const char *envp_entry, const char *str, bool equal_in_str);
 char		*ms_expand_variables(t_ms *env, char *cmd_line);
-int			ms_parse_cmd_line(t_ms *env, char *cmd_line);
 
 /*
 ** commands
@@ -67,7 +65,7 @@ void		ms_execute_cmd_echo(char *cmd[]);
 void		ms_execute_cmd_env(t_env_lst *envp_head);
 void		ms_execute_cmd_export(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
-void    	ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
+void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 
 /*
 ** utils: strings

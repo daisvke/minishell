@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/09/23 04:25:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 03:17:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 */
 enum e_gnl_return
 {
-	GNL_REACHED_EOF, 
+	GNL_REACHED_EOF,
 	GNL_READ_LINE
 };
 

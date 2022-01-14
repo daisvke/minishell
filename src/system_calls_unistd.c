@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_calls_pipex.c                               :+:      :+:    :+:   */
+/*   system_calls_unistd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/14 04:13:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:32:00 by dtanigaw         ###   ########.fr       */
+/*   Created: 2022/01/14 04:19:33 by dtanigaw          #+#    #+#             */
+/*   Updated: 2022/01/14 04:24:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_close(t_ppx *env, int fd)
+void	ms_close(t_ms *env, int fd)
 {
 	if (close(fd) == PPX_ERROR)
-		ppx_exit_with_error_message(env, 5);
+		ms_exit_with_error_message(env, 8);
 }
 
-void	ppx_dup2(t_ppx *env, int fd1, int fd2)
+void	ms_pipe(t_ms *env, int *fds)
 {
-	if (dup2(fd1, fd2) == PPX_ERROR)
-		ppx_exit_with_error_message(env, 4);
+	if (pipe(fds) == PPX_ERROR)
+		ppx_exit_with_error_message(env, 9);
 }
 
-pid_t	ppx_fork(t_ms *env)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == PPX_ERROR)
-		ms_exit_with_error_message(env, 7);
-	return (pid);
-}
