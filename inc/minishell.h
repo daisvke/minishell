@@ -29,6 +29,7 @@
 ** system calls
 */
 void		*ms_free(void *data);
+void		*ms_malloc(t_ms *env, size_t num, size_t size);
 void		*ms_memset(void *s, int c, size_t n);
 
 /*
@@ -51,8 +52,10 @@ int			ms_lst_lstsize(t_env_lst *head);
 /*
 ** parsing
 */
+int			ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env);
 int			ms_compare_with_envp_key(const char *envp_entry, const char *str, bool equal_in_str);
 char		*ms_expand_variables(t_ms *env, char *cmd_line);
+int			ms_parse_cmd_line(t_ms *env, char *cmd_line);
 
 /*
 ** commands
