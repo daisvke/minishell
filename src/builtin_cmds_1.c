@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/08 02:37:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 07:04:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,6 @@ bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool 
 			*cmd_code = MS_CMD_ENV;
 	}
 	return (*cmd_code);
-}
-
-bool	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
-{
-	size_t	i;
-
-	i = 0;
-	while (cmd_and_args[i])
-	{
-		if (i > 1)
-			return (MS_ERROR); //error
-		++i;
-	}
-	return (MS_OK);
 }
 
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)

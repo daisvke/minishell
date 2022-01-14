@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:58:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 03:58:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 07:10:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,31 @@ bool	ms_isalpha(int c)
 bool	ms_isalnum(int c)
 {
 	return (ms_isalpha(c) || ms_isdigit(c));
+}
+bool	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd_and_args[i])
+	{
+		if (i > 1)
+			return (MS_ERROR); //error
+		++i;
+	}
+	return (MS_OK);
+}
+
+bool	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd_and_args[i])
+	{
+		if (i > 1)
+			return (MS_ERROR); //error
+		++i;
+	}
+	return (MS_OK);
 }
