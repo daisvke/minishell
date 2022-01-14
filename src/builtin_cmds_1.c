@@ -6,13 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 07:04:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 07:21:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	ms_check_if_the_cmd_is_implemented(char **cmd_line, size_t *cmd_code, bool process)
+bool	ms_check_if_the_cmd_is_implemented(\
+	char **cmd_line, size_t *cmd_code, bool process)
 {
 	*cmd_code = 0;
 	if (process == PPX_PROC_PARENT)
@@ -51,7 +52,9 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		if (current_absolute_path == NULL)
 			ms_exit_with_error_message(ms_env, 5);
 		node = ms_lst_get_node_with_the_same_key(ms_env->envp_lst, "PWD=");
-		new_path = ppx_join_three_str(ppx_env, "PWD", "=", current_absolute_path);
+		new_path = ppx_join_three_str(\
+				ppx_env, "PWD", "=", current_absolute_path \
+			);
 		ms_lst_assign_entry_to_node(node, new_path);
 		new_path = ms_free(new_path);
 	}
@@ -67,13 +70,13 @@ void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 
 	node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
 	key_len = 4;
-	current_path = node->entry + key_len; 
+	current_path = node->entry + key_len;
 	printf("%s\n", current_path);
 }
 
 void	ms_execute_cmd_env(t_env_lst *envp_head)
 {
-	t_env_lst *node;
+	t_env_lst	*node;
 
 	node = envp_head;
 	while (node)
@@ -102,4 +105,3 @@ void	ms_execute_cmd_echo(char *cmd[])
 	if (opt_n == false)
 		printf("\n");
 }
-
