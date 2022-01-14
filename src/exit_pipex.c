@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:19:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:21:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**ppx_get_array_of_error_messages(char *errors[])
 	errors[0] = "";
 	errors[1] = "malloc failed";
 	errors[2] = "";
-	errors[3] = "pipe failed";
+	errors[3] = "";
 	errors[4] = "dup2 failed";
 	errors[5] = "close failed";
 	errors[6] = "get_next_line failed";

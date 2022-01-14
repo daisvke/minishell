@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:19:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:24:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:21:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	ms_close(t_ms *env, int fd)
 		ms_exit_with_error_message(env, 8);
 }
 
-void	ms_pipe(t_ms *env, int *fds)
+void	ms_dup2(t_ms *env, int fd1, int fd2)
 {
-	if (pipe(fds) == PPX_ERROR)
-		ppx_exit_with_error_message(env, 9);
+	if (dup2(fd1, fd2) == PPX_ERROR)
+		ms_exit_with_error_message(env, 10);
 }
-

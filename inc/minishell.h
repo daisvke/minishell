@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 03:25:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:17:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 void		*ms_free(void *data);
 void		*ms_malloc(t_ms *env, size_t num, size_t size);
 void		*ms_memset(void *s, int c, size_t n);
+
+/*
+** system calls unistd
+*/
+void	ms_close(t_ms *env, int fd);
+void	ms_dup2(t_ms *env, int fd1, int fd2);
+void	ms_pipe(t_ms *env, int *fds);
 
 /*
 ** init

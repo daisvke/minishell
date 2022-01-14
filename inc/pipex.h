@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/06 21:12:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:22:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	ppx_init_ppx(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_and_file_nbr);
 */
 void	ppx_close(t_ppx *env, int fd);
 void	ppx_dup2(t_ppx *env, int fd1, int fd2);
-pid_t	ppx_fork(t_ppx *env);
+pid_t	ppx_fork(t_ms *env);
 void	*ppx_malloc(t_ppx *env, size_t num, size_t size);
-void	ppx_pipe(t_ppx *env, int *fds);
+void	ppx_pipe(t_ms *env, int *fds);
 
 /*
 ** signals
