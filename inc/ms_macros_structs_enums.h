@@ -1,7 +1,19 @@
-#ifndef MS_MACROS_AND_STRUCTS_H
-# define MS_MACROS_AND_STRUCTS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_macros_structs_enums.h                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
+/*   Updated: 2022/01/14 04:24:26 by dtanigaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# define MS_ERR_MAX						10
+#ifndef MS_MACROS_STRUCTS_ENUMS_H
+# define MS_MACROS_STRUCTS_ENUMS_H
+
+# define MS_ERR_MAX						12
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 
@@ -41,14 +53,14 @@ typedef struct s_ppx
 // MAIN STRUCT
 typedef struct s_ms
 {
-	t_ppx	ppx_env;
+	t_ppx		ppx_env;
 	t_env_lst	*envp_lst;
-	char	**envp;
-	char	*cmd_line;
-	char	**split_cmd_line;
-	int		options;
-	int		last_pipe_exit_status;
-}			t_ms;
+	char		**envp;
+	char		*cmd_line;
+	char		**split_cmd_line;
+	int			options;
+	int			last_pipe_exit_status;
+}				t_ms;
 
 // READ FROM PROMPT
 enum e_read
@@ -83,7 +95,6 @@ enum e_options
 	MS_OPT_HEREDOC = 1
 };
 
-
 /*
 ** FROM PIPEX
 */
@@ -91,11 +102,10 @@ enum e_options
 
 // ERROR HANDLING
 # define PPX_ERR_MAX			10
-// ms_ ? ppx_ ?
+
 enum e_error_print_options
 {
 	PUT_NEWLINE,	
-// ms_ ? ppx_ ?
 	NONE
 };
 

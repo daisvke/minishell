@@ -6,24 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/29 05:24:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 03:49:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ms_free_split(char *split[])
-{
-	size_t	i;
-
-	i = 0;
-	while (split[i])
-	{
-		split[i] = ms_free(split[i]);
-		++i;
-	}
-	split = ms_free(split);
-}
 
 char	*ms_strdup(char *src, size_t size)
 {

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/27 06:19:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 04:27:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 char	**ms_get_array_of_error_messages(char *errors[])
 {
-	errors[0] = "";
+	errors[0] = "split failed";
 	errors[1] = "malloc failed";
 	errors[2] = "syntax error near unexpected token `|'";
 	errors[3] = "syntax error near unexpected token `<<'";
 	errors[4] = "syntax error near unexpected token `>>'";
 	errors[5] = "getcwd failed";
 	errors[6] = "minishell: envp is set to NULL";
-	errors[7] = "close failed";
-	errors[8] = "get_next_line failed";
-	errors[9] = "split failed";
-	errors[10] = "permission denied:";
+	errors[7] = "failed to fork child process";
+	errors[8] = "close failed";
+	errors[9] = "pipe failed";
+	errors[10] = "dup2 failed";
+	errors[11] = "";
+	errors[12] = "";
 	return (errors);
 }
 

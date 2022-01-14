@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_calls_pipex.c                               :+:      :+:    :+:   */
+/*   builtin_cmds_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/14 04:13:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:32:00 by dtanigaw         ###   ########.fr       */
+/*   Created: 2022/01/14 03:58:10 by dtanigaw          #+#    #+#             */
+/*   Updated: 2022/01/14 03:58:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_close(t_ppx *env, int fd)
+bool	ms_isdigit(int c)
 {
-	if (close(fd) == PPX_ERROR)
-		ppx_exit_with_error_message(env, 5);
+	return (c >= '0' && c <= '9');
 }
 
-void	ppx_dup2(t_ppx *env, int fd1, int fd2)
+bool	ms_isalpha(int c)
 {
-	if (dup2(fd1, fd2) == PPX_ERROR)
-		ppx_exit_with_error_message(env, 4);
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
 
-pid_t	ppx_fork(t_ms *env)
+bool	ms_isalnum(int c)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == PPX_ERROR)
-		ms_exit_with_error_message(env, 7);
-	return (pid);
+	return (ms_isalpha(c) || ms_isdigit(c));
 }

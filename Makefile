@@ -9,6 +9,7 @@ MEM					=	fsanitize=address fsanitize=undefined
 SRC_DIR				=	src/
 SRC_FILES			=	builtin_cmds_1.c \
 						builtin_cmds_2.c \
+						builtin_cmds_utils.c \
 						child_proc.c \
 						exit_minishell.c \
 						exit_pipex.c \
@@ -24,10 +25,12 @@ SRC_FILES			=	builtin_cmds_1.c \
 						heredoc.c \
 						ms_init_env.c \
 						pipex.c \
+						pipex_utils.c \
 						ppx_init_env.c \
 						signals.c \
 						system_calls.c \
 						system_calls_pipex.c \
+						system_calls_unistd.c \
 						utils_fd.c \
 						utils_str.c \
 						utils_strings.c
