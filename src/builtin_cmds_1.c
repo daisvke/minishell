@@ -59,7 +59,7 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		new_path = ms_free(new_path);
 	}
 	else
-		write(STDOUT_FILENO, "cd: Too many arguments\n", 24);
+		write(STDERR_FILENO, "cd: Too many arguments\n", 24);
 }
 
 void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
