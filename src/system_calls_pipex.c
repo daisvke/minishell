@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:13:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:32:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:21:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,10 @@ pid_t	ppx_fork(t_ms *env)
 	if (pid == PPX_ERROR)
 		ms_exit_with_error_message(env, 7);
 	return (pid);
+}
+
+void	ppx_pipe(t_ms *env, int *fds)
+{
+	if (pipe(fds) == PPX_ERROR)
+		ms_exit_with_error_message(env, 10);
 }

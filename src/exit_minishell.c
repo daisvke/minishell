@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:27:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:21:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[6] = "minishell: envp is set to NULL";
 	errors[7] = "failed to fork child process";
 	errors[8] = "close failed";
-	errors[9] = "pipe failed";
-	errors[10] = "dup2 failed";
+	errors[9] = "dup2 failed";
+	errors[10] = "pipe failed";
 	errors[11] = "";
 	errors[12] = "";
 	return (errors);

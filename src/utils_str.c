@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/12/25 09:58:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:36:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,7 @@ void	*ppx_memcpy(void *dest, const void *src, size_t n)
 		*d++ = *s++;
 	return (dest);
 }
-/*
-char	*ppx_join_two_str(t_ppx *env, char *str1, char *str2)
-{
-	char	*joined;
-	size_t	joined_len;
-	size_t	str1_len;
-	size_t	str2_len;
 
-	str1_len = ms_strlen(str1);
-	str2_len = ms_strlen(str2);
-	joined_len = str1_len + str2_len;
-	joined = ppx_malloc(env, joined_len + 1, sizeof(*joined));
-	ppx_memcpy(joined, str1, str1_len);
-	ppx_memcpy(&joined[str1_len], str2, str2_len);
-	joined[joined_len] = '\0';
-	return (joined);
-}
-*/
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)
 {
 	char	*joined;
@@ -88,4 +71,3 @@ char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)
 	joined[joined_len] = '\0';
 	return (joined);
 }
-
