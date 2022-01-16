@@ -1,38 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_fd.c                                         :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:35:02 by dtanigaw         ###   ########.fr       */
+/*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
+/*   Updated: 2022/01/16 11:32:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
-{
-	int		fd;
-	char	*err_message;
-
-	if (mod)
-		fd = open(file_name, flags, mod);
-	else
-		fd = open(file_name, flags);
-	if (fd == PPX_ERROR)
-	{
-		err_message = strerror(errno);
-		ppx_putstr_fd("pipex: ", STDERR_FILENO, MS_NONE);
-		ppx_putstr_fd(err_message, STDERR_FILENO, MS_NONE);
-		ppx_putstr_fd(": ", STDERR_FILENO, MS_NONE);
-		ppx_putstr_fd(file_name, STDERR_FILENO, MS_PUT_NEWLINE);
-		ppx_free_pipe_fds(env);
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
-}
 
 char	**ppx_del_redirection_section_at_i(\
 	t_ppx *env, size_t del_line, size_t del_pos, size_t lines_to_del)
@@ -70,24 +48,6 @@ char	**ppx_del_redirection_section_at_i(\
 	if (*new_argv[0] == '\0')
 		new_argv = ms_free(new_argv);
 	return (new_argv);
-}
-
-char	*ppx_check_outfile(t_ppx *env, char *file, size_t i, size_t *lines_to_del)
-{
-	*lines_to_del = 1;
-	if (*file == '\0')
-	{
-		if (env->cmd[i + 1] == NULL)
-		{
-			ppx_putstr_fd("minishell: syntax error near unexpected token `newline'", STDERR_FILENO, MS_PUT_NEWLINE);
-			exit(EXIT_FAILURE);
-		}
-		file = env->cmd[i + 1];
-		*lines_to_del = 2;
-		return (file);
-	}
-	else
-		return (file);
 }
 
 void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
@@ -147,7 +107,8 @@ void	ppx_handle_redirections(t_ppx *env)
 				file = ms_search_redir_symbol(&env->cmd[i][j]);
 				file = ppx_check_outfile(env, file, i, &lines_to_del);
 				ppx_apply_redirection(env, &env->cmd[i][j], file);
-				env->cmd = ppx_del_redirection_section_at_i(env, i, j, lines_to_del);
+				env->cmd = ppx_del_redirection_section_at_i(\
+					env, i, j, lines_to_del);
 				i = 0;
 				j = 0;
 			}
@@ -155,15 +116,5 @@ void	ppx_handle_redirections(t_ppx *env)
 				++j;
 		}
 		++i;
-	}
-}
-
-void	ppx_putstr_fd(char *s, int fd, bool option)
-{
-	if (s)
-	{
-		write(fd, s, ms_strlen(s));
-		if (option == MS_PUT_NEWLINE)
-			write(fd, "\n", 1);
 	}
 }
