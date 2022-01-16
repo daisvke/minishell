@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:47:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:55:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ enum e_error_print_options
 	MS_PUT_NEWLINE,	
 	MS_NONE
 };
-
 
 /*
 ** FROM PIPEX
