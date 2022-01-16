@@ -28,13 +28,14 @@ SRC_FILES			=	builtin_cmds_1.c \
 						pipex.c \
 						pipex_utils.c \
 						ppx_init_env.c \
+						redirections.c \
+						redirections_utils.c \
 						signals.c \
 						system_calls_stdlib.c \
 						system_calls_string_1.c \
 						system_calls_string_2.c \
 						system_calls_pipex.c \
 						system_calls_unistd.c \
-						utils_fd.c \
 						utils_str.c \
 						utils_strings.c
 SRC					=	$(addprefix $(SRC_DIR), $(SRC_FILES))
