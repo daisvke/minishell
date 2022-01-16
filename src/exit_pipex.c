@@ -59,16 +59,16 @@ void	ppx_exit_with_error_message(t_ppx *env, int err_code)
 
 	err_message = NULL;
 	err_message = ppx_get_err_message_from_err_code(err_code);
-	ppx_putstr_fd("pipex: ", STDERR_FILENO, NONE);
-	ppx_putstr_fd(err_message, STDERR_FILENO, PUT_NEWLINE);
+	ppx_putstr_fd("pipex: ", STDERR_FILENO, MS_NONE);
+	ppx_putstr_fd(err_message, STDERR_FILENO, MS_PUT_NEWLINE);
 	ppx_free_pipe_fds(env);
 	exit(EXIT_FAILURE);
 }
 
 void	ppx_exit_when_cmd_not_found(t_ppx *env, char *cmd)
 {
-	ppx_putstr_fd(cmd, STDERR_FILENO, NONE);
-	ppx_putstr_fd(": command not found", STDERR_FILENO, PUT_NEWLINE);
+	ppx_putstr_fd(cmd, STDERR_FILENO, MS_NONE);
+	ppx_putstr_fd(": command not found", STDERR_FILENO, MS_PUT_NEWLINE);
 	ppx_free_array_of_pointers(env->cmd, 0);
 	ppx_free_pipe_fds(env);
 	exit(EXIT_FAILURE);

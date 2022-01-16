@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 07:21:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 08:47:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		new_path = ppx_join_three_str(\
 				ppx_env, "PWD", "=", current_absolute_path \
 			);
-		ms_lst_assign_entry_to_node(node, new_path);
+		ms_lst_assign_entry_to_node(ms_env, node, new_path);
 		new_path = ms_free(new_path);
 	}
 	else
-		write(STDERR_FILENO, "cd: Too many arguments\n", 24);
+		write(STDERR_FILENO, "cd: too many arguments\n", 24);
 }
 
 void	ms_execute_cmd_pwd(t_env_lst *envp_lst)

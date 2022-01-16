@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_ms_env.c                                      :+:      :+:    :+:   */
+/*   ms_init_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/08 22:00:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 08:08:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 	while (envp[i])
 		++i;
 	max = i;
-	env->envp_lst = ms_lst_create_new_node(envp[0]);
+	env->envp_lst = ms_lst_create_new_node(env, envp[0]);
 	i = 1;
 	while (i < max)
 	{
-		new = ms_lst_create_new_node(envp[i]);
+		new = ms_lst_create_new_node(env, envp[i]);
 		ms_lst_add_back(env->envp_lst, new);
-		//ppx?
 		++i;
 	}
 }

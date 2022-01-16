@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 05:21:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:46:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ms_get_array_of_error_messages(char *errors[])
 {
-	errors[0] = "split failed";
+	errors[0] = "split: failed to allocate memory";
 	errors[1] = "malloc failed";
 	errors[2] = "syntax error near unexpected token `|'";
 	errors[3] = "syntax error near unexpected token `<<'";
@@ -25,8 +25,10 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[8] = "close failed";
 	errors[9] = "dup2 failed";
 	errors[10] = "pipe failed";
-	errors[11] = "";
-	errors[12] = "";
+	errors[11] = "strdup: failed to allocate memory";
+	errors[12] = "ms_lst_create_new_node: failed to allocate memory";
+	errors[13] = "waitpid failed";
+	errors[14] = "sigaction failed";
 	return (errors);
 }
 
@@ -44,8 +46,8 @@ void	ms_print_error_message(int err_code)
 
 	err_message = NULL;
 	err_message = ms_get_err_message_from_err_code(err_code);
-	ppx_putstr_fd("minishell: ", STDERR_FILENO, NONE);
-	ppx_putstr_fd(err_message, STDERR_FILENO, PUT_NEWLINE);
+	ppx_putstr_fd("minishell: ", STDERR_FILENO, MS_NONE);
+	ppx_putstr_fd(err_message, STDERR_FILENO, MS_PUT_NEWLINE);
 }
 
 void	ms_exit_with_error_message(t_ms *env, int err_code)

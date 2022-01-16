@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:26:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:50:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ms	env;
 
 	ms_init_env(envp, &env);
-	ms_handle_signals(&env);
+	ms_handle_signals();
 	if (ms_check_arguments(argc, argv, envp, &env) == MS_OK)
 	{
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)

@@ -6,33 +6,16 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 03:49:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:37:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_strdup(char *src, size_t size)
-{
-	size_t	i;
-	char	*dest;
-
-	dest = malloc(sizeof(char) * (size + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 size_t	ms_handle_quotes(char *str, char quote)
 {
 	size_t	i;
+
 	i = 1;
 	while (str[i] && str[i] != quote)
 		++i;

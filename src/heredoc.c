@@ -42,8 +42,8 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 			ppx_close(env, fd);
 			return ;
 		}
-		ppx_putstr_fd(line, 1, NONE);
-		ppx_putstr_fd("\n", 1, NONE);
+		ppx_putstr_fd(line, 1, MS_NONE);
+		ppx_putstr_fd("\n", 1, MS_NONE);
 		line = ms_free(line);
 	}
 	line = NULL;

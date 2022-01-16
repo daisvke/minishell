@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:21:17 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 06:41:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 08:25:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	ms_check_if_char_is_a_redir_symbol(int c)
 char	*ms_search_redir_symbol(char *str)
 {
 	char	symbol;
-	
+
 	if (!str)
 		return (NULL);
 	if (ms_check_if_char_is_a_redir_symbol(*str))

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 07:23:04 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 07:24:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:54:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,21 @@ void	ms_handle_sigquit(int signum)
 	struct termios	new_termios_p;
 
 	(void)signum;
-// errno is set
-	if (tcgetattr(STDIN_FILENO, &orig_termios_p) != MS_SUCCESS)
-		exit(EXIT_FAILURE);
+	tcgetattr(STDIN_FILENO, &orig_termios_p);
 	new_termios_p = orig_termios_p;
 	new_termios_p.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_termios_p) != MS_SUCCESS)
-		exit(EXIT_FAILURE);
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios_p);
 }
 
-void	ms_handle_signals(t_ms *ms_env)
+void	ms_handle_signals(void)
 {
 	struct sigaction	signal_action;
-	struct sigaction	signal_action2;
+	struct sigaction	signal_action_2;
 
 	signal_action.sa_handler = &ms_handle_sigint;
-	//errors
-	sigaction(SIGINT, &signal_action, NULL);
-	signal_action2.sa_handler = &ms_handle_sigquit;
-	sigaction(SIGQUIT, &signal_action2, NULL);
+	if (sigaction(SIGINT, &signal_action, NULL) != MS_SUCCESS)
+		ms_print_error_message(14);
+	signal_action_2.sa_handler = &ms_handle_sigquit;
+	if (sigaction(SIGQUIT, &signal_action_2, NULL) != MS_SUCCESS)
+		ms_print_error_message(14);
 }
