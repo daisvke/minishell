@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:52:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:56:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		ms_pipe(t_ms *env, int *fds);
 /*
 ** signals
 */
-void	ms_handle_signals(void);
+void		ms_handle_signals(void);
 
 /*
 ** init

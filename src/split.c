@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 03:50:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 10:07:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,20 @@ void	ppx_free_split(char *split[])
 	split = ms_free(split);
 }
 
-char	*ppx_strdup(char *src, int size)
+int	ppx_check_quotes(char *str, char c, bool *quotes)
 {
-	int		i;
-	char	*dest;
-
-	dest = (char *)malloc(sizeof(*dest) * (size + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (i < size)
+	if (c == '\'' || c == '\"')
 	{
-		dest[i] = src[i];
-		++i;
+		*quotes = true;
+		return (ms_handle_quotes(str, c));
 	}
-	dest[i] = '\0';
-	return (dest);
 }
 
-int	ppx_split_iter(char *split[], char *str, char sep)
+int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
 {
 	int		i;
 	char	*start;
-	bool	quotes;
 
-	quotes = false;
 	i = 0;
 	while (*str)
 	{
@@ -58,14 +47,10 @@ int	ppx_split_iter(char *split[], char *str, char sep)
 		if (!*str)
 			break ;
 		start = str;
-		if (*str == '\'' || *str == '\"')
-		{
-			quotes = true;
-			str += ms_handle_quotes(str, *str);
-		}
+		str += ppx_check_quotes(str, *str, quotes);
 		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
 			str++;
-		split[i] = ppx_strdup(start + quotes, str - start - (2 * quotes));
+		split[i] = ppx_strdup(start + *quotes, str - start - (2 * *quotes));
 		if (!split[i])
 		{
 			ppx_free_array_of_pointers(split, i);
@@ -101,11 +86,15 @@ char	**ppx_split(char const *s, char sep)
 {
 	int		res;
 	char	**split;
+	bool	quotes;
 
-	split = (char **)malloc(sizeof(*split) * (ppx_wordcount((char *)s, sep) + 1));
+	split = (\
+		char **)malloc(sizeof(*split) * (ppx_wordcount((char *)s, sep) + 1) \
+	);
 	if (!split)
 		return (NULL);
-	res = ppx_split_iter(split, (char *)s, sep);
+	quotes = false;
+	res = ppx_split_iter(split, (char *)s, sep, &quotes);
 	if (res == MS_ERROR)
 		return (NULL);
 	return (split);

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 08:13:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:56:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)
 			ms_env, ppx_env, "PATH=", ppx_env->cmd[0] \
 		);
 	lst_size = ms_lst_lstsize(ms_env->envp_lst);
-	envp = ms_convert_envp_lst_to_array_of_pointers(ms_env, ms_env->envp_lst, lst_size);
+	envp = ms_convert_envp_lst_to_array_of_pointers(\
+		ms_env, ms_env->envp_lst, lst_size);
 	if (execve(path_to_cmd, ppx_env->cmd, envp) == PPX_ERROR)
 		ppx_exit_when_cmd_not_found(ppx_env, ppx_env->cmd[0]);
 	ppx_free_array_of_pointers(envp, lst_size);
