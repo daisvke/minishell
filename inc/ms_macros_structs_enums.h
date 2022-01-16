@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 12:44:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 20:09:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ typedef struct s_ms
 	int			options;
 	int			last_pipe_exit_status;
 }				t_ms;
+
+// DELETE REDIRECTION SECTION
+typedef struct s_del
+{
+	size_t	line;
+	size_t	pos;
+	size_t	lines_to_del;
+}			t_del;
 
 // RETURNS
 enum e_comparison
