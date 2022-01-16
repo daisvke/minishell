@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 11:32:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 12:18:52 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 	else if (*str == '>')
 	{
 		env->options |= MS_OPT_REDIR_OUTPUT;
-		ppx_close(env, env->pipe_fds[env->i][1]);
 		open_flags = ppx_get_open_flags(env);
 		fd = ppx_open_file(env, file, open_flags, 0664);
 		ppx_dup2(env, fd, STDOUT_FILENO);
