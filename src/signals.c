@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 07:23:04 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:54:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 12:31:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ms_handle_sigint(int signum)
 {
 	(void)signum;
 	rl_replace_line("", 0);
-	printf("\n");
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
 }
@@ -38,9 +38,11 @@ void	ms_handle_signals(void)
 	struct sigaction	signal_action;
 	struct sigaction	signal_action_2;
 
+	ms_memset(&signal_action, 0, sizeof(signal_action));
 	signal_action.sa_handler = &ms_handle_sigint;
 	if (sigaction(SIGINT, &signal_action, NULL) != MS_SUCCESS)
 		ms_print_error_message(14);
+	ms_memset(&signal_action_2, 0, sizeof(signal_action_2));
 	signal_action_2.sa_handler = &ms_handle_sigquit;
 	if (sigaction(SIGQUIT, &signal_action_2, NULL) != MS_SUCCESS)
 		ms_print_error_message(14);

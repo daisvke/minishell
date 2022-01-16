@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:46:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 12:48:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ void	ms_print_error_message(int err_code)
 void	ms_exit_with_error_message(t_ms *env, int err_code)
 {
 	ms_print_error_message(err_code);
-	if (err_code > 0)
-	{
-		rl_clear_history();
-		ppx_free_array_of_pointers(env->ppx_env.cmd, 0);
-		ppx_free_pipe_fds(&env->ppx_env);
-	}
+	rl_clear_history();
+	ppx_free_array_of_pointers(env->ppx_env.cmd, 0);
+	ppx_free_pipe_fds(&env->ppx_env);
+	ms_lstclear(&env->envp);
 	exit(EXIT_FAILURE);
 }
