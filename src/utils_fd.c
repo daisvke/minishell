@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:12:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 07:26:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:35:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,18 @@ int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 	if (fd == PPX_ERROR)
 	{
 		err_message = strerror(errno);
-		ppx_putstr_fd("pipex: ", STDERR_FILENO, NONE);
-		ppx_putstr_fd(err_message, STDERR_FILENO, NONE);
-		ppx_putstr_fd(": ", STDERR_FILENO, NONE);
-		ppx_putstr_fd(file_name, STDERR_FILENO, PUT_NEWLINE);
+		ppx_putstr_fd("pipex: ", STDERR_FILENO, MS_NONE);
+		ppx_putstr_fd(err_message, STDERR_FILENO, MS_NONE);
+		ppx_putstr_fd(": ", STDERR_FILENO, MS_NONE);
+		ppx_putstr_fd(file_name, STDERR_FILENO, MS_PUT_NEWLINE);
 		ppx_free_pipe_fds(env);
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
 }
 
-char	**ppx_del_redirection_section_at_i(t_ppx *env, size_t del_line, size_t del_pos, size_t lines_to_del)
+char	**ppx_del_redirection_section_at_i(\
+	t_ppx *env, size_t del_line, size_t del_pos, size_t lines_to_del)
 {
 	size_t	len;
 	size_t	i;
@@ -78,7 +79,7 @@ char	*ppx_check_outfile(t_ppx *env, char *file, size_t i, size_t *lines_to_del)
 	{
 		if (env->cmd[i + 1] == NULL)
 		{
-			ppx_putstr_fd("minishell: syntax error near unexpected token `newline'", STDERR_FILENO, PUT_NEWLINE);
+			ppx_putstr_fd("minishell: syntax error near unexpected token `newline'", STDERR_FILENO, MS_PUT_NEWLINE);
 			exit(EXIT_FAILURE);
 		}
 		file = env->cmd[i + 1];
@@ -162,7 +163,7 @@ void	ppx_putstr_fd(char *s, int fd, bool option)
 	if (s)
 	{
 		write(fd, s, ms_strlen(s));
-		if (option == PUT_NEWLINE)
+		if (option == MS_PUT_NEWLINE)
 			write(fd, "\n", 1);
 	}
 }

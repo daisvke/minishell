@@ -6,14 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:24:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 09:47:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_MACROS_STRUCTS_ENUMS_H
 # define MS_MACROS_STRUCTS_ENUMS_H
 
-# define MS_ERR_MAX						12
+# define MS_ERR_MAX						14
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 
@@ -27,6 +27,8 @@ enum e_comparison
 enum e_return
 {
 	MS_OK = 0,
+	MS_FOUND = 0,
+	MS_NOT_FOUND = 1,
 	MS_SUCCESS = 0,
 	MS_ERROR = 1
 };
@@ -95,19 +97,19 @@ enum e_options
 	MS_OPT_HEREDOC = 1
 };
 
+// ERRORS
+enum e_error_print_options
+{
+	MS_PUT_NEWLINE,	
+	MS_NONE
+};
+
+
 /*
 ** FROM PIPEX
 */
 # define PPX_ERROR 				-1
-
-// ERROR HANDLING
 # define PPX_ERR_MAX			10
-
-enum e_error_print_options
-{
-	PUT_NEWLINE,	
-	NONE
-};
 
 // PROCESSES WHILE FORKING
 enum e_processes

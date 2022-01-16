@@ -6,30 +6,32 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 03:16:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 08:46:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
+void	ms_lst_assign_entry_to_node(t_ms *env, t_env_lst *node, char *entry)
 {
 	size_t	len;
 
 	ms_free(node->entry);
 	len = ms_strlen(entry);
 	node->entry = ms_strdup(entry, len);
+	if (node->entry == NULL)
+		ms_exit_with_error_message(env, 11);
 }
 
-t_env_lst	*ms_lst_create_new_node(char *data)
+t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data)
 {
 	t_env_lst	*new;
 
 	new = malloc(sizeof(t_env_lst));
 	if (!new)
-		return (NULL);
+		ms_exit_with_error_message(env, 12);
 	new->entry = NULL;
-	ms_lst_assign_entry_to_node(new, data);
+	ms_lst_assign_entry_to_node(env, new, data);
 	new->next = NULL;
 	return (new);
 }
@@ -49,7 +51,8 @@ void	ms_lst_add_back(t_env_lst *head, t_env_lst *new)
 	}
 }
 
-char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_size)
+char	**ms_convert_envp_lst_to_array_of_pointers(\
+	t_ms *env, t_env_lst *envp_lst, size_t lst_size)
 {
 	t_env_lst	*node;
 	char		**array;
@@ -63,6 +66,8 @@ char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_
 	{
 		len = ms_strlen(node->entry);
 		array[i] = ms_strdup(node->entry, len);
+		if (array[i] == NULL)
+			ms_exit_with_error_message(env, 11);
 		node = node->next;
 		++i;
 	}
@@ -70,7 +75,8 @@ char	**ms_convert_envp_lst_to_array_of_pointers(t_env_lst *envp_lst, size_t lst_
 	return (array);
 }
 
-int	ms_compare_with_envp_key(const char *envp_entry, const char *str, bool equal_in_str)
+int	ms_compare_with_envp_key(\
+	const char *envp_entry, const char *str, bool equal_in_str)
 {
 	if (str && envp_entry)
 	{

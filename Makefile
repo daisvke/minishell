@@ -8,7 +8,8 @@ MEM					=	fsanitize=address fsanitize=undefined
 
 SRC_DIR				=	src/
 SRC_FILES			=	builtin_cmds_1.c \
-						builtin_cmds_2.c \
+						builtin_cmds_2_export.c \
+						builtin_cmds_2_unset.c \
 						builtin_cmds_utils.c \
 						child_proc.c \
 						exit_minishell.c \
@@ -29,7 +30,8 @@ SRC_FILES			=	builtin_cmds_1.c \
 						ppx_init_env.c \
 						signals.c \
 						system_calls_stdlib.c \
-						system_calls_string.c \
+						system_calls_string_1.c \
+						system_calls_string_2.c \
 						system_calls_pipex.c \
 						system_calls_unistd.c \
 						utils_fd.c \
