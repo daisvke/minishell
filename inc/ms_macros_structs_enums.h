@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:55:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 12:44:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@
 # define MS_ERR_MAX						14
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
-
-// RETURNS
-enum e_comparison
-{
-	MS_SAME,
-	MS_DIFFERENT
-};
-
-enum e_return
-{
-	MS_OK = 0,
-	MS_FOUND = 0,
-	MS_NOT_FOUND = 1,
-	MS_SUCCESS = 0,
-	MS_ERROR = 1
-};
 
 // LINKED LIST CONTAINING ENV ENTRIES
 typedef struct s_env_lst
@@ -63,6 +47,22 @@ typedef struct s_ms
 	int			options;
 	int			last_pipe_exit_status;
 }				t_ms;
+
+// RETURNS
+enum e_comparison
+{
+	MS_SAME,
+	MS_DIFFERENT
+};
+
+enum e_return
+{
+	MS_OK = 0,
+	MS_FOUND = 0,
+	MS_NOT_FOUND = 1,
+	MS_SUCCESS = 0,
+	MS_ERROR = 1
+};
 
 // READ FROM PROMPT
 enum e_read
