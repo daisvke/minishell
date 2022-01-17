@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:49:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 04:28:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) \
 			== MS_READ_NONE)
 			return ;
-		add_history(ms_env->cmd_line);
 		if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == true)
 			ppx_execute_implemented_cmd_in_parent(\
 				ms_env, ppx_env, cmd_code, ppx_env->cmd);

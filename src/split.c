@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 03:36:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 05:55:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,17 @@ int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
 {
 	int		i;
 	char	*start;
+	bool	not = false;
 
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			*quotes = true;
+		++i;
+	}
+	if (*quotes == true && (*str != '\'' && *str != '\"'))
+		not = true;
 	i = 0;
 	while (*str)
 	{
@@ -49,20 +59,18 @@ int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
 			break ;
 		start = str;
 		*quotes = false;
+		while (*str && *str != sep && *str != '\'' && *str != '\"')
+			str++;
 		str += ppx_check_quotes(str, *str, quotes);
 		while (*str && *str != sep && *str != '\'' && *str != '\"')
 			str++;
-		while (*str != ':' && *str && *str != ' ')
-		{
-			*quotes = 0;
-			str++;
-		}
-		split[i] = ppx_strdup(start + *quotes, str - start - (2 * *quotes));
+		split[i] = ppx_strdup(start + *quotes - not, str - start - (2 * (*quotes)));
 		if (!split[i])
 		{
 			ppx_free_array_of_pointers(split, i);
 			return (MS_ERROR);
 		}
+		not = false;
 		++i;
 	}
 	split[i] = 0;
@@ -106,6 +114,6 @@ char	**ppx_split(char const *s, char sep)
 		return (NULL);
 	int i;
 	for (i=0;split[i];++i)
-		printf("split: %s\n",split[i]);
+		printf("split: |%s|\n",split[i]);
 	return (split);
 }
