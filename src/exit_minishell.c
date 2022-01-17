@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 04:05:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 06:28:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,14 @@ void	ms_exit_with_error_message(t_ms *env, int err_code)
 	ppx_free_pipe_fds(&env->ppx_env);
 	ms_lst_clear_list(&env->envp_lst);
 	exit(EXIT_FAILURE);
+}
+
+size_t	ms_get_symbol_error_code(char symbol)
+{
+	if (symbol == '|')
+		return (2);
+	if (symbol == '<')
+		return (3);
+	else
+		return (4);
 }

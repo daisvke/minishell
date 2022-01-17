@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 04:06:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 05:57:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,5 @@ char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep)
 	res = ms_split_iter(env, split, (char *)s, sep);
 	if (res == MS_ERROR)
 		return (NULL);
-	int i;
-	for (i=0;split[i];++i)
-		printf("split_active: %s\n",split[i]);
 	return (split);
 }

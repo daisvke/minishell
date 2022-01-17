@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 04:26:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 06:27:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ int	ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env)
 	return (MS_OK);
 }
 
-size_t	ms_get_symbol_error_code(char symbol)
-{
-	if (symbol == '|')
-		return (2);
-	if (symbol == '<')
-		return (3);
-	else
-		return (4);
-}
-
 bool	ms_detect_overuse_of_consecutive_symbol(char symbol, size_t i)
 {
 	return ((symbol == '|' && i > 1) \
@@ -90,5 +80,25 @@ int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
 		}
 		cmd_line++;
 	}
+	return (MS_SUCCESS);
+}
+
+int	ms_check_if_quote_nbr_is_even(char *cmd_line)
+{
+	size_t	count_sgl;
+	size_t	count_dbl;
+
+	count_sgl = 0;
+	count_dbl = 0;
+	while (*cmd_line)
+	{
+		if (*cmd_line == '\'')
+			++count_sgl;
+		else if (*cmd_line == '\"')
+			++count_dbl;
+		cmd_line++;
+	}
+	if (count_sgl % 2 != MS_EVEN || count_dbl % 2 != MS_EVEN)
+		return (15);
 	return (MS_SUCCESS);
 }

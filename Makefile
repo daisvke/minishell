@@ -15,22 +15,23 @@ SRC_FILES			=	builtin_cmds_1.c \
 						exit_minishell.c \
 						exit_pipex.c \
 						expand_variables.c \
+						get_next_line.c \
+						heredoc.c \
 						linked_list.c \
 						linked_list_utils.c \
 						minishell.c \
 						minishell_utils.c \
-						path.c \
-						split.c \
-						split_and_activate_options.c \
-						get_next_line.c \
-						heredoc.c \
 						ms_init_env.c \
+						path.c \
 						pipex.c \
 						pipex_utils.c \
 						ppx_init_env.c \
 						redirections.c \
 						redirections_utils.c \
 						signals.c \
+						split.c \
+						split_utils.c \
+						split_and_activate_options.c \
 						system_calls_stdlib.c \
 						system_calls_string_1.c \
 						system_calls_string_2.c \

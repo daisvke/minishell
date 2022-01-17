@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:37:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 03:09:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 06:20:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ppx_strdup(char *src, size_t size)
 {
 	size_t		i;
 	size_t		j;
-	char	*dest;
+	char		*dest;
 
 	dest = (char *)malloc(sizeof(*dest) * (size + 1));
 	if (!dest)
