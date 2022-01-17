@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 05:55:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 16:58:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,23 @@ int	ppx_check_quotes(char *str, char c, bool *quotes)
 	return (0);
 }
 
+bool	ppx_check_if_str_contains_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'' || *str == '\"')
+			return (true);
+		str++;
+	}
+	return (false);
+}
+
 int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
 {
-	int		i;
+	size_t	i;
 	char	*start;
 	bool	not = false;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			*quotes = true;
-		++i;
-	}
 	if (*quotes == true && (*str != '\'' && *str != '\"'))
 		not = true;
 	i = 0;
@@ -77,43 +81,20 @@ int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
 	return (0);
 }
 
-int	ppx_wordcount(char *str, int sep)
-{
-	size_t	wc;
-
-	wc = 0;
-	while (*str)
-	{
-		while (*str == (char)sep)
-			str++;
-		if (!*str)
-			break ;
-		if (*str == '\'' || *str == '\"')
-			str += ms_handle_quotes(NULL, str, *str);
-		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
-			str++;
-		++wc;
-	}
-	return (wc);
-}
-
-char	**ppx_split(char const *s, char sep)
+char	**ppx_split(char const *str, char sep)
 {
 	int		res;
 	char	**split;
 	bool	quotes;
 
 	split = (\
-		char **)malloc(sizeof(*split) * (ppx_wordcount((char *)s, sep) + 1) \
+		char **)malloc(sizeof(*split) * (ppx_wordcount((char *)str, sep) + 1) \
 	);
 	if (!split)
 		return (NULL);
-	quotes = false;
-	res = ppx_split_iter(split, (char *)s, sep, &quotes);
+	quotes = ppx_check_if_str_contains_quotes(str);
+	res = ppx_split_iter(split, (char *)str, sep, &quotes);
 	if (res == MS_ERROR)
 		return (NULL);
-	int i;
-	for (i=0;split[i];++i)
-		printf("split: |%s|\n",split[i]);
 	return (split);
 }

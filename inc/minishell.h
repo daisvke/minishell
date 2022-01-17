@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 02:05:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 06:26:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 ** exit
 */
 void		ms_exit_with_error_message(t_ms *env, int err_code);
+size_t		ms_get_symbol_error_code(char symbol);
 void		ms_print_error_message(int err_code);
 
 #endif

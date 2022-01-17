@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 03:10:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 06:20:35 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 /*
 ** pipe
 */
-int		ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[]);
+int		ppx_create_array_of_commands(\
+	t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[]);
 bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code);
 void	ppx_save_data_from_child(t_ms *ms_env, t_ppx *ppx_env);
 

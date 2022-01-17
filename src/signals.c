@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 07:23:04 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 12:31:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 08:05:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	ms_handle_sigquit(int signum)
 	new_termios_p = orig_termios_p;
 	new_termios_p.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios_p);
+	/*
+	ppx_free_array_of_pointers(env->ppx_env.cmd, 0);
+	ppx_free_pipe_fds(&env->ppx_env);
+	ms_lst_clear_list(&env->envp_lst);
+	*/
 }
 
 void	ms_handle_signals(void)
