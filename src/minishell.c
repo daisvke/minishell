@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 04:05:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 04:29:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
 		return (MS_READ_EOF);
 	if (*cmd_line[0] == '\0')
 		return (MS_READ_NONE);
+	add_history(*cmd_line);
 	return (MS_READ_LINE);
 }
 int	ms_check_if_quote_nbr_is_even(char *cmd_line)
