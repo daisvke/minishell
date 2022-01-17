@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:34:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 21:18:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ms_check_character_1(char *cmd[], size_t i, size_t j)
 	return (MS_SUCCESS);
 }
 
-int	ms_check_export_args(t_ms *env, char *cmd[])
+int	ms_check_export_args(char *cmd[])
 {
 	size_t	i;
 	size_t	j;
@@ -85,7 +85,7 @@ void	ms_execute_cmd_export(t_ms *env, char *cmd_line[])
 	size_t		i;
 	t_env_lst	*node;
 
-	if (ms_check_export_args(env, cmd_line) == MS_NO_EXPORT)
+	if (ms_check_export_args(cmd_line) == MS_NO_EXPORT)
 		return ;
 	i = MS_FIRST_ARG_POS;
 	while (cmd_line[i])

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 03:16:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 21:42:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,51 +73,8 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 	return (len);
 }
 
-int	ms_nbrlen(long long int n)
+void	ms_print_last_exit_status()
 {
-	int	len;
-
-	if (n == 0)
-		return (1);
-	len = 0;
-	if (n < 0)
-	{
-		n = -n;
-		len = ms_nbrlen(n) + 1;
-	}
-	else
-	{
-		while (n > 0)
-		{
-			len += 1;
-			n = n / 10;
-		}
-	}
-	return (len);
-}
-
-char	*ms_itoa(t_ms *env, int n)
-{
-	char	*res;
-	int		len;
-	long	nb;
-
-	nb = n;
-	len = ms_nbrlen(nb);
-	res = (char *)malloc(sizeof(*res) * (len + 1));
-	if (!res)
-		return (NULL);
-	res[len] = '\0';
-	if (nb < 0)
-		nb = -nb;
-	while (len--)
-	{
-		res[len] = nb % 10 + '0';
-		nb /= 10;
-	}
-	if (n < 0)
-		res[0] = '-';
-	return (res);
 }
 
 char	*ms_expand_variables(t_ms *env, char *cmd_line)
@@ -135,7 +92,6 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 	len = ms_get_new_expanded_cmd_line_length(env, cmd_line);
 	if (len < 0)
 		return (cmd_line);
-//	printf("len: %ld\n", len);
 	new_cmd_line = malloc(sizeof(char) * (len + 1));
 	i = 0;
 	k = 0;
@@ -185,6 +141,5 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 		++i;
 	}
 	new_cmd_line[k] = '\0';
-//	printf("str: |%s|\n", new_cmd_line);
 	return (new_cmd_line); 
 }

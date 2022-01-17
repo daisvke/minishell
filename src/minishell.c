@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:50:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 04:05:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,36 @@ int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
 		return (MS_READ_NONE);
 	return (MS_READ_LINE);
 }
+int	ms_check_if_quote_nbr_is_even(char *cmd_line)
+{
+	size_t	count_sgl;
+	size_t	count_dbl;
+
+	count_sgl = 0;
+	count_dbl = 0;
+	while (*cmd_line)
+	{
+		if (*cmd_line == '\'')
+			++count_sgl;
+		else if (*cmd_line == '\"')
+			++count_dbl;
+		cmd_line++;
+	}
+	if (count_sgl % 2 != MS_EVEN || count_dbl % 2 != MS_EVEN)
+		return (15);
+	return (MS_SUCCESS);
+}
 
 int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 {
 	int	err_code;
 
+	err_code = ms_check_if_quote_nbr_is_even(cmd_line);
+	if (err_code != MS_SUCCESS)
+	{
+		ms_print_error_message(err_code);
+		return (MS_ERROR);
+	}
 	err_code = ms_check_pipes_and_redirections(env, cmd_line);
 	if (err_code != MS_SUCCESS)
 	{

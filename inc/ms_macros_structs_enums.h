@@ -6,16 +6,17 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 20:09:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 04:03:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_MACROS_STRUCTS_ENUMS_H
 # define MS_MACROS_STRUCTS_ENUMS_H
 
-# define MS_ERR_MAX						14
+# define MS_ERR_MAX						15
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
+# define MS_EVEN						0
 
 // LINKED LIST CONTAINING ENV ENTRIES
 typedef struct s_env_lst

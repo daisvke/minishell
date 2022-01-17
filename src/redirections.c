@@ -6,13 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 20:21:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 21:30:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ppx_del_redirection_section_iter(t_ppx *env, t_del del, char *new_argv[])
+char	**ppx_del_redirection_section_iter(\
+	t_ppx *env, t_del del, char *new_cmd_array[])
 {
 	size_t	i;
 	size_t	j;
@@ -24,24 +25,24 @@ char	**ppx_del_redirection_section_iter(t_ppx *env, t_del del, char *new_argv[])
 		if (del.line == i \
 			&& ms_check_if_char_is_a_redir_symbol(env->cmd[i][0]) == false \
 			&& env->cmd[i][1] != '\0')
-			new_argv[j] = ms_strdup(env->cmd[i], del.pos);
+			new_cmd_array[j] = ms_strdup(env->cmd[i], del.pos);
 		else if ((del.lines_to_del == 1 && i != del.line) \
 			|| (del.lines_to_del == 2 && i != del.line && i != del.line + 1))
 		{
-			new_argv[j] = ms_strdup(env->cmd[i], ms_strlen(env->cmd[i]));
+			new_cmd_array[j] = ms_strdup(env->cmd[i], ms_strlen(env->cmd[i]));
 			++j;
 		}
 		++i;
 	}
-	if (*new_argv[0] == '\0')
-		new_argv = ms_free(new_argv);
-	return (new_argv); //name;
+	if (*new_cmd_array[0] == '\0')
+		new_cmd_array = ms_free(new_cmd_array);
+	return (new_cmd_array);
 }
 
 char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 {
 	size_t	len;
-	char	**new_argv;
+	char	**new_cmd_array;
 
 	len = 1;
 	while (env->cmd[len])
@@ -49,10 +50,10 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 	if (len == del.lines_to_del)
 		len += 1;
 	len -= del.lines_to_del;
-	new_argv = malloc(sizeof(char *) * (len + 1));
-	ms_memset(new_argv, 0, sizeof(char **) * (len + 1));
-	new_argv = ppx_del_redirection_section_iter(env, del, new_argv);
-	return (new_argv);
+	new_cmd_array = malloc(sizeof(char *) * (len + 1));
+	ms_memset(new_cmd_array, 0, sizeof(char **) * (len + 1));
+	new_cmd_array = ppx_del_redirection_section_iter(env, del, new_cmd_array);
+	return (new_cmd_array);
 }
 
 void	ppx_apply_redirection(t_ppx *env, char *str, char *file)

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 11:34:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 03:36:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ppx_check_quotes(char *str, char c, bool *quotes)
 	if (c == '\'' || c == '\"')
 	{
 		*quotes = true;
-		return (ms_handle_quotes(str, c));
+		return (ms_handle_quotes(NULL, str, c));
 	}
 	return (0);
 }
@@ -48,9 +48,15 @@ int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
 		if (!*str)
 			break ;
 		start = str;
+		*quotes = false;
 		str += ppx_check_quotes(str, *str, quotes);
-		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
+		while (*str && *str != sep && *str != '\'' && *str != '\"')
 			str++;
+		while (*str != ':' && *str && *str != ' ')
+		{
+			*quotes = 0;
+			str++;
+		}
 		split[i] = ppx_strdup(start + *quotes, str - start - (2 * *quotes));
 		if (!split[i])
 		{
@@ -75,7 +81,7 @@ int	ppx_wordcount(char *str, int sep)
 		if (!*str)
 			break ;
 		if (*str == '\'' || *str == '\"')
-			str += ms_handle_quotes(str, *str);
+			str += ms_handle_quotes(NULL, str, *str);
 		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
 			str++;
 		++wc;
@@ -98,5 +104,8 @@ char	**ppx_split(char const *s, char sep)
 	res = ppx_split_iter(split, (char *)s, sep, &quotes);
 	if (res == MS_ERROR)
 		return (NULL);
+	int i;
+	for (i=0;split[i];++i)
+		printf("split: %s\n",split[i]);
 	return (split);
 }
