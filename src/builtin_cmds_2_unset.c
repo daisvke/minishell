@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:06:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 21:18:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_check_unset_args(t_ms *env, char *cmd[])
+int	ms_check_unset_args(char *cmd[])
 {
 	size_t	i;
 	size_t	j;
@@ -54,7 +54,7 @@ void	ms_execute_cmd_unset(t_ms *env, char *cmd_line[])
 	size_t		i;
 	t_env_lst	*node;
 
-	if (ms_check_unset_args(env, cmd_line) == MS_ERROR)
+	if (ms_check_unset_args(cmd_line) == MS_ERROR)
 		return ;
 	i = MS_FIRST_ARG_POS;
 	while (cmd_line[i])

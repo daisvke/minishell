@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:51:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 03:10:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	ppx_putstr_fd(char *s, int fd, bool option);
 /*
 ** execute command
 */
+void	ppx_execute_implemented_cmd_in_parent(\
+	t_ms *ms_env, t_ppx *ppx_env, size_t cmd_code, char *cmd[]);
 void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env);
 
 /*
@@ -56,6 +58,13 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env);
 bool	ppx_check_access(char *path);
 char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	char *key, char *cmd);
+
+/*
+** pipe
+*/
+int		ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[]);
+bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code);
+void	ppx_save_data_from_child(t_ms *ms_env, t_ppx *ppx_env);
 
 /*
 ** exit
@@ -70,6 +79,7 @@ void	ppx_free_pipe_fds(t_ppx *env);
 void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size);
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3);
 void	*ppx_memcpy(void *dest, const void *src, size_t n);
+char	*ppx_strdup(char *src, size_t size);
 
 /*
 ** split

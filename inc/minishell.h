@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:56:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 02:05:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key);
 void		ms_lst_add_back(t_env_lst *head, t_env_lst *new);
 void		ms_lst_assign_entry_to_node(\
 	t_ms *env, t_env_lst *node, char *entry);
+void		ms_lst_clear_list(t_env_lst **lst);
 t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data);
 void		ms_lst_del_node(t_env_lst *node);
 t_env_lst	*ms_lst_get_last_node(t_env_lst *node);
@@ -66,9 +67,18 @@ int			ms_lst_lstsize(t_env_lst *head);
 ** parsing
 */
 int			ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env);
+int			ms_check_pipes_and_redirections(t_ms *env, char *cmd_line);
 int			ms_compare_with_envp_key(\
 	const char *envp_entry, const char *str, bool equal_in_str);
 char		*ms_expand_variables(t_ms *env, char *cmd_line);
+
+/*
+** redirections
+*/
+void		ms_apply_append_mode(t_ppx *env, char *file);
+void		ms_apply_heredoc(t_ppx *env, char *file);
+char		*ppx_check_outfile(\
+	t_ppx *env, char *file, size_t i, size_t *lines_to_del);
 
 /*
 ** commands
@@ -87,7 +97,7 @@ void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 ** utils: strings
 */
 char		ms_check_if_char_is_a_redir_symbol(int c);
-size_t		ms_handle_quotes(char *str, char quote);
+size_t		ms_handle_quotes(void *env, char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);

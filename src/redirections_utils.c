@@ -6,33 +6,35 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:18:52 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 19:18:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/16 21:30:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	ms_apply_append_mode(t_ppx *env, char *file)
 {
 	int	fd;
 	int	open_flags;
 
-	env->options |= MS_OPT_APPEND_OUTPUT; 
+	env->options |= MS_OPT_APPEND_OUTPUT;
 	ppx_close(env, env->pipe_fds[env->i][1]);
 	open_flags = ppx_get_open_flags(env);
 	fd = ppx_open_file(env, file, open_flags, 0664);
 	ppx_dup2(env, fd, STDOUT_FILENO);
 }
 
-char	*ppx_check_outfile(t_ppx *env, char *file, size_t i, size_t *lines_to_del)
+char	*ppx_check_outfile(\
+	t_ppx *env, char *file, size_t i, size_t *lines_to_del)
 {
 	*lines_to_del = 1;
 	if (*file == '\0')
 	{
 		if (env->cmd[i + 1] == NULL)
 		{
-			ppx_putstr_fd("minishell: syntax error near unexpected token `newline'", STDERR_FILENO, MS_PUT_NEWLINE);
+			ppx_putstr_fd(\
+				"minishell: syntax error near unexpected token `newline'", \
+				STDERR_FILENO, MS_PUT_NEWLINE);
 			exit(EXIT_FAILURE);
 		}
 		file = env->cmd[i + 1];
