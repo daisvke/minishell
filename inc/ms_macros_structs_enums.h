@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 04:03:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 21:29:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ typedef struct s_del
 	size_t	lines_to_del;
 }			t_del;
 
+// BITWISE FOR SPLIT
+typedef struct s_split
+{
+	size_t	i;
+	char	sep;
+	bool	quotes;
+	bool	first_char_not_quote;
+	char	*start;
+}			t_split;
+
 // RETURNS
 enum e_comparison
 {
@@ -96,6 +106,13 @@ enum e_cmds
 	MS_CMD_EXIT	
 };
 
+// ERRORS
+enum e_error_print_options
+{
+	MS_PUT_NEWLINE,	
+	MS_NONE
+};
+
 // BITWISE FOR S_MS OPTIONS
 enum e_options
 {
@@ -104,13 +121,6 @@ enum e_options
 	MS_OPT_READ_FROM_FILE = 4,
 	MS_OPT_REDIR_OUTPUT	= 2,
 	MS_OPT_HEREDOC = 1
-};
-
-// ERRORS
-enum e_error_print_options
-{
-	MS_PUT_NEWLINE,	
-	MS_NONE
 };
 
 /*

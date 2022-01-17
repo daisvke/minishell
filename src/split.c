@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 16:58:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 21:32:49 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,38 +46,32 @@ bool	ppx_check_if_str_contains_quotes(char *str)
 	return (false);
 }
 
-int	ppx_split_iter(char *split[], char *str, char sep, bool *quotes)
+int	ppx_split_iter(char *split[], char *str, t_split opt)
 {
-	size_t	i;
-	char	*start;
-	bool	not = false;
-
-	if (*quotes == true && (*str != '\'' && *str != '\"'))
-		not = true;
-	i = 0;
 	while (*str)
 	{
-		while (*str == sep)
+		while (*str == opt.sep)
 			str++;
 		if (!*str)
 			break ;
-		start = str;
-		*quotes = false;
-		while (*str && *str != sep && *str != '\'' && *str != '\"')
+		opt.start = str;
+		opt.quotes = false;
+		while (*str && *str != opt.sep && *str != '\'' && *str != '\"')
 			str++;
-		str += ppx_check_quotes(str, *str, quotes);
-		while (*str && *str != sep && *str != '\'' && *str != '\"')
+		str += ppx_check_quotes(str, *str, &opt.quotes);
+		while (*str && *str != opt.sep && *str != '\'' && *str != '\"')
 			str++;
-		split[i] = ppx_strdup(start + *quotes - not, str - start - (2 * (*quotes)));
-		if (!split[i])
+		split[opt.i] = ppx_strdup(opt.start + opt.quotes - \
+			opt.first_char_not_quote, str - opt.start - (2 * (opt.quotes)));
+		if (!split[opt.i])
 		{
-			ppx_free_array_of_pointers(split, i);
+			ppx_free_array_of_pointers(split, opt.i);
 			return (MS_ERROR);
 		}
-		not = false;
-		++i;
+		opt.first_char_not_quote = false;
+		++opt.i;
 	}
-	split[i] = 0;
+	split[opt.i] = 0;
 	return (0);
 }
 
@@ -85,15 +79,20 @@ char	**ppx_split(char const *str, char sep)
 {
 	int		res;
 	char	**split;
-	bool	quotes;
+	t_split	opt;
 
 	split = (\
 		char **)malloc(sizeof(*split) * (ppx_wordcount((char *)str, sep) + 1) \
 	);
 	if (!split)
 		return (NULL);
-	quotes = ppx_check_if_str_contains_quotes(str);
-	res = ppx_split_iter(split, (char *)str, sep, &quotes);
+	opt.i = 0;
+	opt.sep = sep;
+	opt.quotes = ppx_check_if_str_contains_quotes(str);
+	opt.first_char_not_quote = false;
+	if (opt.quotes == true && (*str != '\'' && *str != '\"'))
+		opt.first_char_not_quote = true;
+	res = ppx_split_iter(split, (char *)str, opt);
 	if (res == MS_ERROR)
 		return (NULL);
 	return (split);
