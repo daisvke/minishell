@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:56:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:56:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	ppx_split_iter(char *split[], char *str, t_split opt)
 char	**ppx_split(char const *str, char sep)
 {
 	int		res;
+	size_t	len;
 	char	**split;
 	t_split	opt;
 
-	split = (\
-		char **)malloc(sizeof(*split) * (ppx_wordcount((char *)str, sep) + 1) \
-	);
+	len = ppx_wordcount((char *)str, sep) + 1;
+	split = malloc(sizeof(char *) * len);
 	if (!split)
 		return (NULL);
 	opt.i = 0;
