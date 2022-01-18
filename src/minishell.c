@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 10:00:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 11:26:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(char *envp[], t_ms *env)
 	size_t	res;
 	char	*read_line;
 
-//	env->cmd_line = ms_free(env->cmd_line);
 	res = ms_show_prompt_and_read_cmd_line(&read_line);
 	if (res == MS_READ_EOF)
 		exit(EXIT_SUCCESS);
