@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:38:53 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 03:50:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 03:59:37 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,12 @@ char	*ms_print_last_exit_status(t_ms *env)
 	value = ms_itoa(env, env->last_pipe_exit_status);
 	printf("%s\n", value);
 	return (NULL);
+}
+
+bool	ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
+	char *cmd_line, t_expv *vars)
+{
+	return ((vars->i == 0 && cmd_line[vars->i] == '$') \
+			|| (vars->i != 0 \
+			&& cmd_line[vars->i - 1] != '\'' && cmd_line[vars->i] == '$'));
 }

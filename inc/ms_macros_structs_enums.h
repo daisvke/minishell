@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 03:22:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:07:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,24 @@ typedef struct s_del
 // BITWISE FOR SPLIT
 typedef struct s_split
 {
-	size_t	i;
-	char	sep;
 	bool	quotes;
 	bool	first_char_not_quote;
+	size_t	i;
+	char	sep;
 	char	*start;
 }			t_split;
 
 // VARIABLES USED IN MS_EXPAND_VARIABLES
 typedef struct s_expv
 {
+	int		status;
+	bool	found_var;
+	bool	double_quote;
 	size_t	i;
 	size_t	j;
 	size_t	k;
 	size_t	start;
-	int		status;
+	size_t	len;
 }			t_expv;
 
 // RETURNS
