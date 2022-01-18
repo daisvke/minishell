@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 09:37:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:17:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_env_lst
 	char	*entry;
 	void	*next;
 }			t_env_lst;
+
+extern t_env_lst	g_envp;
 
 // MAIN STRUCT FROM PIPEX
 typedef struct s_ppx

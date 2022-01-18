@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 10:00:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:19:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		ms_handle_signals(void);
 /*
 ** init
 */
-void	ms_init_env(char *envp[], t_ms *env, bool create_envp_lst);
+void		ms_init_env(char *envp[], t_ms *env, bool create_envp_lst);
 
 /*
 ** envp
@@ -124,6 +124,7 @@ char		*ms_print_last_exit_status(t_ms *env);
 ** exit
 */
 void		ms_exit_with_error_message(t_ms *env, int err_code);
+void		ms_free_all_allocated_variables(t_ms *env);
 size_t		ms_get_symbol_error_code(char symbol);
 void		ms_print_error_message(int err_code);
 
