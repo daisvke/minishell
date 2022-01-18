@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 06:26:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 22:34:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 ** utils: strings
 */
 char		ms_check_if_char_is_a_redir_symbol(int c);
-size_t		ms_handle_quotes(void *env, char *str, char quote);
+size_t		ms_handle_quotes(char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);

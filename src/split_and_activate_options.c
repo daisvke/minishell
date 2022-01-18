@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 05:57:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 22:35:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ms_handle_quotes(void *env, char *str, char quote)
+size_t	ms_handle_quotes(char *str, char quote)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ size_t	ms_handle_quotes(void *env, char *str, char quote)
 	return (i + 1);
 }
 
-int	ms_split_iter(t_ms *env, char *split[], char *str, char sep)
+int	ms_split_iter(char *split[], char *str, char sep)
 {
 	size_t	i;
 	char	*start;
@@ -36,7 +36,7 @@ int	ms_split_iter(t_ms *env, char *split[], char *str, char sep)
 			break ;
 		start = str;
 		if (*str == '\'' || *str == '\"')
-			str += ms_handle_quotes(env, str, *str);
+			str += ms_handle_quotes(str, *str);
 		while (*str && *str != sep)
 			str++;
 		split[i] = ms_strdup(start, str - start);
@@ -72,7 +72,7 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 		if (!*str)
 			break ;
 		if (*str == '\'' || *str == '\"')
-			str += ms_handle_quotes(env, str, *str);
+			str += ms_handle_quotes(str, *str);
 		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
 			str++;
 		++wc;
@@ -90,7 +90,7 @@ char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep)
 	split = malloc(sizeof(char *) * (wordcount + 1));
 	if (!split)
 		return (NULL);
-	res = ms_split_iter(env, split, (char *)s, sep);
+	res = ms_split_iter(split, (char *)s, sep);
 	if (res == MS_ERROR)
 		return (NULL);
 	return (split);
