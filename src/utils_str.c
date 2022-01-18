@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:54:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 11:36:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
 {
 	size_t	i;
 
+	if (array_of_pointers == NULL)
+		return ;
 	i = 0;
 	if (arr_size != 0)
 	{

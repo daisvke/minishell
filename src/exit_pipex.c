@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 06:12:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 11:42:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ppx_free_pipe_fds(t_ppx *env)
 	int	size;
 	int	i;
 
-	if (!env->cmd_nbr)
-		return ;
+//	if (!env->cmd_nbr)
+//		return ;
 	size = env->cmd_nbr;
 	i = 0;
 	while (i < size)

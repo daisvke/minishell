@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:11 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 09:57:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 11:23:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ms_lst_del_node(t_env_lst *node)
 	node->entry = ms_free(node->entry);
 	node = ms_free(node);
 }
-//names
+
 void	ms_lst_clear_list(t_env_lst *node)
 {
 	t_env_lst	*nxt;
