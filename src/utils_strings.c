@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:21:17 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 22:55:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:59:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,13 @@ char	*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[])
 		while (argv[i][j])
 		{
 			if (argv[i][j] != ' ')
-			{
-				*str = argv[i][j];
-				str++;
-			}
+				*str++ = argv[i][j];
 			++j;
 		}
 		if (i < argc - 1)
-		{
-			*str = ' ';
-			str++;
-		}
+			*str++ = ' ';
 		++i;
 	}
 	*str = '\0';
 	return (str - len + 1);
 }
-
