@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:54:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 06:12:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,16 @@ void	ms_print_error_message(int err_code)
 	ppx_putstr_fd(err_message, STDERR_FILENO, MS_PUT_NEWLINE);
 }
 
+void	ms_free_all_allocated_variables(t_ppx *env)
+{
+	ppx_free_all_allocated_variables(env->ppx_env);
+	ppx_free_array_of_pointers(env->cmd, MS_ALL);
+}
+
 void	ms_exit_with_error_message(t_ms *env, int err_code)
 {
 	ms_print_error_message(err_code);
 	rl_clear_history();
-	ppx_free_array_of_pointers(env->ppx_env.cmd, 0);
-	ppx_free_pipe_fds(&env->ppx_env);
 	ms_lst_clear_list(&env->envp_lst);
 	exit(EXIT_FAILURE);
 }
