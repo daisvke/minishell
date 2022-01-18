@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 13:19:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:43:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void		ms_pipe(t_ms *env, int *fds);
 ** signals
 */
 void		ms_handle_signals(void);
+
+/*
+** when argc > 1
+*/
+char		*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[]);
 
 /*
 ** init
