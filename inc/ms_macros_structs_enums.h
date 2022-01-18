@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 06:11:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:37:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_ms
 {
 	t_ppx		ppx_env;
 	t_env_lst	*envp_lst;
-	char		**envp;
 	char		*cmd_line;
 	char		**split_cmd_line;
 	int			options;

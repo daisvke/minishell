@@ -1,10 +1,10 @@
 NAME				=	minishell
 
-CC					=	clang $(INC) $(WFLAGS) -g3 
+CC					=	clang $(INC) $(WFLAGS) -g3
 WFLAGS				=	-Wall -Wextra #-Werror
 READ				=	-lreadline	
 INC					=	-I inc/
-MEM					=	fsanitize=address fsanitize=undefined
+MEM					=	-fsanitize=address -fsanitize=undefined
 
 SRC_DIR				=	src/
 SRC_FILES			=	builtin_cmds_1.c \

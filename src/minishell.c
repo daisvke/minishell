@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 07:27:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 10:00:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,17 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	return (MS_SUCCESS);
 }
 
-void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
+void	ms_prompt_and_execute_cmd_line_with_pipex(char *envp[], t_ms *env)
 {
 	size_t	res;
+	char	*read_line;
 
-	env->cmd_line = ms_free(env->cmd_line);
-	res = ms_show_prompt_and_read_cmd_line(&env->cmd_line);
+//	env->cmd_line = ms_free(env->cmd_line);
+	res = ms_show_prompt_and_read_cmd_line(&read_line);
 	if (res == MS_READ_EOF)
 		exit(EXIT_SUCCESS);
+	ms_init_env(envp, env, true);
+	env->cmd_line = read_line;
 	if (res == MS_READ_NONE \
 		|| ms_parse_cmd_line(env, env->cmd_line) == 1)
 		return ;
@@ -81,7 +84,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ms	env;
 	int		last_pipe_exit_status;
 
-	ms_init_env(envp, &env);
+	ms_init_env(envp, &env, false);
 	ms_handle_signals();
 	if (ms_check_arguments(argc, argv, envp, &env) == MS_OK)
 	{
@@ -89,10 +92,9 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			if (argc == 1)
 			{
-				ms_prompt_and_execute_cmd_line_with_pipex(&env); 
+				ms_prompt_and_execute_cmd_line_with_pipex(envp, &env); 
 				last_pipe_exit_status = env.last_pipe_exit_status;
 				ms_free_all_allocated_variables(&env);
-				ms_init_env(envp, &env);
 				env.last_pipe_exit_status = last_pipe_exit_status;
 			}
 			else
