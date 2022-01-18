@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*   minishell_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 22:43:13 by dtanigaw         ###   ########.fr       */
+/*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
+/*   Updated: 2022/01/19 00:09:49 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 	env->split_cmd_line[j] = NULL;
 }
 
-int	ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env)
+int	ms_check_arguments(char *envp[], t_ms *env)
 {
-	(void)argv;
 	if (envp == NULL)
 	{
 		ms_print_error_message(4);
@@ -100,3 +99,4 @@ int	ms_check_if_quote_nbr_is_even(char *cmd_line)
 		return (15);
 	return (MS_SUCCESS);
 }
+

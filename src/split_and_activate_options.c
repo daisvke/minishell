@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 20:49:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 00:07:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep)
 {
 	char	**split;
-	size_t	len;
 	int		res;
 	size_t	wordcount;
 
