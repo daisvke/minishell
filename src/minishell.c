@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 05:42:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 07:27:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	main(int argc, char *argv[], char *envp[])
 			{
 				ms_prompt_and_execute_cmd_line_with_pipex(&env); 
 				last_pipe_exit_status = env.last_pipe_exit_status;
+				ms_free_all_allocated_variables(&env);
 				ms_init_env(envp, &env);
 				env.last_pipe_exit_status = last_pipe_exit_status;
 			}
