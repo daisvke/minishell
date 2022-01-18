@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 21:29:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 03:22:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ typedef struct s_split
 	bool	first_char_not_quote;
 	char	*start;
 }			t_split;
+
+// VARIABLES USED IN MS_EXPAND_VARIABLES
+typedef struct s_expv
+{
+	size_t	i;
+	size_t	j;
+	size_t	k;
+	size_t	start;
+	int		status;
+}			t_expv;
 
 // RETURNS
 enum e_comparison

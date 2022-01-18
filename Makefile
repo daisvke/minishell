@@ -15,6 +15,7 @@ SRC_FILES			=	builtin_cmds_1.c \
 						exit_minishell.c \
 						exit_pipex.c \
 						expand_variables.c \
+						expand_variables_utils.c \
 						get_next_line.c \
 						heredoc.c \
 						linked_list.c \

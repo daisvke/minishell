@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 06:09:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 06:14:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 22:34:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ppx_wordcount(char *str, int sep)
 		if (!*str)
 			break ;
 		if (*str == '\'' || *str == '\"')
-			str += ms_handle_quotes(NULL, str, *str);
+			str += ms_handle_quotes(str, *str);
 		while (*str && *str != (char)sep && *str != '\'' && *str != '\"')
 			str++;
 		++wc;

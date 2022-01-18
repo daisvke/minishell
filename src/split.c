@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 21:32:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/17 22:34:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ppx_check_quotes(char *str, char c, bool *quotes)
 	if (c == '\'' || c == '\"')
 	{
 		*quotes = true;
-		return (ms_handle_quotes(NULL, str, c));
+		return (ms_handle_quotes(str, c));
 	}
 	return (0);
 }
@@ -88,7 +88,7 @@ char	**ppx_split(char const *str, char sep)
 		return (NULL);
 	opt.i = 0;
 	opt.sep = sep;
-	opt.quotes = ppx_check_if_str_contains_quotes(str);
+	opt.quotes = ppx_check_if_str_contains_quotes((char *)str);
 	opt.first_char_not_quote = false;
 	if (opt.quotes == true && (*str != '\'' && *str != '\"'))
 		opt.first_char_not_quote = true;
