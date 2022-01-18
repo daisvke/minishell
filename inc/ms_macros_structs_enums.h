@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:53:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 06:11:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 # define MS_EVEN						0
+# define MS_ALL							0
 
 // LINKED LIST CONTAINING ENV ENTRIES
 typedef struct s_env_lst
