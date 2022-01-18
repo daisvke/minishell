@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 08:08:39 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 10:00:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 	}
 }
 
-void	ms_init_env(char *envp[], t_ms *env)
+void	ms_init_env(char *envp[], t_ms *env, bool create_envp_lst)
 {
 	ms_memset(env, 0, sizeof(t_ms));
-	ms_convert_envp_into_linked_list(envp, env);
+	if (create_envp_lst)
+		ms_convert_envp_into_linked_list(envp, env);
 }

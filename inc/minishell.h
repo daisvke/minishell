@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:59:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 10:00:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		ms_handle_signals(void);
 /*
 ** init
 */
-void		ms_init_env(char *envp[], t_ms *env);
+void	ms_init_env(char *envp[], t_ms *env, bool create_envp_lst);
 
 /*
 ** envp
@@ -57,7 +57,7 @@ t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key);
 void		ms_lst_add_back(t_env_lst *head, t_env_lst *new);
 void		ms_lst_assign_entry_to_node(\
 	t_ms *env, t_env_lst *node, char *entry);
-void		ms_lst_clear_list(t_env_lst **lst);
+void		ms_lst_clear_list(t_env_lst *node);
 t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data);
 void		ms_lst_del_node(t_env_lst *node);
 t_env_lst	*ms_lst_get_last_node(t_env_lst *node);
