@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 21:14:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:54:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ms_nbrlen(long long int n)
 	return (len);
 }
 
-char	*ms_itoa(t_ms *env, int n)
+char	*ms_itoa(int n)
 {
 	char	*res;
 	int		len;

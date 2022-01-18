@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 06:28:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:54:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[13] = "waitpid failed";
 	errors[14] = "sigaction failed";
 	errors[15] = "unclosed quotes are forbidden";
+	errors[16] = "itoa: failed to allocate memory";
 	return (errors);
 }
 
