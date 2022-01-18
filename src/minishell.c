@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 13:18:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:05:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,73 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(char *envp[], t_ms *env)
 	ms_execute_cmd_line_with_pipex(env, env->split_cmd_line);
 }
 
+size_t	ms_count_char_in_array(char *argv[])
+{
+	size_t	i;
+	size_t	j;
+	size_t	res;
+
+	res = 0;
+	i = MS_FIRST_ARG_POS;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			++res;
+			++j;
+		}
+		++res;
+		++i;
+	}
+	return (res);
+}
+
+char	*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[])
+{
+	size_t	len;
+	int		i;
+	size_t	j;
+	char	*str;
+
+	len = ms_count_char_in_array(argv);
+	str = ms_malloc(env, len, sizeof(char));
+	ms_memset(str, 0, len);
+	i = MS_FIRST_ARG_POS;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] != ' ')
+			{
+				*str = argv[i][j];
+	printf("len: %c\n",*(str));
+				str++;
+			}
+			++j;
+		}
+		if (i < argc - 1)
+		{
+			*str = ' ';
+	printf("len: %c\n",*(str));
+			str++;
+		}
+		++i;
+	}
+	*str = '\0';
+	return (str);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	env;
 	int		last_pipe_exit_status;
-
-	ms_init_env(envp, &env, false);
+	
+	if (argc == 1)
+		ms_init_env(envp, &env, false);
+	else
+		ms_init_env(envp, &env, true);
 	ms_handle_signals();
 	if (ms_check_arguments(argc, argv, envp, &env) == MS_OK)
 	{
@@ -100,7 +161,11 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 			else
 			{
+				env.cmd_line = ms_convert_array_of_str_to_str(&env, argc, argv);
+				if (ms_parse_cmd_line(&env, env.cmd_line) == 1)
+					break ;
 				ms_execute_cmd_line_with_pipex(&env, env.split_cmd_line);
+				ms_free_all_allocated_variables(&env);
 				break ;
 			}
 		}
