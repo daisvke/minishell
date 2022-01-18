@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 11:44:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:26:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ void	ms_print_error_message(int err_code)
 
 void	ms_free_all_allocated_variables(t_ms *env)
 {
-	rl_clear_history();
 	ms_lst_clear_list(env->envp_lst);
-	ppx_free_all_allocated_variables(env);
+	ppx_free_all_allocated_variables(&env->ppx_env);
 	ppx_free_array_of_pointers(env->split_cmd_line, MS_ALL);
 	env->cmd_line = ms_free(env->cmd_line);
 }
 
 void	ms_exit_with_error_message(t_ms *env, int err_code)
 {
+	rl_clear_history();
 	ms_print_error_message(err_code);
 	ms_free_all_allocated_variables(env);
 	exit(EXIT_FAILURE);

@@ -6,11 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 11:26:14 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:18:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_env_lst	g_envp;
 
 void	ms_execute_cmd_line_with_pipex(t_ms *env, char **cmd_line)
 {
@@ -91,7 +93,7 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			if (argc == 1)
 			{
-				ms_prompt_and_execute_cmd_line_with_pipex(envp, &env); 
+				ms_prompt_and_execute_cmd_line_with_pipex(envp, &env);
 				last_pipe_exit_status = env.last_pipe_exit_status;
 				ms_free_all_allocated_variables(&env);
 				env.last_pipe_exit_status = last_pipe_exit_status;
