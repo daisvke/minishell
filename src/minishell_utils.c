@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 22:04:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:43:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 		++i;
 	}
 	env->split_cmd_line[j] = NULL;
-	for(i=0;env->split_cmd_line[i];++i)
-		printf("len:%ld, split: %s\n",argc, env->split_cmd_line[i]);
 }
 
 int	ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env)
@@ -44,8 +42,6 @@ int	ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env)
 		ms_print_error_message(4);
 		exit(EXIT_FAILURE);
 	}
-//	if (argc > 1)
-//		ms_use_argv_to_create_cmd_line(argc, argv, env);
 	return (MS_OK);
 }
 
@@ -92,7 +88,7 @@ int	ms_check_if_quote_nbr_is_even(char *cmd_line)
 
 	count_sgl = 0;
 	count_dbl = 0;
-	while (*cmd_line)
+	while (cmd_line && *cmd_line)
 	{
 		if (*cmd_line == '\'')
 			++count_sgl;
