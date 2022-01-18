@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:49:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 05:42:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
 	return (MS_SUCCESS);
 }
 
-int	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
+void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 {
 	size_t	res;
 
@@ -72,14 +72,14 @@ int	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 		exit(EXIT_SUCCESS);
 	if (res == MS_READ_NONE \
 		|| ms_parse_cmd_line(env, env->cmd_line) == 1)
-		return (1);
+		return ;
 	ms_execute_cmd_line_with_pipex(env, env->split_cmd_line);
-	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	env;
+	int		last_pipe_exit_status;
 
 	ms_init_env(envp, &env);
 	ms_handle_signals();
@@ -89,8 +89,10 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			if (argc == 1)
 			{
-				if (ms_prompt_and_execute_cmd_line_with_pipex(&env) == 1)
-					continue ;
+				ms_prompt_and_execute_cmd_line_with_pipex(&env); 
+				last_pipe_exit_status = env.last_pipe_exit_status;
+				ms_init_env(envp, &env);
+				env.last_pipe_exit_status = last_pipe_exit_status;
 			}
 			else
 			{
