@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:20:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:59:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	*ms_get_expanded_value_from_cmd_line(\
 int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 {
 	t_expv	vars;
-	char	*key;
-	char	*value;
 
 	ms_memset(&vars, 0, sizeof(t_expv));
 	while (cmd_line[vars.i])

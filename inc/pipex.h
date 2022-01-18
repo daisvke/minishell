@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 06:20:35 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:55:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,11 @@ char	*ppx_strdup(char *src, size_t size);
 /*
 ** split
 */
+bool	ppx_check_if_str_contains_quotes(char *str);
+int		ppx_check_quotes(char *str, char c, bool *quotes);
 void	ppx_free_split(char **array_of_pointers);
 char	**ppx_split(char const *s, char c);
+int		ppx_wordcount(char *str, int sep);
 
 /*
 ** redirections

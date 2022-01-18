@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 06:09:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 22:34:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:56:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,25 @@ int	ppx_wordcount(char *str, int sep)
 		++wc;
 	}
 	return (wc);
+}
+
+int	ppx_check_quotes(char *str, char c, bool *quotes)
+{
+	if (c == '\'' || c == '\"')
+	{
+		*quotes = true;
+		return (ms_handle_quotes(str, c));
+	}
+	return (0);
+}
+
+bool	ppx_check_if_str_contains_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'' || *str == '\"')
+			return (true);
+		str++;
+	}
+	return (false);
 }

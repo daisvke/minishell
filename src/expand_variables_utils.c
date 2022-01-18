@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:38:53 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 03:59:37 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:54:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ char	*ms_print_last_exit_status(t_ms *env)
 {
 	char	*value;
 
-	value = ms_itoa(env, env->last_pipe_exit_status);
+	value = ms_itoa(env->last_pipe_exit_status);
+	if (value == NULL)
+		ms_exit_with_error_message(env, 16);
 	printf("%s\n", value);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 06:56:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:49:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 	return (0);
 }
 
-	t_ms	env;
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_ms	env;
 
 	ms_init_env(envp, &env);
 	ms_handle_signals();

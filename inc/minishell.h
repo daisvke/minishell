@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/17 22:34:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/18 04:59:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int			ms_lst_lstsize(t_env_lst *head);
 ** parsing
 */
 int			ms_check_arguments(int argc, char *argv[], char *envp[], t_ms *env);
+int			ms_check_if_quote_nbr_is_even(char *cmd_line);
 int			ms_check_pipes_and_redirections(t_ms *env, char *cmd_line);
 int			ms_compare_with_envp_key(\
 	const char *envp_entry, const char *str, bool equal_in_str);
@@ -101,13 +102,23 @@ size_t		ms_handle_quotes(char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);
-char		*ms_itoa(t_ms *env, int n);
+char		*ms_itoa(int n);
 char		*ms_search_redir_symbol(char *str);
 int			ms_strcmp(const char *s1, const char *s2);
 int			ms_strncmp(const char *s1, const char *s2, size_t n);
 char		*ms_strdup(char *src, size_t size); //used
 size_t		ms_strlen(const char *s);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
+
+/*
+** expand variables
+*/
+bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
+	char *cmd_line, t_expv *vars);
+void		ms_copy_value_to_the_expansion_location(\
+	char *value, char *location, t_expv *vars);
+char		*ms_get_envp_value_from_key(t_ms *env, char *key);
+char		*ms_print_last_exit_status(t_ms *env);
 
 /*
 ** exit
