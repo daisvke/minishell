@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 08:49:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:51:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	ms_free_all_allocated_variables(t_ms *env)
 	ms_lst_clear_list(env->envp_lst);
 	ppx_free_all_allocated_variables(&env->ppx_env);
 	ppx_free_array_of_pointers(env->split_cmd_line, MS_ALL);
-	env->cmd_line = ms_free(env->cmd_line);
+	if (env->cmd_line && *env->cmd_line) //for each ?
+		env->cmd_line = ms_free(env->cmd_line);
 }
 
 void	ms_exit_with_error_message(t_ms *env, int err_code)

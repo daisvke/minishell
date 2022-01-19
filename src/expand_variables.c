@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 06:29:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:55:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 		new_cmd_line = ms_malloc(env, 1, sizeof(char));
 		new_cmd_line[0] = '\0';
 		*/
+		cmd_line = ms_free(cmd_line);
 		return (ms_print_last_exit_status(env));
 	}
 	else

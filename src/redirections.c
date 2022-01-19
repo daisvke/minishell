@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 21:30:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:49:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**ppx_del_redirection_section_iter(\
 		}
 		++i;
 	}
-	if (*new_cmd_array[0] == '\0')
+	if (new_cmd_array && new_cmd_array[0] && *new_cmd_array[0] == '\0')
 		new_cmd_array = ms_free(new_cmd_array);
 	return (new_cmd_array);
 }
@@ -53,6 +53,11 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 	new_cmd_array = malloc(sizeof(char *) * (len + 1));
 	ms_memset(new_cmd_array, 0, sizeof(char **) * (len + 1));
 	new_cmd_array = ppx_del_redirection_section_iter(env, del, new_cmd_array);
+	if (*new_cmd_array)
+		printf("dsdqsdqsd here\n");
+	size_t i;
+	for (i=0;new_cmd_array[i];++i)
+		printf("new: |%s|\n", new_cmd_array[i]);
 	return (new_cmd_array);
 }
 
@@ -92,6 +97,8 @@ void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
 	del.line = i;
 	del.pos = j;
 	env->cmd = ppx_del_redirection_section_at_i(env, del);
+	if (*env->cmd)
+		printf("==============\n");
 }
 
 void	ppx_handle_redirections(t_ppx *env)
@@ -99,12 +106,15 @@ void	ppx_handle_redirections(t_ppx *env)
 	size_t	i;
 	size_t	j;
 
+	for(i=0;env->cmd[i];++i)
+		printf("cmd;: |%s|\n", env->cmd[i]);
 	i = 0;
 	while (env->cmd[i])
 	{
 		j = 0;
-		while (env->cmd[i][j])
+		while (*env->cmd && env->cmd[i][j])//added first cond
 		{
+printf("cccc: %c\n", env->cmd[i][j]);
 			if (ms_search_redir_symbol(&env->cmd[i][j]))
 			{
 				ppx_check_and_apply_redirection(env, i, j);
@@ -113,6 +123,7 @@ void	ppx_handle_redirections(t_ppx *env)
 			}
 			else
 				++j;
+	//		printf("cmd: |%c| i:%ld, j:%ld\n",env->cmd[i][j],i,j);
 		}
 		++i;
 	}
