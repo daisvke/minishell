@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 23:53:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 00:02:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void		ms_copy_value_to_the_expansion_location(\
 	char *value, char *location, t_expv *vars);
 char		*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
+char		*ms_get_new_cmd_line_with_expanded_variables(t_ms *env, char **cmd_line);
 char		*ms_print_last_exit_status(t_ms *env);
 
 /*
