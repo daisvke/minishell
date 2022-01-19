@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 23:51:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 00:03:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 	{
 		vars->status = 1;
 		ms_free(new_cmd_line);
-		new_cmd_line = ms_malloc(env, 2, sizeof(char));
-		new_cmd_line[0] = '$';
-		new_cmd_line[1] = '\0';
+		cmd_line = ms_free(cmd_line);
+		new_cmd_line = ms_strdup("$", 2);
 		return (new_cmd_line);
 	}
 	vars->start = vars->i + 1;
@@ -84,12 +83,7 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 		|| cmd_line[vars->i + 2] == '\0'))
 	{
 		vars->status = 1;
-		ms_free(new_cmd_line);// ou strdup ??
-//		ms_print_last_exit_status(env); //no ret needed
-		/*
-		new_cmd_line = ms_malloc(env, 1, sizeof(char));
-		new_cmd_line[0] = '\0';
-		*/
+		ms_free(new_cmd_line);
 		cmd_line = ms_free(cmd_line);
 		return (ms_print_last_exit_status(env));
 	}
