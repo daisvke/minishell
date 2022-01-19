@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 13:26:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 08:49:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ms_free_all_allocated_variables(t_ms *env)
 
 void	ms_exit_with_error_message(t_ms *env, int err_code)
 {
-	rl_clear_history();
+	rl_clear_history();//to free all
 	ms_print_error_message(err_code);
 	ms_free_all_allocated_variables(env);
 	exit(EXIT_FAILURE);
