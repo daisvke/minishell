@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 21:38:53 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:54:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 01:22:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*ms_print_last_exit_status(t_ms *env)
 	if (value == NULL)
 		ms_exit_with_error_message(env, 16);
 	printf("%s\n", value);
+	value = ms_free(value);
 	return (NULL);
 }
 

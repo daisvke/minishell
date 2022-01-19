@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 00:09:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 05:47:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 	env->split_cmd_line[j] = NULL;
 }
 
-int	ms_check_arguments(char *envp[], t_ms *env)
+int	ms_check_arguments(char *envp[])
 {
 	if (envp == NULL)
 	{
@@ -99,4 +99,3 @@ int	ms_check_if_quote_nbr_is_even(char *cmd_line)
 		return (15);
 	return (MS_SUCCESS);
 }
-
