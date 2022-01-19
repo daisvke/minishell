@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 00:06:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 06:22:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,46 @@ void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
 	ppx_pipex(env, &env->ppx_env, cmd_line);
 }
 
-int	ms_show_prompt_and_read_cmd_line(char **cmd_line)
+int	ms_show_prompt_and_read_cmd_line(char **read_line)
 {
-	*cmd_line = readline("\033[0;32m$\033[0;37m ");
-	if (*cmd_line == NULL)
+	*read_line = readline("\033[0;32m$\033[0;37m ");
+	if (*read_line == NULL)
 		return (MS_READ_EOF);
-	if (*cmd_line[0] == '\0')
+	if (*read_line[0] == '\0')
 		return (MS_READ_NONE);
-	add_history(*cmd_line);
+	add_history(*read_line);
 	return (MS_READ_LINE);
 }
 
-int	ms_parse_cmd_line(t_ms *env, char *cmd_line)
+int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 {
 	int	err_code;
+	char	*new;
 
-	err_code = ms_check_if_quote_nbr_is_even(cmd_line);
+	err_code = ms_check_if_quote_nbr_is_even(*cmd_line);
 	if (err_code != MS_SUCCESS)
 	{
 		ms_print_error_message(err_code);
 		return (MS_ERROR);
 	}
-	err_code = ms_check_pipes_and_redirections(env, cmd_line);
+	err_code = ms_check_pipes_and_redirections(env, *cmd_line);
 	if (err_code != MS_SUCCESS)
 	{
 		ms_print_error_message(err_code);
 		return (MS_ERROR);
 	}
-	cmd_line = ms_expand_variables(env, cmd_line);
-	if (cmd_line == NULL \
-		|| cmd_line[0] == '\0')
+	new = ms_expand_variables(env, *cmd_line);
+//	*cmd_line = ms_free(*cmd_line);
+//	*cmd_line = new;
+	if (new == NULL)
 		return (1);
-	env->split_cmd_line = ms_split_and_activate_options(env, cmd_line, '|');
+		/*
+		|| *cmd_line[0] == '\0')*/
+	env->split_cmd_line = ms_split_and_activate_options(env, new, '|');
+	new = ms_free(new);
 	if (env->split_cmd_line == NULL)
 		ms_exit_with_error_message(env, 0);
+	
 	return (MS_SUCCESS);
 }
 
@@ -75,7 +81,8 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(\
 	env->last_pipe_exit_status = last_pipe_exit_status;
 	env->cmd_line = read_line;
 	if (res == MS_READ_NONE \
-		|| ms_parse_cmd_line(env, env->cmd_line) == 1)
+		|| ms_parse_cmd_line(env, &env->cmd_line) == 1)
 		return ;
+//	printf("prompt cmd: %s\n", env->cmd_line);
 	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
 }

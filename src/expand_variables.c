@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 04:59:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 06:29:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,23 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 	if (cmd_line[vars->i + 1] == ' ' || cmd_line[vars->i + 1] == '\0')
 	{
 		vars->status = 1;
-		return ("$");
+		ms_free(new_cmd_line);
+		new_cmd_line = ms_malloc(env, 2, sizeof(char));
+		new_cmd_line[0] = '$';
+		new_cmd_line[1] = '\0';
+		return (new_cmd_line);
 	}
 	vars->start = vars->i + 1;
 	if (cmd_line[vars->i + 1] == '?' && (cmd_line[vars->i + 2] == ' ' \
 		|| cmd_line[vars->i + 2] == '\0'))
 	{
 		vars->status = 1;
+		ms_free(new_cmd_line);// ou strdup ??
+//		ms_print_last_exit_status(env); //no ret needed
+		/*
+		new_cmd_line = ms_malloc(env, 1, sizeof(char));
+		new_cmd_line[0] = '\0';
+		*/
 		return (ms_print_last_exit_status(env));
 	}
 	else
@@ -98,7 +108,7 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 	len = ms_get_new_expanded_cmd_line_length(env, cmd_line);
 	if (len < 0)
 		return (cmd_line);
-	new_cmd_line = malloc(sizeof(char) * (len + 1));
+	new_cmd_line = ms_malloc(env, len + 1, sizeof(char));
 	ms_memset(&vars, 0, sizeof(t_expv));
 	while (cmd_line[vars.i])
 	{

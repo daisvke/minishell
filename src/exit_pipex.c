@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 11:42:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 06:10:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ppx_free_pipe_fds(t_ppx *env)
 	}
 	env->pipe_fds = ms_free(env->pipe_fds);
 }
+
 // del unused
 char	**ppx_get_array_of_error_messages(char *errors[])
 {
@@ -71,10 +72,12 @@ void	ppx_exit_with_error_message(t_ppx *env, int err_code)
 	exit(EXIT_FAILURE);
 }
 
-void	ppx_exit_when_cmd_not_found(t_ppx *env, char *cmd)
+void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
 {
 	ppx_putstr_fd(cmd, STDERR_FILENO, MS_NONE);
 	ppx_putstr_fd(": command not found", STDERR_FILENO, MS_PUT_NEWLINE);
-	ppx_free_all_allocated_variables(env);
+		path_to_cmd = ms_free(path_to_cmd);
+	ppx_free_pipe_fds(&env->ppx_env);
+	ms_lst_clear_list(env->envp_lst);
 	exit(EXIT_FAILURE);
 }
