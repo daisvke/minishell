@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 23:36:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:53:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,18 @@ int			ms_check_if_quote_nbr_is_even(char *cmd_line);
 int			ms_check_pipes_and_redirections(t_ms *env, char *cmd_line);
 int			ms_compare_with_envp_key(\
 	const char *envp_entry, const char *str, bool equal_in_str);
-char		*ms_expand_variables(t_ms *env, char *cmd_line);
 int			ms_parse_cmd_line(t_ms *env, char **cmd_line);
+
+/*
+** expand variables
+*/
+bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
+	char *cmd_line, t_expv *vars);
+void		ms_copy_value_to_the_expansion_location(\
+	char *value, char *location, t_expv *vars);
+char		*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars);
+char		*ms_get_envp_value_from_key(t_ms *env, char *key);
+char		*ms_print_last_exit_status(t_ms *env);
 
 /*
 ** redirections
@@ -118,16 +128,6 @@ int			ms_strncmp(const char *s1, const char *s2, size_t n);
 char		*ms_strdup(char *src, size_t size); //used
 size_t		ms_strlen(const char *s);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
-
-/*
-** expand variables
-*/
-bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-	char *cmd_line, t_expv *vars);
-void		ms_copy_value_to_the_expansion_location(\
-	char *value, char *location, t_expv *vars);
-char		*ms_get_envp_value_from_key(t_ms *env, char *key);
-char		*ms_print_last_exit_status(t_ms *env);
 
 /*
 ** exit
