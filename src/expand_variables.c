@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 10:55:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:51:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 	return (new_cmd_line);
 }
 
-char	*ms_expand_variables(t_ms *env, char *cmd_line)
+char	*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars)
 {
-	t_expv	vars;
 	int		len;
 	char	*new_cmd_line;
 
@@ -110,21 +109,20 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line)
 	if (len < 0)
 		return (cmd_line);
 	new_cmd_line = ms_malloc(env, len + 1, sizeof(char));
-	ms_memset(&vars, 0, sizeof(t_expv));
-	while (cmd_line[vars.i])
+	while (cmd_line[vars->i])
 	{
 		if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-			cmd_line, &vars) == true)
+			cmd_line, vars) == true)
 		{
 			new_cmd_line = ms_expand_last_exit_status_or_value_from_envp(\
-				env, cmd_line, &vars, new_cmd_line);
-			if (vars.status == 1)
+				env, cmd_line, vars, new_cmd_line);
+			if (vars->status == 1)
 				return (new_cmd_line);
 		}
 		else
-			new_cmd_line[vars.k++] = cmd_line[vars.i];
-		++vars.i;
+			new_cmd_line[vars->k++] = cmd_line[vars->i];
+		++vars->i;
 	}
-	new_cmd_line[vars.k] = '\0';
+	new_cmd_line[vars->k] = '\0';
 	return (new_cmd_line);
 }

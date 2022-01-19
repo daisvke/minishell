@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 06:22:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:53:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	ms_show_prompt_and_read_cmd_line(char **read_line)
 
 int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 {
-	int	err_code;
+	int		err_code;
+	t_expv	vars;
 	char	*new;
 
 	err_code = ms_check_if_quote_nbr_is_even(*cmd_line);
@@ -53,13 +54,12 @@ int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 		ms_print_error_message(err_code);
 		return (MS_ERROR);
 	}
-	new = ms_expand_variables(env, *cmd_line);
-//	*cmd_line = ms_free(*cmd_line);
-//	*cmd_line = new;
+	ms_memset(&vars, 0, sizeof(t_expv));
+	new = ms_expand_variables(env, *cmd_line, &vars);
+	if (vars.found_var == true)
+		*cmd_line = ms_free(*cmd_line);
 	if (new == NULL)
 		return (1);
-		/*
-		|| *cmd_line[0] == '\0')*/
 	env->split_cmd_line = ms_split_and_activate_options(env, new, '|');
 	new = ms_free(new);
 	if (env->split_cmd_line == NULL)
