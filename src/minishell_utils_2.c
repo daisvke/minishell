@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 05:47:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:37:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
 	if (env->cmd_line[0] == '|' \
 		|| (len > 0 && env->cmd_line[len - 1] == '|'))
 		return (2);
-	while (*cmd_line)
+	while (cmd_line && *cmd_line)
 	{
 		if (*cmd_line == '|' || *cmd_line == '<' || *cmd_line == '>')
 		{

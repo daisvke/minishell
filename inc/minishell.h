@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 06:05:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:36:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			ms_check_pipes_and_redirections(t_ms *env, char *cmd_line);
 int			ms_compare_with_envp_key(\
 	const char *envp_entry, const char *str, bool equal_in_str);
 char		*ms_expand_variables(t_ms *env, char *cmd_line);
-//int			ms_parse_cmd_line(t_ms *env, char *cmd_line);
+int			ms_parse_cmd_line(t_ms *env, char **cmd_line);
 
 /*
 ** redirections

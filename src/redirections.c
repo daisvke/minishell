@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 10:49:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:39:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 char	**ppx_del_redirection_section_iter(\
 	t_ppx *env, t_del del, char *new_cmd_array[])
 {
-	size_t	i;
-	size_t	j;
+	size_t		i;
+	size_t		j;
 
 	i = 0;
 	j = 0;
-	while (env->cmd[i])
+	while (env->cmd && env->cmd[i])
 	{
 		if (del.line == i \
 			&& ms_check_if_char_is_a_redir_symbol(env->cmd[i][0]) == false \
@@ -34,7 +34,8 @@ char	**ppx_del_redirection_section_iter(\
 		}
 		++i;
 	}
-	if (new_cmd_array && new_cmd_array[0] && *new_cmd_array[0] == '\0')
+	if ((new_cmd_array && new_cmd_array[0] && *new_cmd_array[0] == '\0') \
+		|| (*new_cmd_array == NULL))
 		new_cmd_array = ms_free(new_cmd_array);
 	return (new_cmd_array);
 }
@@ -53,11 +54,6 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 	new_cmd_array = malloc(sizeof(char *) * (len + 1));
 	ms_memset(new_cmd_array, 0, sizeof(char **) * (len + 1));
 	new_cmd_array = ppx_del_redirection_section_iter(env, del, new_cmd_array);
-	if (*new_cmd_array)
-		printf("dsdqsdqsd here\n");
-	size_t i;
-	for (i=0;new_cmd_array[i];++i)
-		printf("new: |%s|\n", new_cmd_array[i]);
 	return (new_cmd_array);
 }
 
@@ -88,17 +84,18 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 
 void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
 {
-	char	*file;
-	t_del	del;
+	char			*file;
+	char			**cmd_line_without_redir_section;
+	t_del			del;
 
 	file = ms_search_redir_symbol(&env->cmd[i][j]);
 	file = ppx_check_outfile(env, file, i, &del.lines_to_del);
 	ppx_apply_redirection(env, &env->cmd[i][j], file);
 	del.line = i;
 	del.pos = j;
-	env->cmd = ppx_del_redirection_section_at_i(env, del);
-	if (*env->cmd)
-		printf("==============\n");
+	cmd_line_without_redir_section = ppx_del_redirection_section_at_i(env, del);
+	ppx_free_array_of_pointers(env->cmd, MS_ALL);
+	env->cmd = cmd_line_without_redir_section;
 }
 
 void	ppx_handle_redirections(t_ppx *env)
@@ -106,24 +103,22 @@ void	ppx_handle_redirections(t_ppx *env)
 	size_t	i;
 	size_t	j;
 
-	for(i=0;env->cmd[i];++i)
-		printf("cmd;: |%s|\n", env->cmd[i]);
 	i = 0;
 	while (env->cmd[i])
 	{
 		j = 0;
-		while (*env->cmd && env->cmd[i][j])//added first cond
+		while (*env->cmd && env->cmd[i][j])
 		{
-printf("cccc: %c\n", env->cmd[i][j]);
 			if (ms_search_redir_symbol(&env->cmd[i][j]))
 			{
 				ppx_check_and_apply_redirection(env, i, j);
+				if (env->cmd == NULL)
+					return ;
 				i = 0;
 				j = 0;
 			}
 			else
 				++j;
-	//		printf("cmd: |%c| i:%ld, j:%ld\n",env->cmd[i][j],i,j);
 		}
 		++i;
 	}
