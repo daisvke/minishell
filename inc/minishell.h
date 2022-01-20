@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 00:02:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 02:18:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char		*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[]);
 /*
 ** init
 */
-void		ms_init_env(char *envp[], t_ms *env, bool create_envp_lst);
+void		ms_init_env(char *envp[], t_ms *env);
 
 /*
 ** envp
@@ -111,8 +111,7 @@ void		ms_execute_cmd_export(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
 void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line);
-void		ms_prompt_and_execute_cmd_line_with_pipex(\
-	char *envp[], t_ms *env, int last_pipe_exit_status);
+void		ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env);
 
 /*
 ** utils: strings

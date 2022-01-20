@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 01:35:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 02:33:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,18 @@ int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 	return (MS_SUCCESS);
 }
 
-void	ms_prompt_and_execute_cmd_line_with_pipex(\
-	char *envp[], t_ms *env, int last_pipe_exit_status)
+void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 {
 	size_t	res;
 	char	*read_line;
 
 	res = ms_show_prompt_and_read_cmd_line(&read_line);
 	if (res == MS_READ_EOF)
+	{
+		rl_clear_history();
+		ms_lst_clear_list(env->envp_lst);
 		exit(EXIT_SUCCESS);
-	ms_init_env(envp, env, true);
-	env->last_pipe_exit_status = last_pipe_exit_status;
+	}
 	env->cmd_line = read_line;
 	if (res == MS_READ_NONE \
 		|| ms_parse_cmd_line(env, &env->cmd_line) == 1)
