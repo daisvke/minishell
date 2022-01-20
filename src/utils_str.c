@@ -6,36 +6,36 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 11:36:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 05:01:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size)
+void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size)
 {
 	size_t	i;
 
-	if (array_of_pointers == NULL)
+	if (*array_of_pointers == NULL)
 		return ;
 	i = 0;
 	if (arr_size != 0)
 	{
 		while (i < arr_size)
 		{
-			array_of_pointers[i] = ms_free(array_of_pointers[i]);
+			(*array_of_pointers)[i] = ms_free((*array_of_pointers)[i]);
 			++i;
 		}
 	}
 	else
 	{
-		while (array_of_pointers[i])
+		while ((*array_of_pointers)[i])
 		{
-			array_of_pointers[i] = ms_free(array_of_pointers[i]);
+			(*array_of_pointers)[i] = ms_free((*array_of_pointers)[i]);
 			++i;
 		}
 	}
-	array_of_pointers = ms_free(array_of_pointers);
+	*array_of_pointers = ms_free(*array_of_pointers);
 }
 
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)

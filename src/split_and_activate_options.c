@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 06:16:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ms_split_iter(char *split[], char *str, char sep)
 		split[i] = ms_strdup(start, str - start);
 		if (!split[i])
 		{
-			ppx_free_array_of_pointers(split, i);
+			ppx_free_array_of_pointers(&split, i);
 			return (MS_ERROR);
 		}
 		i++;

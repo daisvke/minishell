@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 02:25:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ms_launch_prompt(t_ms *env)
 {
 	ms_prompt_and_execute_cmd_line_with_pipex(env);
 	ppx_free_all_allocated_variables(&env->ppx_env);
-	ppx_free_array_of_pointers(env->split_cmd_line, MS_ALL);
+	ppx_free_array_of_pointers(&env->split_cmd_line, MS_ALL); //add  in all free ?
 }
 
 void	ms_run_command_and_quit(int argc, char *argv[], t_ms *env)

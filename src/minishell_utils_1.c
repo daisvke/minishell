@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 02:33:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:50:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 {
 	size_t	res;
 	char	*read_line;
+	char	**tmp;
 
 	res = ms_show_prompt_and_read_cmd_line(&read_line);
 	if (res == MS_READ_EOF)
@@ -92,8 +93,15 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 		exit(EXIT_SUCCESS);
 	}
 	env->cmd_line = read_line;
-	if (res == MS_READ_NONE \
-		|| ms_parse_cmd_line(env, &env->cmd_line) == 1)
+	if (res == MS_READ_NONE)
 		return ;
+	if (ms_parse_cmd_line(env, &env->cmd_line) == 1)
+	{
+		tmp = ms_malloc(env, 1, sizeof(char *));
+		tmp[0] = ms_malloc(env, 1, sizeof(char));
+		*tmp[0] = '\0';
+		env->ppx_env.cmd = tmp; //or set on a bool and not to free
+		return ;
+	}
 	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
 }

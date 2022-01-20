@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 23:39:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
 	del.line = i;
 	del.pos = j;
 	cmd_line_without_redir_section = ppx_del_redirection_section_at_i(env, del);
-	ppx_free_array_of_pointers(env->cmd, MS_ALL);
+	ppx_free_array_of_pointers(&env->cmd, MS_ALL);
 	env->cmd = cmd_line_without_redir_section;
 }
 
