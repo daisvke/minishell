@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 06:23:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 00:43:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ms_launch_prompt(char *envp[], t_ms *env, int last_pipe_exit_status)
 {
 	ms_prompt_and_execute_cmd_line_with_pipex(envp, env, last_pipe_exit_status);
 	last_pipe_exit_status = env->last_pipe_exit_status;
-
 	ms_lst_clear_list(env->envp_lst);
 	ppx_free_all_allocated_variables(&env->ppx_env);
 	ppx_free_array_of_pointers(env->split_cmd_line, MS_ALL);
