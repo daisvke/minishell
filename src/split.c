@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 20:56:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ppx_split_iter(char *split[], char *str, t_split opt)
 			opt.first_char_not_quote, str - opt.start - (2 * (opt.quotes)));
 		if (!split[opt.i])
 		{
-			ppx_free_array_of_pointers(split, opt.i);
+			ppx_free_array_of_pointers(&split, opt.i);
 			return (MS_ERROR);
 		}
 		opt.first_char_not_quote = false;

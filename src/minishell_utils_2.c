@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 20:37:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 		env->split_cmd_line[j] = ms_strdup(argv[i], ms_strlen(argv[i]));
 		if (env->split_cmd_line[j] == NULL)
 		{
-			ppx_free_array_of_pointers(env->split_cmd_line, j);
+			ppx_free_array_of_pointers(&env->split_cmd_line, j);
 			ms_exit_with_error_message(env, 0);
 		}
 		++j;

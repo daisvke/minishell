@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 00:39:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 03:53:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 		vars->status = 1;
 		ms_free(new_cmd_line);
 		cmd_line = ms_free(cmd_line);
-		return (ms_print_last_exit_status(env));
+		ms_print_last_exit_status(env);
+		new_cmd_line = ms_strdup(" ", 2); // or set on a bool
+		return (new_cmd_line);
 	}
 	else
 		value = ms_get_expanded_value_from_cmd_line(\

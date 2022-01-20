@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 05:54:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ppx_free_pipe_fds(t_ppx *env);
 /*
 ** utils_str
 */
-void	ppx_free_array_of_pointers(char **array_of_pointers, size_t arr_size);
+void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size);
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3);
 void	*ppx_memcpy(void *dest, const void *src, size_t n);
 char	*ppx_strdup(char *src, size_t size);

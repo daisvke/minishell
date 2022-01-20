@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 02:23:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 05:03:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ppx_free_pipe_fds(t_ppx *env)
 
 //	if (!env->cmd_nbr)
 //		return ;
+	if (env->pipe_fds == NULL)
+		return ;
 	size = env->cmd_nbr;
 	i = 0;
 	while (i < size)
@@ -56,7 +58,7 @@ char	*ppx_get_err_message_from_err_code(int err_code)
 
 void	ppx_free_all_allocated_variables(t_ppx *env)
 {
-	ppx_free_array_of_pointers(env->cmd, MS_ALL);
+	ppx_free_array_of_pointers(&env->cmd, MS_ALL);
 	ppx_free_pipe_fds(env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 02:40:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 			ppx_execute_pipe_and_run_cmd_in_child_process(\
 				ms_env, ppx_env, &pid);
 		if (ppx_env->pos < ppx_env->cmd_nbr - 1)
-			ppx_free_array_of_pointers(ppx_env->cmd, MS_ALL);
+			ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
