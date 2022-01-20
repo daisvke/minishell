@@ -6,24 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/20 05:07:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ppx_free_split(char *split[])
-{
-	size_t	i;
-
-	i = 0;
-	while (split[i])
-	{
-		split[i] = ms_free(split[i]);
-		++i;
-	}
-	split = ms_free(split);
-}
 
 int	ppx_split_iter(char *split[], char *str, t_split opt)
 {
