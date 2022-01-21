@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 07:39:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[14] = "sigaction failed";
 	errors[15] = "unclosed quotes are forbidden";
 	errors[16] = "itoa: failed to allocate memory";
+	errors[17] = "envp is not set";
+	errors[18] = "argc < 1";
 	return (errors);
 }
 
