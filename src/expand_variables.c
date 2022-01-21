@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/21 09:34:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 10:16:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*ms_get_expanded_value_from_cmd_line(\
 	key = ms_free(key);
 	if (value)
 	{
+			vars->found_var = true;
 		if (mode == 1)
 			value++;
 		else
@@ -51,7 +52,7 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 		if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 			cmd_line, &vars) == true)
 		{
-			vars.found_var = true;
+//			vars.found_var = true;
 			vars.start = vars.i + 1;
 			ms_get_expanded_value_from_cmd_line(env, cmd_line, &vars, 0);
 		}
@@ -120,6 +121,7 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars)
 		++vars->i;
 	}
 	new_cmd_line[vars->k] = '\0';
-	cmd_line = ms_free(cmd_line);
+	if (vars->found_var == false)
+		cmd_line = ms_free(cmd_line);
 	return (new_cmd_line);
 }
