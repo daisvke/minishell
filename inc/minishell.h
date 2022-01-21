@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/21 07:39:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 12:02:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);
 char		*ms_itoa(int n);
+int			ms_nbrlen(long long int n);
 char		*ms_search_redir_symbol(char *str);
 int			ms_strcmp(const char *s1, const char *s2);
 int			ms_strncmp(const char *s1, const char *s2, size_t n);
