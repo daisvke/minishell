@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 05:01:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 12:05:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ms_nbrlen(long long int n)
 	return (len);
 }
 
-char	*ms_itoa(int n)
+char	*ms_itoa(t_ms *env, int n)
 {
 	char	*res;
 	int		len;
@@ -93,7 +93,7 @@ char	*ms_itoa(int n)
 	len = ms_nbrlen(nb);
 	res = (char *)malloc(sizeof(*res) * (len + 1));
 	if (!res)
-		return (NULL);
+		ms_exit_with_error_message(env, 16);
 	res[len] = '\0';
 	if (nb < 0)
 		nb = -nb;
