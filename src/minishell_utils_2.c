@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 07:39:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 	env->split_cmd_line[j] = NULL;
 }
 
-int	ms_check_arguments(char *envp[])
+int	ms_check_arguments(char *envp[], int argc)
 {
 	if (envp == NULL)
 	{
-		ms_print_error_message(4);
+		ms_print_error_message(17);
+		exit(EXIT_FAILURE);
+	}
+	if (argc < 1)
+	{
+		ms_print_error_message(18);
 		exit(EXIT_FAILURE);
 	}
 	return (MS_OK);

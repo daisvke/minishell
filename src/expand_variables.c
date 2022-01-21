@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 03:53:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 09:34:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,6 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars)
 		++vars->i;
 	}
 	new_cmd_line[vars->k] = '\0';
+	cmd_line = ms_free(cmd_line);
 	return (new_cmd_line);
 }

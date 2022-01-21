@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 02:18:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 07:39:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			ms_lst_lstsize(t_env_lst *head);
 /*
 ** parsing
 */
-int			ms_check_arguments(char *envp[]);
+int			ms_check_arguments(char *envp[], int argc);
 int			ms_check_if_quote_nbr_is_even(char *cmd_line);
 int			ms_check_pipes_and_redirections(t_ms *env, char *cmd_line);
 int			ms_compare_with_envp_key(\
