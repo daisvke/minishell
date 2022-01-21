@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/21 12:01:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 12:05:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ms_expand_last_pipe_exit_status(\
 {
 	char	*exit_status;
 
-	exit_status = ms_itoa(env->last_pipe_exit_status);
+	exit_status = ms_itoa(env, env->last_pipe_exit_status);
 	ms_copy_value_to_the_expansion_location(exit_status, new_cmd_line, vars);
 	exit_status = ms_free(exit_status);
 	++vars->i;
