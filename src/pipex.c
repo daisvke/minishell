@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 05:15:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 04:20:35 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
 	pid_t	pid;
 	size_t	cmd_code;
-
+	
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) \
@@ -80,7 +80,8 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 			ppx_execute_implemented_cmd_in_parent(\
 				ms_env, ppx_env, cmd_code, ppx_env->cmd);
 		else if (ms_check_if_the_cmd_is_implemented(\
-			ppx_env->cmd, &cmd_code, PPX_PROC_PARENT) == true);	
+			ppx_env->cmd, &cmd_code, PPX_PROC_PARENT) == true)
+			continue ;
 		else
 			ppx_execute_pipe_and_run_cmd_in_child_process(\
 				ms_env, ppx_env, &pid);

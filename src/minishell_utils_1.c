@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/21 09:26:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 05:36:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
 
 int	ms_show_prompt_and_read_cmd_line(char **read_line)
 {
-	*read_line = readline("\033[0;32m$\033[0;37m ");
+	write(STDOUT_FILENO, MS_PROMPT, 16);
+	*read_line = readline(NULL);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
@@ -97,9 +98,9 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 		return ;
 	if (ms_parse_cmd_line(env, &env->cmd_line) == 1)
 	{
-		tmp = ms_malloc(env, 1, sizeof(char *));
-		tmp[0] = ms_malloc(env, 1, sizeof(char));
-		*tmp[0] = '\0';
+		tmp = ms_malloc(env, 2, sizeof(char *));
+		tmp[0] = ms_strdup(" ", 2); 
+		*tmp[1] = '\0';
 		env->ppx_env.cmd = tmp; //or set on a bool and not to free
 		return ;
 	}
