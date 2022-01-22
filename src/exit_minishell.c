@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 06:26:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 20:14:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[3] = "syntax error near unexpected token `<<'";
 	errors[4] = "syntax error near unexpected token `>>'";
 	errors[5] = "getcwd failed";
-	errors[6] = "minishell: envp is set to NULL";
+	errors[6] = "envp is set to NULL";
 	errors[7] = "failed to fork child process";
 	errors[8] = "close failed";
 	errors[9] = "dup2 failed";
@@ -33,6 +33,7 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[16] = "itoa: failed to allocate memory";
 	errors[17] = "envp is not set";
 	errors[18] = "argc < 1";
+	errors[19] = "error near unexpected token `newline'";
 	return (errors);
 }
 

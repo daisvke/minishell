@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 05:36:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 20:40:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
 
 int	ms_show_prompt_and_read_cmd_line(char **read_line)
 {
-	write(STDOUT_FILENO, MS_PROMPT, 16);
-	*read_line = readline(NULL);
+//	write(STDOUT_FILENO, MS_PROMPT, 16);
+	*read_line = readline(MS_PROMPT);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
@@ -60,19 +60,13 @@ int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 
 	err_code = ms_check_if_quote_nbr_is_even(*cmd_line);
 	if (err_code != MS_SUCCESS)
-	{
-		ms_print_error_message(err_code);
-		return (MS_ERROR);
-	}
+		return (err_code);
 	err_code = ms_check_pipes_and_redirections(env, *cmd_line);
 	if (err_code != MS_SUCCESS)
-	{
-		ms_print_error_message(err_code);
-		return (MS_ERROR);
-	}
+		return (err_code);
 	new = ms_get_new_cmd_line_with_expanded_variables(env, cmd_line);
 	if (new == NULL)
-		return (1);
+		return (MS_READ_NONE);
 	env->split_cmd_line = ms_split_and_activate_options(env, new, '|');
 	new = ms_free(new);
 	if (env->split_cmd_line == NULL)
@@ -85,6 +79,7 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 	size_t	res;
 	char	*read_line;
 	char	**tmp;
+	int		err_code;
 
 	res = ms_show_prompt_and_read_cmd_line(&read_line);
 	if (res == MS_READ_EOF)
@@ -96,12 +91,19 @@ void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
 	env->cmd_line = read_line;
 	if (res == MS_READ_NONE)
 		return ;
-	if (ms_parse_cmd_line(env, &env->cmd_line) == 1)
+	err_code = ms_parse_cmd_line(env, &env->cmd_line);
+	if (err_code != MS_SUCCESS)
 	{
-		tmp = ms_malloc(env, 2, sizeof(char *));
-		tmp[0] = ms_strdup(" ", 2); 
-		*tmp[1] = '\0';
-		env->ppx_env.cmd = tmp; //or set on a bool and not to free
+		if (err_code == MS_READ_NONE)
+		{
+			tmp = ms_malloc(env, 2, sizeof(char *));
+			tmp[0] = ms_strdup(" ", 2); 
+			*tmp[1] = '\0';
+			env->ppx_env.cmd = tmp; //or set on a bool and not to free
+			return ;
+		}
+		ms_print_error_message(err_code);
+		env->cmd_line = ms_free(env->cmd_line);
 		return ;
 	}
 	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
