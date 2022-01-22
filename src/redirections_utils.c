@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:18:52 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 21:30:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 09:51:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ppx_check_outfile(\
 	t_ppx *env, char *file, size_t i, size_t *lines_to_del)
 {
 	*lines_to_del = 1;
-	if (*file == '\0')
+	if (*file == '\0' || *file == '>')
 	{
 		if (env->cmd[i + 1] == NULL)
 		{
