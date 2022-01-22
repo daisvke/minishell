@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 03:44:36 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 04:57:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/21 22:46:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ms_split_iter(char *split[], char *str, char sep)
 	return (0);
 }
 
-void	ms_activate_option(t_ms *env, int sep)
+void	ms_activate_pipe_option(t_ms *env, int sep)
 {
 	if ((char)sep == '|')
 		env->options |= MS_OPT_PIPE;
@@ -66,7 +66,7 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 	{
 		while (*str == (char)sep)
 		{
-			ms_activate_option(env, sep);
+			ms_activate_pipe_option(env, sep);
 			str++;
 		}
 		if (!*str)
@@ -80,17 +80,17 @@ size_t	ms_wordcount(t_ms *env, char *str, int sep)
 	return (wc);
 }
 
-char	**ms_split_and_activate_options(t_ms *env, char const *s, char sep)
+char	**ms_split_and_activate_options(t_ms *env, char const *str, char sep)
 {
 	char	**split;
 	int		res;
 	size_t	wordcount;
 
-	wordcount = ms_wordcount(env, (char *)s, sep);
+	wordcount = ms_wordcount(env, (char *)str, sep);
 	split = malloc(sizeof(char *) * (wordcount + 1));
 	if (!split)
 		return (NULL);
-	res = ms_split_iter(split, (char *)s, sep);
+	res = ms_split_iter(split, (char *)str, sep);
 	if (res == MS_ERROR)
 		return (NULL);
 	return (split);

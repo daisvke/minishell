@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/21 07:39:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 04:54:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
 			if (ms_detect_overuse_of_consecutive_symbol(symbol, i) == true)
 				return (ms_get_symbol_error_code(symbol));
 		}
-		cmd_line++;
+		if (*cmd_line)
+			cmd_line++;
 	}
 	return (MS_SUCCESS);
 }
