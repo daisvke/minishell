@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 00:11:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 21:43:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char	**ms_get_array_of_error_messages(char *errors[])
 {
 	errors[0] = "split: failed to allocate memory";
-	errors[1] = "malloc failed";
+	errors[1] = "malloc: failed to allocate memory";
 	errors[2] = "syntax error near unexpected token `|'";
 	errors[3] = "error near unexpected token `newline'";
-	errors[4] = "";
+	errors[4] = "argc < 1";
 	errors[5] = "getcwd failed";
 	errors[6] = "envp is set to NULL";
 	errors[7] = "failed to fork child process";
@@ -27,13 +27,10 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[10] = "pipe failed";
 	errors[11] = "strdup: failed to allocate memory";
 	errors[12] = "ms_lst_create_new_node: failed to allocate memory";
-	errors[13] = "";
-//	errors[13] = "waitpid failed";
+	errors[13] = "envp is not set";
 	errors[14] = "sigaction failed";
 	errors[15] = "unclosed quotes are forbidden";
 	errors[16] = "itoa: failed to allocate memory";
-	errors[17] = "envp is not set";
-	errors[18] = "argc < 1";
 	return (errors);
 }
 

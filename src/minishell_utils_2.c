@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 20:30:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 21:43:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	ms_check_arguments(char *envp[], int argc)
 {
 	if (envp == NULL)
 	{
-		ms_print_error_message(17);
+		ms_print_error_message(13);
 		exit(EXIT_FAILURE);
 	}
 	if (argc < 1)
 	{
-		ms_print_error_message(18);
+		ms_print_error_message(4);
 		exit(EXIT_FAILURE);
 	}
 	return (MS_OK);
