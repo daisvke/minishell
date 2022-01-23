@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 00:32:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:25:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 	env->split_cmd_line = ms_split_and_activate_options(env, new, '|');
 	new = ms_free(new);
 	if (env->split_cmd_line == NULL)
-		ms_exit_with_error_message(env, 0);
+		ms_exit_with_error_message(env, 7);
 	return (MS_SUCCESS);
 }
 
