@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 05:07:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:48:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static char	**ppx_get_path(t_ms *ms_env, t_ppx *ppx_env, char *key)
 			ms_env->envp_lst, key \
 		)->entry;
 	if (paths_envp == NULL)
-		ppx_exit_with_error_message(ppx_env, 9);
+		ppx_exit_with_error_message(ppx_env, 3);
 	paths_envp_split = ppx_split(paths_envp, ':');
 	if (!paths_envp_split)
-		ppx_exit_with_error_message(ppx_env, 7);
+		ppx_exit_with_error_message(ppx_env, 0);
 	return (paths_envp_split);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:00:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:49:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:32:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
 	ppx_env->cmd = ppx_split(cmd_line[ppx_env->pos], ' ');
 	if (!ppx_env->cmd)
-		ms_exit_with_error_message(ms_env, 0);
+		ms_exit_with_error_message(ms_env, 7);
 	if (!*ppx_env->cmd)
 		return (MS_READ_NONE);
 	return (MS_SUCCESS);

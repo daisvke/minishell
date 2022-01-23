@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:19:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/14 05:21:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:48:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	ms_close(t_ms *env, int fd)
 void	ms_dup2(t_ms *env, int fd1, int fd2)
 {
 	if (dup2(fd1, fd2) == PPX_ERROR)
-		ms_exit_with_error_message(env, 10);
+		ms_exit_with_error_message(env, 3);
 }
