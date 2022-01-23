@@ -6,20 +6,19 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 07:10:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 11:16:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	gnl_get_char_index(char *str, char c, bool increment)
+int	gnl_get_char_index(char *str, char c, bool increment)
 {
 	size_t	i;
 
 	i = 0;
 	while (str && str[i])
 	{
-	printf("char: %c\n", str[0]);
 		if (str[i] == c)
 			return (i);
 		++i;
@@ -67,8 +66,11 @@ int	gnl_get_line(char **data, int fd)
 		res = read(fd, buffer, BUFFER_SIZE);
 		if (res < 0)
 			return (PPX_ERROR);
-		if (res == 0)
+		if (res == GNL_REACHED_EOF)
+		{
+			close(0);//ppx + ctrl c writes $ two times
 			break ;
+		}
 		buffer[res] = '\0';
 		tmp = gnl_concatenate(*data, buffer, GNL_OFF, false);
 		if (!tmp)
@@ -81,10 +83,10 @@ int	gnl_get_line(char **data, int fd)
 
 int	gnl_run_and_return(char **data, char **line, int fd)
 {
-	int			res;
-	size_t		index;
-	char		*tmp;
-	bool		is_empty;
+	int		res;
+	int		index;
+	char	*tmp;
+	bool	is_empty;
 
 	res = gnl_get_line(data, fd);
 	if (res == PPX_ERROR)
@@ -103,7 +105,9 @@ int	gnl_run_and_return(char **data, char **line, int fd)
 	*data = ms_free(*data);
 	*data = tmp;
 	if (res == GNL_REACHED_EOF && is_empty)
+	{
 		return (GNL_REACHED_EOF);
+	}
 	else
 		return (GNL_READ_LINE);
 }
