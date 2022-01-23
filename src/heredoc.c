@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 07:05:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 11:14:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	}
 	line = NULL;
 	ppx_close(env, fd);
-	ppx_exit_with_error_message(env, 6);
+//	ppx_exit_with_error_message(env, 6);
 }
 
 void	ms_apply_heredoc(t_ppx *env, char *file)

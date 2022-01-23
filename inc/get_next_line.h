@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 05:39:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 10:51:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define GNL_NOT_FOUND	0
+# define GNL_NOT_FOUND	-1
 
 # define GNL_OFF		-1
 
