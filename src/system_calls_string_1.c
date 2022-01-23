@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:06:40 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/19 04:32:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 01:27:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ms_strcmp(const char *s1, const char *s2)
 
 int	ms_strncmp(const char *s1, const char *s2, size_t n)
 {
+	if (!s1 || !s2)
+		return (MS_DIFFERENT);
 	while ((*s1 || *s2) && n--)
 	{
 		if (*s1 != *s2)

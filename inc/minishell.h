@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 04:26:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 22:56:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void		ms_execute_cmd_export(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
 void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line);
-void		ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env);
+int			ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env, char *readline);
 
 /*
 ** utils: strings
@@ -137,5 +137,6 @@ void		ms_exit_with_error_message(t_ms *env, int err_code);
 void		ms_free_all_allocated_variables(t_ms *env);
 size_t		ms_get_symbol_error_code(char symbol);
 void		ms_print_error_message(int err_code);
+void		ms_quit_with_ctrl_d(t_ms *env);
 
 #endif

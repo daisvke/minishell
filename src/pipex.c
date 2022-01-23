@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 04:20:35 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 00:43:35 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,14 @@ void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 	while (i < size)
 	{
 		if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
-			ms_exit_with_error_message(ms_env, 13);
-		if (WIFEXITED(wstatus))
+		{
+	ppx_free_all_allocated_variables(&ms_env->ppx_env);
+	ppx_free_array_of_pointers(&ms_env->split_cmd_line, MS_ALL);
+		}
+//	if (env->cmd_line && *env->cmd_line) //for each ?
+//		env->cmd_line = ms_free(env->cmd_line);
+		if (WIFEXITED(wstatus)) 
+//			ms_exit_with_error_message(ms_env, 13);
 		{
 			status_code = WEXITSTATUS(wstatus);
 			ms_env->last_pipe_exit_status = status_code;
