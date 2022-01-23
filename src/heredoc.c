@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 07:18:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 07:05:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	fd = ppx_open_file(env, "heredoc_tmp", \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	ppx_dup2(env, fd, STDOUT_FILENO);
-	while (get_next_line(0, &line) >= 0)
+	while (get_next_line(STDIN_FILENO, &line) >= 0)
 	{
 		if (ms_strncmp(line, limiter, ms_strlen(line)) == MS_SAME)
 		{
 			line = ms_free(line);
-			line = NULL;
 			ppx_close(env, fd);
 			return ;
 		}

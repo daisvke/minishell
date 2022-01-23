@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/21 09:17:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 23:23:14 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,21 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 void	ms_launch_prompt(t_ms *env)
 
 {
-	ms_prompt_and_execute_cmd_line_with_pipex(env);
+	char	*read_line;
+	int		err_code;
+	
+	read_line = NULL;
+	err_code = ms_prompt_and_execute_cmd_line_with_pipex(env, read_line);
+	if (err_code == MS_ERROR)
+		return ;
+	err_code = ms_parse_cmd_line(env, &env->cmd_line);
+	if (err_code != MS_SUCCESS)
+	{
+		ms_print_error_message(err_code);
+		env->cmd_line = ms_free(env->cmd_line);
+		return ;
+	}
+	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
 	ppx_free_all_allocated_variables(&env->ppx_env);
 	ppx_free_array_of_pointers(&env->split_cmd_line, MS_ALL); //add in all free ?
 }

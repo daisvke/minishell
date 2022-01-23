@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 08:35:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/22 23:00:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_handle_pipe_in_child_proc(t_ms *ms_env, t_ppx *ppx_env)
+void	ppx_handle_pipe_in_child_proc(t_ppx *ppx_env)
 {
 //	ppx_close(ppx_env, ppx_env->pipe_fds[ppx_env->i][0]);
 	if ((ppx_env->options & MS_OPT_READ_FROM_FILE) == false) 
@@ -63,7 +63,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	if (ppx_env->cmd && *ppx_env->cmd)
 	{
 		if (ppx_env->options & MS_OPT_PIPE)
-			ppx_handle_pipe_in_child_proc(ms_env, ppx_env);
+			ppx_handle_pipe_in_child_proc(ppx_env);
 		if (ms_check_if_the_cmd_is_implemented(\
 				ppx_env->cmd, &cmd_code, PPX_PROC_CHILD \
 			) == true)

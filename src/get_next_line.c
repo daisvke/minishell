@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2021/10/06 22:54:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 07:10:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ size_t	gnl_get_char_index(char *str, char c, bool increment)
 	i = 0;
 	while (str && str[i])
 	{
+	printf("char: %c\n", str[0]);
 		if (str[i] == c)
 			return (i);
 		++i;
@@ -65,13 +66,13 @@ int	gnl_get_line(char **data, int fd)
 	{
 		res = read(fd, buffer, BUFFER_SIZE);
 		if (res < 0)
-			return (MS_ERROR);
+			return (PPX_ERROR);
 		if (res == 0)
 			break ;
 		buffer[res] = '\0';
 		tmp = gnl_concatenate(*data, buffer, GNL_OFF, false);
 		if (!tmp)
-			return (MS_ERROR);
+			return (PPX_ERROR);
 		*data = ms_free(*data);
 		*data = tmp;
 	}
@@ -86,19 +87,19 @@ int	gnl_run_and_return(char **data, char **line, int fd)
 	bool		is_empty;
 
 	res = gnl_get_line(data, fd);
-	if (res == MS_ERROR)
-		return (MS_ERROR);
+	if (res == PPX_ERROR)
+		return (PPX_ERROR);
 	index = 0;
 	if (*data)
 		index = gnl_get_char_index(*data, '\n', true);
 	is_empty = index + 1 > gnl_get_char_index(*data, '\0', true);
 	*line = gnl_concatenate(*data, NULL, index, false);
 	if (!line)
-		return (MS_ERROR);
+		return (PPX_ERROR);
 	tmp = gnl_concatenate(*data + index + 1, NULL, \
 		gnl_get_char_index(*data, '\0', true) - index - 1, is_empty);
 	if (!tmp)
-		return (MS_ERROR);
+		return (PPX_ERROR);
 	*data = ms_free(*data);
 	*data = tmp;
 	if (res == GNL_REACHED_EOF && is_empty)
@@ -114,14 +115,11 @@ int	get_next_line(int fd, char **line)
 	int			res;
 
 	if (BUFFER_SIZE <= 0 || !line)
-		return (MS_ERROR);
+		return (PPX_ERROR);
 	data_cpy = data;
 	res = gnl_run_and_return(&data_cpy, line, fd);
-	if (res == GNL_REACHED_EOF || res == MS_ERROR)
-	{
+	if (res == GNL_REACHED_EOF || res == PPX_ERROR)
 		data_cpy = ms_free(data_cpy);
-		data_cpy = NULL;
-	}
 	data = data_cpy;
 	return (res);
 }

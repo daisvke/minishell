@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 20:40:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 00:32:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	ms_show_prompt_and_read_cmd_line(char **read_line)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
 	{
-		if (read_line)
-			read_line = ms_free(*read_line);
+//		if (read_line)
+//			read_line = ms_free(*read_line);
 		return (MS_READ_NONE);
 	}
 	add_history(*read_line);
@@ -66,7 +66,7 @@ int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 		return (err_code);
 	new = ms_get_new_cmd_line_with_expanded_variables(env, cmd_line);
 	if (new == NULL)
-		return (MS_READ_NONE);
+		return (3);
 	env->split_cmd_line = ms_split_and_activate_options(env, new, '|');
 	new = ms_free(new);
 	if (env->split_cmd_line == NULL)
@@ -74,37 +74,18 @@ int	ms_parse_cmd_line(t_ms *env, char **cmd_line)
 	return (MS_SUCCESS);
 }
 
-void	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env)
+int	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env, char *read_line)
 {
 	size_t	res;
-	char	*read_line;
-	char	**tmp;
-	int		err_code;
 
 	res = ms_show_prompt_and_read_cmd_line(&read_line);
 	if (res == MS_READ_EOF)
+		ms_quit_with_ctrl_d(env);
+	if (res == MS_READ_NONE)
 	{
-		rl_clear_history();
-		ms_lst_clear_list(env->envp_lst);
-		exit(EXIT_SUCCESS);
+		read_line = ms_free(read_line);
+		return (MS_ERROR);
 	}
 	env->cmd_line = read_line;
-	if (res == MS_READ_NONE)
-		return ;
-	err_code = ms_parse_cmd_line(env, &env->cmd_line);
-	if (err_code != MS_SUCCESS)
-	{
-		if (err_code == MS_READ_NONE)
-		{
-			tmp = ms_malloc(env, 2, sizeof(char *));
-			tmp[0] = ms_strdup(" ", 2); 
-			*tmp[1] = '\0';
-			env->ppx_env.cmd = tmp; //or set on a bool and not to free
-			return ;
-		}
-		ms_print_error_message(err_code);
-		env->cmd_line = ms_free(env->cmd_line);
-		return ;
-	}
-	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
+	return (MS_SUCCESS);
 }
