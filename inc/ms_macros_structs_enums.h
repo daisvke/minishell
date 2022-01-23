@@ -6,14 +6,14 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 21:53:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 23:40:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_MACROS_STRUCTS_ENUMS_H
 # define MS_MACROS_STRUCTS_ENUMS_H
 
-# define MS_PROMPT						"\033[0;32m$\033[0;37m "
+# define MS_PROMPT						"$ "
 # define MS_ERR_MAX						16
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
