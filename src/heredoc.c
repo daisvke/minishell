@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 11:14:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 00:11:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	char	*line;
 
 	line = NULL;
-	fd = ppx_open_file(env, "heredoc_tmp", \
+	fd = ppx_open_file(env, ".heredoc.tmp", \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(STDIN_FILENO, &line) >= 0)
@@ -56,7 +56,7 @@ void	ms_apply_heredoc(t_ppx *env, char *file)
 
 	env->options |= MS_OPT_HEREDOC; // utile ?
 	ppx_request_heredoc_input(env, file);
-	fd = ppx_open_file(env, "heredoc_tmp", O_RDONLY, 0);
+	fd = ppx_open_file(env, ".heredoc.tmp", O_RDONLY, 0);
 	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	ppx_dup2(env, fd, STDIN_FILENO);
 	unlink("heredoc_tmp");

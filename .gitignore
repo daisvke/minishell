@@ -1,5 +1,7 @@
 # Executable
 minishell
+# Heredoc temporary file
+.heredoc.tmp
 
 # Prerequisites
 *.d
