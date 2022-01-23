@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 20:51:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 21:53:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	**ppx_get_array_of_error_messages(char *errors[])
 	errors[4] = "dup2 failed";
 	errors[5] = "close failed";
 	errors[6] = "get_next_line failed";
+	errors[7] = "strdup: failed to allocate memory";
 	return (errors);
 }
 

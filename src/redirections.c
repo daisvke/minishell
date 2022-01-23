@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 08:33:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 21:54:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@ char	**ppx_del_redirection_section_iter(\
 		if (del.line == i \
 			&& ms_check_if_char_is_a_redir_symbol(env->cmd[i][0]) == false \
 			&& env->cmd[i][1] != '\0')
+		{
 			new_cmd_array[j] = ms_strdup(env->cmd[i], del.pos);
+			if (new_cmd_array[j] == NULL)
+				ppx_exit_with_error_message(env, 7);
+		}
 		else if ((del.lines_to_del == 1 && i != del.line) \
 			|| (del.lines_to_del == 2 && i != del.line && i != del.line + 1))
 		{
 			new_cmd_array[j] = ms_strdup(env->cmd[i], ms_strlen(env->cmd[i]));
+			if (new_cmd_array[j] == NULL)
+				ppx_exit_with_error_message(env, 7);
 			++j;
 		}
 		++i;
