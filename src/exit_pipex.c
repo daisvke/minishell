@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 20:48:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:51:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	ppx_free_pipe_fds(t_ppx *env)
 // del unused
 char	**ppx_get_array_of_error_messages(char *errors[])
 {
-	errors[0] = "split failed";
-	errors[1] = "malloc failed";
+	errors[0] = "split: failed to allocate memory";
+	errors[1] = "malloc: failed to allocate memory";
 	errors[2] = "permission denied:";
 	errors[3] = "execve failed: No such file or directory";
 	errors[4] = "dup2 failed";

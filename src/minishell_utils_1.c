@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 20:25:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/23 21:39:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ int	ms_show_prompt_and_read_cmd_line(char **read_line)
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
-	{
-//		if (read_line)
-//			read_line = ms_free(*read_line);
 		return (MS_READ_NONE);
-	}
 	add_history(*read_line);
 	return (MS_READ_LINE);
 }
