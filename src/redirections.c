@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 21:54:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:24:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,19 @@
 char	**ppx_del_redirection_section_iter(\
 	t_ppx *env, t_del del, char *new_cmd_array[])
 {
-	size_t		i;
-	size_t		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
 	while (env->cmd && env->cmd[i])
 	{
-		if (del.line == i \
-			&& ms_check_if_char_is_a_redir_symbol(env->cmd[i][0]) == false \
-			&& env->cmd[i][1] != '\0')
+		if (ppx_is_a_line_to_del_and_a_redir_symbol(del, i, env) == true)
+			new_cmd_array[j] = ppx_strdup_with_exit(env, env->cmd[i], del.pos);
+		else if (ppx_is_not_a_line_to_del(del, i))
 		{
-			new_cmd_array[j] = ms_strdup(env->cmd[i], del.pos);
-			if (new_cmd_array[j] == NULL)
-				ppx_exit_with_error_message(env, 7);
-		}
-		else if ((del.lines_to_del == 1 && i != del.line) \
-			|| (del.lines_to_del == 2 && i != del.line && i != del.line + 1))
-		{
-			new_cmd_array[j] = ms_strdup(env->cmd[i], ms_strlen(env->cmd[i]));
-			if (new_cmd_array[j] == NULL)
-				ppx_exit_with_error_message(env, 7);
-			++j;
+			new_cmd_array[j++] = ppx_strdup_with_exit(\
+				env, env->cmd[i], ms_strlen(env->cmd[i]));
 		}
 		++i;
 	}
@@ -90,9 +81,9 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 
 void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
 {
-	char			*file;
-	char			**cmd_line_without_redir_section;
-	t_del			del;
+	char	*file;
+	char	**cmd_line_without_redir_section;
+	t_del	del;
 
 	file = ms_search_redir_symbol(&env->cmd[i][j]);
 	file = ppx_check_outfile(env, file, i, &del.lines_to_del);

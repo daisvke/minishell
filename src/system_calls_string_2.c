@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:37:06 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 20:19:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:06:49 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,24 @@ char	*ms_strdup(char *src, size_t size)
 	dest = malloc(sizeof(char) * (size + 1));
 	if (!dest)
 		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ppx_strdup_with_exit(t_ppx *env, char *src, size_t size)
+{
+	size_t	i;
+	char	*dest;
+
+	dest = malloc(sizeof(char) * (size + 1));
+	if (dest == NULL)
+		ppx_exit_with_error_message(env, 7);
 	i = 0;
 	while (i < size)
 	{

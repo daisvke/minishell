@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:18:52 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/22 20:15:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:24:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ char	*ppx_check_outfile(\
 		return (file);
 }
 
-void	ppx_putstr_fd(char *s, int fd, bool option)
-{
-	if (s)
-	{
-		write(fd, s, ms_strlen(s));
-		if (option == MS_PUT_NEWLINE)
-			write(fd, "\n", 1);
-	}
-}
-
 int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 {
 	int		fd;
@@ -70,4 +60,17 @@ int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
+}
+
+bool	ppx_is_a_line_to_del_and_a_redir_symbol(t_del del, size_t i, t_ppx *env)
+{
+	return (del.line == i \
+		&& ms_check_if_char_is_a_redir_symbol(env->cmd[i][0]) == false \
+		&& env->cmd[i][1] != '\0');
+}
+
+bool	ppx_is_not_a_line_to_del(t_del del, size_t i)
+{
+	return ((del.lines_to_del == 1 && i != del.line) \
+		|| (del.lines_to_del == 2 && i != del.line && i != del.line + 1));
 }

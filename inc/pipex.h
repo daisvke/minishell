@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/20 05:07:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:24:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size);
 char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3);
 void	*ppx_memcpy(void *dest, const void *src, size_t n);
 char	*ppx_strdup(char *src, size_t size);
+char	*ppx_strdup_with_exit(t_ppx *env, char *src, size_t size);
 
 /*
 ** split
@@ -95,6 +96,8 @@ int		ppx_wordcount(char *str, int sep);
 ** redirections
 */
 void	ppx_handle_redirections(t_ppx *env);
+bool	ppx_is_a_line_to_del_and_a_redir_symbol(t_del del, size_t i, t_ppx *env);
+bool	ppx_is_not_a_line_to_del(t_del del, size_t i);
 
 /*
 ** heredoc
