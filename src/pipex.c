@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:20:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:47:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,17 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		return ;
 	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
 		ppx_wait_for_all_children(ms_env, ppx_env, pid);
+}
+
+void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
+{
+	size_t	i;
+	size_t	cmd_and_file_nbr;
+
+	i = 0;
+	while (cmd_line[i])
+		++i;
+	cmd_and_file_nbr = i;
+	ppx_init_ppx(env, &env->ppx_env, cmd_and_file_nbr);
+	ppx_pipex(env, &env->ppx_env, cmd_line);
 }

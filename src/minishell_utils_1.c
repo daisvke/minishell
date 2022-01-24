@@ -6,23 +6,32 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:21:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:49:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
+void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 {
-	size_t	i;
-	size_t	cmd_and_file_nbr;
+	int		i;
+	size_t	j;
 
-	i = 0;
-	while (cmd_line[i])
+	env->split_cmd_line = ms_malloc(env, argc, sizeof(char *));
+	i = MS_FIRST_ARG_POS;
+	j = 0;
+	while (i < argc)
+	{
+		env->split_cmd_line[j] = ms_strdup(argv[i], ms_strlen(argv[i]));
+		if (env->split_cmd_line[j] == NULL)
+		{
+			ppx_free_array_of_pointers(&env->split_cmd_line, j);
+			ms_exit_with_error_message(env, 11);
+		}
+		++j;
 		++i;
-	cmd_and_file_nbr = i;
-	ppx_init_ppx(env, &env->ppx_env, cmd_and_file_nbr);
-	ppx_pipex(env, &env->ppx_env, cmd_line);
+	}
+	env->split_cmd_line[j] = NULL;
 }
 
 int	ms_show_prompt_and_read_cmd_line(char **read_line)
