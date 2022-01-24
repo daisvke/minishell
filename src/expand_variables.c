@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:55:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 03:08:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,6 @@ void	*ms_get_expanded_value_from_cmd_line(\
 			vars->len += ms_strlen(value) - 1 + vars->double_quote;
 	}
 	return (value);
-}
-
-bool	ms_found_last_pipe_exit_status_symbols(char *cmd_line, t_expv *vars)
-{
-	if (cmd_line[vars->i] == '$' && cmd_line[vars->i + 1] == '?')
-	{
-		vars->found_var = true;
-		return (true);
-	}
-	return (false);
-}
-
-void	ms_get_last_pipe_exit_status_length(t_ms *env, t_expv *vars)
-{
-	size_t	len;
-
-	len = ms_nbrlen(env->last_pipe_exit_status);
-	vars->len += len - 1;
 }
 
 int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
@@ -112,15 +94,25 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 	return (new_cmd_line);
 }
 
-void	ms_expand_last_pipe_exit_status(\
-	t_ms *env, char *new_cmd_line, t_expv *vars)
+int	ms_fill_new_cmd_line(t_ms *env, char *cmd_line, t_expv *vars, char *new_cmd_line)
 {
-	char	*exit_status;
-
-	exit_status = ms_itoa(env, env->last_pipe_exit_status);
-	ms_copy_value_to_the_expansion_location(exit_status, new_cmd_line, vars);
-	exit_status = ms_free(exit_status);
-	++vars->i;
+	while (cmd_line[vars->i])
+	{
+		if (ms_found_last_pipe_exit_status_symbols(cmd_line, vars))
+			ms_expand_last_pipe_exit_status(env, new_cmd_line, vars);
+		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
+			cmd_line, vars) == true)
+		{
+			new_cmd_line = ms_expand_last_exit_status_or_value_from_envp(\
+				env, cmd_line, vars, new_cmd_line);
+			if (vars->status == 1)
+				return (1);
+		}
+		else
+			new_cmd_line[vars->k++] = cmd_line[vars->i];
+		++vars->i;
+	}
+	return (0);
 }
 
 char	*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars)
@@ -132,22 +124,8 @@ char	*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars)
 	if (len < 0)
 		return (cmd_line);
 	new_cmd_line = ms_malloc(env, len + 1, sizeof(char));
-	while (cmd_line[vars->i])
-	{
-		if (ms_found_last_pipe_exit_status_symbols(cmd_line, vars))
-			ms_expand_last_pipe_exit_status(env, new_cmd_line, vars);	
-		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-			cmd_line, vars) == true)
-		{
-			new_cmd_line = ms_expand_last_exit_status_or_value_from_envp(\
-				env, cmd_line, vars, new_cmd_line);
-			if (vars->status == 1)
-				return (new_cmd_line);
-		}
-		else
-			new_cmd_line[vars->k++] = cmd_line[vars->i];
-		++vars->i;
-	}
+	if (ms_fill_new_cmd_line(env, cmd_line, vars, new_cmd_line) == 1)
+		return (new_cmd_line);
 	new_cmd_line[vars->k] = '\0';
 	if (vars->found_var == false)
 		cmd_line = ms_free(cmd_line);

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:49:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 03:00:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,12 @@ bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 	char *cmd_line, t_expv *vars);
 void		ms_copy_value_to_the_expansion_location(\
 	char *value, char *location, t_expv *vars);
+void		ms_expand_last_pipe_exit_status(\
+	t_ms *env, char *new_cmd_line, t_expv *vars);
 char		*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars);
+bool		ms_found_last_pipe_exit_status_symbols(char *cmd_line, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
+void		ms_get_last_pipe_exit_status_length(t_ms *env, t_expv *vars);
 char		*ms_get_new_cmd_line_with_expanded_variables(\
 	t_ms *env, char **cmd_line);
 char		*ms_print_last_exit_status(t_ms *env);
