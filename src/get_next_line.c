@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:40:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 03:10:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,7 @@ int	gnl_run_and_return(t_ppx *env, char **data, char **line, int fd)
 	*data = ms_free(*data);
 	*data = tmp;
 	if (res == GNL_REACHED_EOF && is_empty)
-	{
 		return (GNL_REACHED_EOF);
-	}
 	else
 		return (GNL_READ_LINE);
 }

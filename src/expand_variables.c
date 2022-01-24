@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 03:08:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 03:10:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ char	*ms_expand_last_exit_status_or_value_from_envp(\
 	return (new_cmd_line);
 }
 
-int	ms_fill_new_cmd_line(t_ms *env, char *cmd_line, t_expv *vars, char *new_cmd_line)
+int	ms_fill_new_cmd_line(\
+	t_ms *env, char *cmd_line, t_expv *vars, char *new_cmd_line)
 {
 	while (cmd_line[vars->i])
 	{
