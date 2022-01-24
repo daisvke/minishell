@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:39:44 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:47:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <errno.h>
 
 # include "get_next_line.h"
-
-void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[]);
 
 /*
 ** init
@@ -96,7 +94,8 @@ int		ppx_wordcount(char *str, int sep);
 ** redirections
 */
 void	ppx_handle_redirections(t_ppx *env);
-bool	ppx_is_a_line_to_del_and_a_redir_symbol(t_del del, size_t i, t_ppx *env);
+bool	ppx_is_a_line_to_del_and_a_redir_symbol(\
+	t_del del, size_t i, t_ppx *env);
 bool	ppx_is_not_a_line_to_del(t_del del, size_t i);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:40:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:49:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void		ms_copy_value_to_the_expansion_location(\
 	char *value, char *location, t_expv *vars);
 char		*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
-char		*ms_get_new_cmd_line_with_expanded_variables(t_ms *env, char **cmd_line);
+char		*ms_get_new_cmd_line_with_expanded_variables(\
+	t_ms *env, char **cmd_line);
 char		*ms_print_last_exit_status(t_ms *env);
 
 /*
@@ -111,7 +112,8 @@ void		ms_execute_cmd_export(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
 void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
 void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line);
-int			ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env, char *readline);
+int			ms_prompt_and_execute_cmd_line_with_pipex(\
+	t_ms *env, char *readline);
 
 /*
 ** utils: strings
@@ -135,7 +137,6 @@ char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 */
 void		ms_exit_with_error_message(t_ms *env, int err_code);
 void		ms_free_all_allocated_variables(t_ms *env);
-size_t		ms_get_symbol_error_code(char symbol);
 void		ms_print_error_message(int err_code);
 void		ms_quit_with_ctrl_d(t_ms *env);
 

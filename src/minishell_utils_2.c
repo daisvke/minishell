@@ -6,33 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 01:53:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:49:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
-{
-	int		i;
-	size_t	j;
-
-	env->split_cmd_line = ms_malloc(env, argc, sizeof(char *));
-	i = MS_FIRST_ARG_POS;
-	j = 0;
-	while (i < argc)
-	{
-		env->split_cmd_line[j] = ms_strdup(argv[i], ms_strlen(argv[i]));
-		if (env->split_cmd_line[j] == NULL)
-		{
-			ppx_free_array_of_pointers(&env->split_cmd_line, j);
-			ms_exit_with_error_message(env, 11);
-		}
-		++j;
-		++i;
-	}
-	env->split_cmd_line[j] = NULL;
-}
 
 int	ms_check_arguments(char *envp[], int argc)
 {
@@ -47,6 +25,14 @@ int	ms_check_arguments(char *envp[], int argc)
 		exit(EXIT_FAILURE);
 	}
 	return (MS_OK);
+}
+
+size_t	ms_get_symbol_error_code(char symbol)
+{
+	if (symbol == '|')
+		return (2);
+	else
+		return (3);
 }
 
 size_t	ms_detect_overuse_of_consecutive_symbol(char *cmd_line)

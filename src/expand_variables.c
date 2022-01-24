@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 21:46:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:55:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 char	*ms_expand_last_exit_status_or_value_from_envp(\
 	t_ms *env, char *cmd_line, t_expv *vars, char *new_cmd_line)
 {
-	char	*value;
-	static int i;
+	char		*value;
+	static int	i;
 
 	vars->status = 0;
 	if (cmd_line[vars->i + 1] == ' ' || cmd_line[vars->i + 1] == '\0')

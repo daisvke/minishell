@@ -14,6 +14,7 @@ SRC_FILES			=	builtin_cmds_1.c \
 						child_proc.c \
 						exit_minishell.c \
 						exit_pipex.c \
+						exit_utils.c \
 						expand_variables.c \
 						expand_variables_utils.c \
 						get_next_line.c \

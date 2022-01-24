@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 22:08:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:53:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,4 @@ void	ms_exit_with_error_message(t_ms *env, int err_code)
 	ms_print_error_message(err_code);
 	ms_free_all_allocated_variables(env);
 	exit(EXIT_FAILURE);
-}
-
-size_t	ms_get_symbol_error_code(char symbol)
-{
-	if (symbol == '|')
-		return (2);
-	else
-		return (3);
-}
-
-void	ms_quit_with_ctrl_d(t_ms *env)
-{
-	rl_clear_history();
-	ms_lst_clear_list(env->envp_lst);
-	exit(EXIT_SUCCESS);
 }
