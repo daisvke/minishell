@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 21:39:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 02:21:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
 
 int	ms_show_prompt_and_read_cmd_line(char **read_line)
 {
-//	write(STDOUT_FILENO, MS_PROMPT, 16);
 	*read_line = readline(MS_PROMPT);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
