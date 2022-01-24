@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 20:48:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:34:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	}
 	if (cmd_path_at_i == NULL)
 		cmd_path_at_i = cmd;
-	ppx_free_array_of_pointers(&paths_envp_split, MS_ALL); // make it a ms_
+	ppx_free_array_of_pointers(&paths_envp_split, MS_ALL);
 	paths_envp_split = NULL;
 	return (cmd_path_at_i);
 }

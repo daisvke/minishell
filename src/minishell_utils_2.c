@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 21:43:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:53:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,26 @@ int	ms_check_arguments(char *envp[], int argc)
 	return (MS_OK);
 }
 
-bool	ms_detect_overuse_of_consecutive_symbol(char symbol, size_t i)
+size_t	ms_detect_overuse_of_consecutive_symbol(char *cmd_line)
 {
-	return ((symbol == '|' && i > 1) \
+	char	symbol;
+	size_t	i;
+
+	i = 0;
+	symbol = cmd_line[i];
+	while (cmd_line && cmd_line[i] == symbol)
+		++i;
+	if ((symbol == '|' && i > 1) \
 		|| (symbol == '<' && i > 3) \
-		|| (symbol == '>' && i > 2));
+		|| (symbol == '>' && i > 2))
+		return (ms_get_symbol_error_code(symbol));
+	return (0);
 }
 
 int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
 {
 	size_t	len;
-	char	symbol;
-	size_t	i;
+	size_t	res;
 
 	len = ms_strlen(env->cmd_line);
 	if (env->cmd_line[0] == '|' \
@@ -70,15 +78,9 @@ int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
 	{
 		if (*cmd_line == '|' || *cmd_line == '<' || *cmd_line == '>')
 		{
-			i = 0;
-			symbol = *cmd_line;
-			while (cmd_line && *cmd_line == symbol)
-			{
-				cmd_line++;
-				++i;
-			}
-			if (ms_detect_overuse_of_consecutive_symbol(symbol, i) == true)
-				return (ms_get_symbol_error_code(symbol));
+			res = ms_detect_overuse_of_consecutive_symbol(cmd_line);
+			if (res > 1)
+				return (res);
 		}
 		if (*cmd_line)
 			cmd_line++;

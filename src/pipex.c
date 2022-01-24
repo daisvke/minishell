@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/23 21:39:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:56:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 			ppx_free_all_allocated_variables(&ms_env->ppx_env);
 			ppx_free_array_of_pointers(&ms_env->split_cmd_line, MS_ALL);
 		}
-		if (WIFEXITED(wstatus)) 
+		if (WIFEXITED(wstatus))
 		{
 			status_code = WEXITSTATUS(wstatus);
 			ms_env->last_pipe_exit_status = status_code;
@@ -72,7 +72,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
 	pid_t	pid;
 	size_t	cmd_code;
-	
+
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) \
@@ -92,11 +92,8 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
-	if (ppx_env->cmd == NULL)
-	{
-		ms_free(ms_env->cmd_line);
+	if (ppx_env->cmd == NULL && ms_free(ms_env->cmd_line) == NULL)
 		return ;
-	}
 	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
 		ppx_wait_for_all_children(ms_env, ppx_env, pid);
 }
