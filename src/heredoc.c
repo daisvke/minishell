@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 03:49:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 08:45:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	while (get_next_line(env, STDIN_FILENO, &line) >= 0)
 	{
 		if (ms_strncmp(line, limiter, ms_strlen(line)) == MS_SAME \
-			&& ms_strncmp(line, limiter, ms_strlen(line)) == MS_SAME)
+			&& ms_strncmp(line, limiter, ms_strlen(limiter)) == MS_SAME)
 		{
 			line = ms_free(line);
 			ppx_close(env, fd);
@@ -60,4 +60,29 @@ void	ms_apply_heredoc(t_ppx *env, char *file)
 	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	ppx_dup2(env, fd, STDIN_FILENO);
 	unlink(".heredoc.tmp");
+}
+
+void	ppx_detect_heredocs(t_ppx *env, char *cmd[])
+{
+	size_t	i;
+	size_t	j;
+
+	env->heredoc_pos = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		while (*cmd && cmd[i][j])
+		{
+			if (cmd[i][j] == '<' && cmd[i][j + 1] == '<')
+			{
+				env->options |= MS_OPT_HEREDOC;
+				env->heredoc_pos = i;
+				return ;
+			}
+			else
+				++j;
+		}
+		++i;
+	}
 }

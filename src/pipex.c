@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 03:14:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 07:32:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	ppx_execute_implemented_cmd_in_parent(\
 		exit(EXIT_SUCCESS);
 }
 
-void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
+void	ppx_wait_for_all_children(\
+	t_ms *ms_env, t_ppx *ppx_env, pid_t pid, size_t wait_count)
 {
 	int	i;
 	int	size;
@@ -51,7 +52,7 @@ void	ppx_wait_for_all_children(t_ms *ms_env, t_ppx *ppx_env, pid_t pid)
 	int	status_code;
 
 	i = 0;
-	size = ppx_env->cmd_nbr;
+	size = ppx_env->cmd_nbr - wait_count;
 	while (i < size)
 	{
 		if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
@@ -75,8 +76,12 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	pid_t	pid;
 	size_t	cmd_code;
 
+	int	wstatus;
+	size_t	wait_count = 0;
+
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
+		ppx_detect_heredocs(ppx_env, cmd_line);
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) == 2)
 			return ;
 		if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == true)
@@ -90,13 +95,27 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 				ms_env, ppx_env, &pid);
 		if (ppx_env->pos < ppx_env->cmd_nbr - 1)
 			ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
+		if (ppx_env->options & MS_OPT_HEREDOC \
+			&& ppx_env->pos == ppx_env->heredoc_pos)
+		{
+			if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
+			{
+				perror("ERROR WAITPID");
+		//		ppx_free_all_allocated_variables(&ms_env->ppx_env);
+		//		ppx_free_array_of_pointers(&ms_env->split_cmd_line, MS_ALL);
+
+		// status to $?
+			}
+			else
+				++wait_count;
+		}
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
 	if (ppx_env->cmd == NULL && ms_free(ms_env->cmd_line) == NULL)
-		return ;
+		return ;	
 	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
-		ppx_wait_for_all_children(ms_env, ppx_env, pid);
+		ppx_wait_for_all_children(ms_env, ppx_env, pid, wait_count);
 }
 
 void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line)
