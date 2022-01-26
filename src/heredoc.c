@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 08:45:42 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:30:07 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,30 @@ int	ppx_get_open_flags(t_ppx *env)
 	return (flags);
 }
 
+char	*ppx_generate_filename(t_ppx *env, bool increment)
+{
+	static size_t	i;
+	char			*fileno;
+	char			*file;
+	fileno = ppx_itoa(env, i);
+	file = ppx_join_three_str(env, ".", fileno,"heredoc.tmp");
+	fileno = ms_free(fileno);
+	if (increment == true)
+		++i;
+	return (file);
+}
+
 void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 {
 	int		fd;
 	char	*line;
+	char	*file;
 
 	line = NULL;
-	fd = ppx_open_file(env, ".heredoc.tmp", \
+	file = ppx_generate_filename(env, true);
+	fd = ppx_open_file(env, file, \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	file = ms_free(file);
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(env, STDIN_FILENO, &line) >= 0)
 	{
@@ -52,14 +68,20 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 
 void	ms_apply_heredoc(t_ppx *env, char *file)
 {
-	int	fd;
+	char	*in_file;
+	int		fd;
 
 	env->options |= MS_OPT_HEREDOC;
 	ppx_request_heredoc_input(env, file);
-	fd = ppx_open_file(env, ".heredoc.tmp", O_RDONLY, 0);
+	in_file = ppx_generate_filename(env, false);
+	perror("open here");
+	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
+	in_file = ms_free(in_file);
 	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	ppx_dup2(env, fd, STDIN_FILENO);
-	unlink(".heredoc.tmp");
+	in_file = ppx_generate_filename(env, false);
+	unlink(in_file);
+	file = ms_free(in_file);
 }
 
 void	ppx_detect_heredocs(t_ppx *env, char *cmd[])
@@ -86,3 +108,33 @@ void	ppx_detect_heredocs(t_ppx *env, char *cmd[])
 		++i;
 	}
 }
+/*
+size_t	ppx_count_heredoc(char *cmd[])
+{
+	size_t	i;
+	size_t	j;
+	size_t	heredoc_nbr;
+
+	heredoc_nbr = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		while (*cmd && cmd[i][j])
+		{
+			if (ms_search_redir_symbol(&cmd[i][j]))
+			{
+				if (cmd[i][j] == '<' && cmd[i][j + 1] == '<')
+					++heredoc_nbr;
+				i = -1;
+				j = 0;
+				break ;
+			}
+			else
+				++j;
+		}
+		++i;
+	}
+	return (heredoc_nbr);
+}
+*/

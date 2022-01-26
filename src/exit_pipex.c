@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 11:41:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 09:36:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	**ppx_get_array_of_error_messages(char *errors[])
 	errors[5] = "close failed";
 	errors[6] = "get_next_line failed";
 	errors[7] = "strdup: failed to allocate memory";
+	errors[8] = "itoa: failed to allocate memory";
 	return (errors);
 }
 

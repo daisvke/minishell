@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 08:38:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 09:37:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ enum e_options
 ** FROM PIPEX
 */
 # define PPX_ERROR 				-1
-# define PPX_ERR_MAX			7
+# define PPX_ERR_MAX			8
 
 // PROCESSES WHILE FORKING
 enum e_processes
