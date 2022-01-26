@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 10:30:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 11:08:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	char	*file;
 
 	line = NULL;
-	file = ppx_generate_filename(env, true);
+	file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, file, \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	file = ms_free(file);
@@ -74,14 +74,15 @@ void	ms_apply_heredoc(t_ppx *env, char *file)
 	env->options |= MS_OPT_HEREDOC;
 	ppx_request_heredoc_input(env, file);
 	in_file = ppx_generate_filename(env, false);
-	perror("open here");
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
 	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	ppx_dup2(env, fd, STDIN_FILENO);
-	in_file = ppx_generate_filename(env, false);
+	ppx_close(env, fd);
+	in_file = ppx_generate_filename(env, true);
 	unlink(in_file);
-	file = ms_free(in_file);
+	in_file = ms_free(in_file);
+	perror("apply heredoc");
 }
 
 void	ppx_detect_heredocs(t_ppx *env, char *cmd[])

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 10:41:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:54:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,9 @@ void	ppx_handle_redirections(t_ppx *env)
 		j = 0;
 		while (*env->cmd && env->cmd[i][j])
 		{
-		int k;
-		for(k=0;env->cmd[k];++k)
-			printf("bef   cmd: %s\n",env->cmd[k]);
 			if (ms_search_redir_symbol(&env->cmd[i][j]))
 			{
 				ppx_check_and_apply_redirection(env, i, j);
-		int k;
-		for(k=0;env->cmd[k];++k)
-			printf("cmd: %s\n",env->cmd[k]);
-		printf("aft   i: %ld, j:%ld\n",i,j);
 				if (env->cmd == NULL)
 					return ;
 				i = -1;
