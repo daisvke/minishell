@@ -6,12 +6,12 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 03:10:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 03:13:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// update on github
+
 int	gnl_get_char_index(char *str, char c, bool increment)
 {
 	size_t	i;

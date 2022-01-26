@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:37:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 03:48:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ char	**ppx_del_redirection_section_iter(\
 	j = 0;
 	while (env->cmd && env->cmd[i])
 	{
-		if (ppx_is_a_line_to_del_and_a_redir_symbol(del, i, env) == true)
-			new_cmd_array[j] = ppx_strdup_with_exit(env, env->cmd[i], del.pos);
+		if (ppx_is_a_line_to_del_not_starting_with_a_redir_symbol(del, i, env) \
+			== true)
+		{
+			new_cmd_array[j++] = ppx_strdup_with_exit(\
+				env, env->cmd[i], del.pos);
+		}
 		else if (ppx_is_not_a_line_to_del(del, i))
 		{
 			new_cmd_array[j++] = ppx_strdup_with_exit(\
@@ -40,6 +44,7 @@ char	**ppx_del_redirection_section_iter(\
 char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 {
 	size_t	len;
+	bool	first_char_is_not_a_redir_symbol;
 	char	**new_cmd_array;
 
 	len = 1;
@@ -47,10 +52,13 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 		++len;
 	if (len == del.lines_to_del)
 		len += 1;
-	len -= del.lines_to_del;
+	first_char_is_not_a_redir_symbol = \
+		ms_check_if_char_is_a_redir_symbol(env->cmd[del.line][0]) == false ;
+	len += first_char_is_not_a_redir_symbol - del.lines_to_del;
 	new_cmd_array = malloc(sizeof(char *) * (len + 1));
 	ms_memset(new_cmd_array, 0, sizeof(char **) * (len + 1));
-	new_cmd_array = ppx_del_redirection_section_iter(env, del, new_cmd_array);
+	new_cmd_array = ppx_del_redirection_section_iter(\
+		env, del, new_cmd_array);
 	return (new_cmd_array);
 }
 
@@ -111,8 +119,9 @@ void	ppx_handle_redirections(t_ppx *env)
 				ppx_check_and_apply_redirection(env, i, j);
 				if (env->cmd == NULL)
 					return ;
-				i = 0;
+				i = -1;
 				j = 0;
+				break ;
 			}
 			else
 				++j;
