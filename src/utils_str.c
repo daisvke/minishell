@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 10:24:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:45:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size)
 	{
 		while ((*array_of_pointers)[i])
 		{
-	perror("here");
 			(*array_of_pointers)[i] = ms_free((*array_of_pointers)[i]);
 			++i;
 		}
@@ -68,7 +67,6 @@ int	ms_nbrlen(long long int n)
 	if (n == 0)
 		return (1);
 	len = 0;
-	perror("here");
 	if (n < 0)
 	{
 		n = -n;

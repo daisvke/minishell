@@ -1,6 +1,6 @@
 NAME				=	minishell
 
-CC					=	clang $(INC) $(WFLAGS) -g3 $(MEM) 
+CC					=	clang $(INC) $(WFLAGS) -g3
 WFLAGS				=	-Wall -Wextra #-Werror
 READ				=	-lreadline	
 INC					=	-I inc/
