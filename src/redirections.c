@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 03:48:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 08:37:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,8 @@ void	ppx_handle_redirections(t_ppx *env)
 				ppx_check_and_apply_redirection(env, i, j);
 				if (env->cmd == NULL)
 					return ;
-				i = -1;
+				i = 0;
 				j = 0;
-				break ;
 			}
 			else
 				++j;

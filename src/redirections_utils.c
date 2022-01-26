@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:18:52 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/25 11:22:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 08:34:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ppx_check_outfile(\
 		if (env->cmd[i + 1] == NULL)
 			ppx_exit_with_error_message(env, 3);
 		file = env->cmd[i + 1];
-		*lines_to_del = 2i;
+		*lines_to_del = 2;
 		return (file);
 	}
 	else

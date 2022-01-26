@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 03:48:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 08:38:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ bool	ppx_is_not_a_line_to_del(t_del del, size_t i);
 /*
 ** heredoc
 */
+void	ppx_detect_heredocs(t_ppx *env, char *cmd[]);
 int		ppx_get_open_flags(t_ppx *env);
 
 #endif

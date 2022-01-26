@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 10:11:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 08:38:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ typedef struct s_env_lst
 typedef struct s_ppx
 {
 	int		**pipe_fds;
-	int		pos;
-	int		cmd_nbr;
-	int		i;
+	size_t	pos;
+	size_t	cmd_nbr;
+	size_t	i;
 	int		fd_in;
 	char	**cmd;
 	int		options;
+	size_t	heredoc_pos;
 }			t_ppx;
 
 // MAIN STRUCT
