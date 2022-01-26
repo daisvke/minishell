@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:18:52 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 01:24:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:22:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ char	*ppx_check_outfile(\
 	if (*file == '\0' || *file == '>')
 	{
 		if (env->cmd[i + 1] == NULL)
-			ms_print_error_message(19);
+			ppx_exit_with_error_message(env, 3);
 		file = env->cmd[i + 1];
-		*lines_to_del = 2;
+		*lines_to_del = 2i;
 		return (file);
 	}
 	else
@@ -52,7 +52,7 @@ int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 	if (fd == PPX_ERROR)
 	{
 		err_message = strerror(errno);
-		ppx_putstr_fd("pipex: ", STDERR_FILENO, MS_NONE);
+		ppx_putstr_fd("minishell: ", STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(err_message, STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(": ", STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(file_name, STDERR_FILENO, MS_PUT_NEWLINE);
@@ -62,7 +62,8 @@ int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 	return (fd);
 }
 
-bool	ppx_is_a_line_to_del_and_a_redir_symbol(t_del del, size_t i, t_ppx *env)
+bool	ppx_is_a_line_to_del_not_starting_with_a_redir_symbol(\
+	t_del del, size_t i, t_ppx *env)
 {
 	return (del.line == i \
 		&& ms_check_if_char_is_a_redir_symbol(env->cmd[i][0]) == false \

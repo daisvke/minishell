@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:53:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 11:41:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ppx_exit_with_error_message(t_ppx *env, int err_code)
 
 	err_message = NULL;
 	err_message = ppx_get_err_message_from_err_code(err_code);
-	ppx_putstr_fd("pipex: ", STDERR_FILENO, MS_NONE);
+	ppx_putstr_fd("minishell: ", STDERR_FILENO, MS_NONE);
 	ppx_putstr_fd(err_message, STDERR_FILENO, MS_PUT_NEWLINE);
 	ppx_free_all_allocated_variables(env);
 	exit(EXIT_FAILURE);
@@ -55,7 +55,7 @@ void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
 {
 	ppx_putstr_fd(cmd, STDERR_FILENO, MS_NONE);
 	ppx_putstr_fd(": command not found", STDERR_FILENO, MS_PUT_NEWLINE);
-		path_to_cmd = ms_free(path_to_cmd);
+	path_to_cmd = ms_free(path_to_cmd);
 	ppx_free_pipe_fds(&env->ppx_env);
 	ms_lst_clear_list(env->envp_lst);
 	exit(EXIT_FAILURE);

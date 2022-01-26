@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 00:56:35 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/24 10:11:17 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,11 @@ enum e_error_print_options
 // BITWISE FOR S_MS OPTIONS
 enum e_options
 {
-	MS_OPT_PIPE	= 8,
-	MS_OPT_APPEND_OUTPUT = 4,
-	MS_OPT_READ_FROM_FILE = 2,
-	MS_OPT_REDIR_OUTPUT	= 1,
-//	MS_OPT_HEREDOC = 1
+	MS_OPT_PIPE	= 16,
+	MS_OPT_APPEND_OUTPUT = 8,
+	MS_OPT_READ_FROM_FILE = 4,
+	MS_OPT_REDIR_OUTPUT	= 2,
+	MS_OPT_HEREDOC = 1
 };
 
 /*

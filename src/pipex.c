@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:47:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 03:14:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	t_ms *ms_env, t_ppx *ppx_env, pid_t *pid)
 {
-	if (ppx_env->options & MS_OPT_PIPE)
+	if ((ppx_env->options & MS_OPT_HEREDOC) == false \
+		&& ppx_env->options & MS_OPT_PIPE)
 		ppx_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
 	*pid = ppx_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
@@ -23,7 +24,8 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 		ppx_spawn_child_to_execute_cmd(ms_env, ppx_env);
 		exit(EXIT_SUCCESS);
 	}
-	if ((ppx_env->options & MS_OPT_PIPE)
+	if ((ppx_env->options & MS_OPT_HEREDOC) == false \
+		&& (ppx_env->options & MS_OPT_PIPE) \
 		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
 		ppx_save_data_from_child(ms_env, ppx_env);
 }
