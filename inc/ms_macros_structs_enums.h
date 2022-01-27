@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 09:37:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/26 22:15:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_env_lst
 	void	*next;
 }			t_env_lst;
 
-// MAIN STRUCT FROM PIPEX
+// PIPEX ENV
 typedef struct s_ppx
 {
 	int		**pipe_fds;
@@ -40,7 +40,7 @@ typedef struct s_ppx
 	size_t	heredoc_pos;
 }			t_ppx;
 
-// MAIN STRUCT
+// MINISHELL ENV
 typedef struct s_ms
 {
 	t_ppx		ppx_env;

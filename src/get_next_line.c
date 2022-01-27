@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 03:13:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 06:58:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	gnl_get_line(t_ppx *env, char **data, int fd)
 			return (PPX_ERROR);
 		if (res == GNL_REACHED_EOF)
 		{
-			ppx_close(env, 0);
+			ppx_close(env, env->pipe_fds[env->i][0]);
 			break ;
 		}
 		buffer[res] = '\0';
@@ -88,6 +88,7 @@ int	gnl_run_and_return(t_ppx *env, char **data, char **line, int fd)
 	char	*tmp;
 	bool	is_empty;
 
+	tmp = NULL;
 	res = gnl_get_line(env, data, fd);
 	if (res == PPX_ERROR)
 		return (PPX_ERROR);
@@ -98,10 +99,13 @@ int	gnl_run_and_return(t_ppx *env, char **data, char **line, int fd)
 	*line = gnl_concatenate(*data, NULL, index, false);
 	if (!line)
 		return (PPX_ERROR);
-	tmp = gnl_concatenate(*data + index + 1, NULL, \
-		gnl_get_char_index(*data, '\0', true) - index - 1, is_empty);
-	if (!tmp)
-		return (PPX_ERROR);
+	if (*data)
+	{
+		tmp = gnl_concatenate(*data + index + 1, NULL, \
+			gnl_get_char_index(*data, '\0', true) - index - 1, is_empty);
+		if (!tmp)
+			return (PPX_ERROR);
+	}
 	*data = ms_free(*data);
 	*data = tmp;
 	if (res == GNL_REACHED_EOF && is_empty)

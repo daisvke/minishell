@@ -6,20 +6,42 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 09:02:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 06:55:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_handle_pipe_in_child_proc(t_ppx *ppx_env)
+void	ppx_handle_pipe_in_child_proc(t_ppx *env)
 {
-//	ppx_close(ppx_env, ppx_env->pipe_fds[ppx_env->i][0]);
-	if ((ppx_env->options & MS_OPT_READ_FROM_FILE) == false)
-		ppx_dup2(ppx_env, ppx_env->fd_in, STDIN_FILENO);
-	if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false
-		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
-		ppx_dup2(ppx_env, ppx_env->pipe_fds[ppx_env->i][1], STDOUT_FILENO);
+//	ppx_close(env, env->pipe_fds[env->i][0]);
+	if ((env->options & MS_OPT_READ_FROM_FILE) == false)
+	{
+		perror("here 1");
+		ppx_dup2(env, env->fd_in, STDIN_FILENO);
+		perror("here 2");
+	}
+	/*
+	else if (env->pos == 0)
+	{
+		perror("here 5");
+		ppx_close(env, env->pipe_fds[env->i][0]);
+	}*/
+	if (
+		(env->options & MS_OPT_REDIR_OUTPUT) == false \
+		&& env->pos != env->cmd_nbr - 1)
+	{
+		perror("here 3");
+		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
+		perror("here 4");
+	}
+	/*
+	else if (env->pos != env->cmd_nbr - 1 &&  (env->options & MS_OPT_HEREDOC) == false)
+	{
+		perror("here 6");
+		ppx_close(env, env->pipe_fds[env->i][1]);
+		perror("here 7");
+	}*/
 }
 
 void	ms_execute_implemented_cmd(\
