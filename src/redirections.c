@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 04:28:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 07:29:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,15 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 {
 	static size_t	hd_count;
+	size_t			hd_total;
 	int				fd;
 	int				open_flags;
 
 	fd = 0;
 	if (*str == '<' && *(str + 1) == '<')
 	{
-		ms_apply_heredoc(env, file, hd_count);
+		hd_total = ppx_count_heredoc(env->cmd);
+		ms_apply_heredoc(env, file, hd_count, hd_total);
 		++hd_count;
 	}
 	else if (*str == '>' && *(str + 1) == '>')
