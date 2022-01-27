@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 06:55:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 12:39:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,18 @@
 void	ppx_handle_pipe_in_child_proc(t_ppx *env)
 {
 //	ppx_close(env, env->pipe_fds[env->i][0]);
-	if ((env->options & MS_OPT_READ_FROM_FILE) == false)
-	{
-		perror("here 1");
+	if ((env->options & MS_OPT_READ_FROM_FILE) == false \
+		&& (env->options & MS_OPT_HEREDOC) == false)
 		ppx_dup2(env, env->fd_in, STDIN_FILENO);
-		perror("here 2");
-	}
 	/*
 	else if (env->pos == 0)
 	{
 		perror("here 5");
 		ppx_close(env, env->pipe_fds[env->i][0]);
 	}*/
-	if (
-		(env->options & MS_OPT_REDIR_OUTPUT) == false \
+	if ((env->options & MS_OPT_REDIR_OUTPUT) == false \
 		&& env->pos != env->cmd_nbr - 1)
-	{
-		perror("here 3");
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
-		perror("here 4");
-	}
 	/*
 	else if (env->pos != env->cmd_nbr - 1 &&  (env->options & MS_OPT_HEREDOC) == false)
 	{
@@ -81,16 +73,19 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 {
 	size_t	cmd_code;
 
-	ppx_handle_redirections(ppx_env);
-	if (ppx_env->cmd && *ppx_env->cmd)
-	{
+//	if (ppx_env->cmd && *ppx_env->cmd)
+//	{
+		ppx_handle_redirections(ppx_env);
+		if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
+			return ;
 		if (ppx_env->options & MS_OPT_PIPE)
 			ppx_handle_pipe_in_child_proc(ppx_env);
+	
 		if (ms_check_if_the_cmd_is_implemented(\
 				ppx_env->cmd, &cmd_code, PPX_PROC_CHILD \
 			) == true)
 			ms_execute_implemented_cmd(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 		else
 			ppx_execute_unimplemented_cmd(ms_env, ppx_env);
-	}
+//	}
 }

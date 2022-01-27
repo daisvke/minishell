@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 07:30:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 12:33:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,27 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 
 void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_count, size_t hd_total)
 {
-	static size_t	apply_count;
 	char		*in_file;
 	int			fd;
-
-	env->options |= MS_OPT_HEREDOC;
+// sep in out/in for better comprehension
 	ppx_request_heredoc_input(env, file);
 	in_file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
-	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
-	if (hd_count > 0 || (hd_total == 1 && hd_count == 0))
-		ppx_dup2(env, fd, env->fd_in);
+	if (!(hd_total > 1 && hd_count == hd_total - 1))
+		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	else
+	{
+		ppx_dup2(env, fd, STDOUT_FILENO);
+		env->fd_in = fd;	
+	}
+
+	if (hd_count > 0 || (hd_total == 1 && hd_count == 0))
 		ppx_dup2(env, fd, STDIN_FILENO);
-	ppx_close(env, fd);
+//	ppx_close(env, fd);
 	in_file = ppx_generate_filename(env, true);
 	unlink(in_file);
 	in_file = ms_free(in_file);
-	++apply_count;
 }
 
 void	ppx_detect_heredocs(t_ppx *env, char *cmd[])
@@ -133,12 +135,8 @@ size_t	ppx_count_heredoc(char *cmd[])
 			{
 				if (cmd[i][j] == '<' && cmd[i][j + 1] == '<')
 					++heredoc_nbr;
-				i = -1;
-				j = 0;
-				break ;
 			}
-			else
-				++j;
+			++j;
 		}
 		++i;
 	}
