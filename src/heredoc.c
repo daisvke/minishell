@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 11:08:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 06:10:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	int		fd;
 	char	*line;
 	char	*file;
+	int i=0;
+	int j=0;
 
+	printf("lim: %s\n",limiter);
 	line = NULL;
 	file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, file, \
@@ -51,8 +54,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(env, STDIN_FILENO, &line) >= 0)
 	{
-		if (ms_strncmp(line, limiter, ms_strlen(line)) == MS_SAME \
-			&& ms_strncmp(line, limiter, ms_strlen(limiter)) == MS_SAME)
+		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
 			line = ms_free(line);
 			ppx_close(env, fd);
@@ -66,10 +68,11 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	ppx_close(env, fd);
 }
 
-void	ms_apply_heredoc(t_ppx *env, char *file)
+void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_count)
 {
-	char	*in_file;
-	int		fd;
+	static size_t	apply_count;
+	char		*in_file;
+	int			fd;
 
 	env->options |= MS_OPT_HEREDOC;
 	ppx_request_heredoc_input(env, file);
@@ -77,12 +80,13 @@ void	ms_apply_heredoc(t_ppx *env, char *file)
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
 	ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
-	ppx_dup2(env, fd, STDIN_FILENO);
-	ppx_close(env, fd);
+	if (hd_count > 0)
+		ppx_dup2(env, fd, env->fd_in);
+//	ppx_close(env, fd);
 	in_file = ppx_generate_filename(env, true);
 	unlink(in_file);
 	in_file = ms_free(in_file);
-	perror("apply heredoc");
+	++apply_count;
 }
 
 void	ppx_detect_heredocs(t_ppx *env, char *cmd[])

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 10:54:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 04:28:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ char	**ppx_del_redirection_section_iter(\
 	if ((new_cmd_array && new_cmd_array[0] && *new_cmd_array[0] == '\0') \
 		|| (*new_cmd_array == NULL))
 		new_cmd_array = ms_free(new_cmd_array);
+	if (new_cmd_array)
+		new_cmd_array[j] = NULL;
+/*
+int fd;
+	for (fd=0;new_cmd_array[fd];++fd)
+		printf("cmd: %s\n",new_cmd_array[fd]);
+*/
 	return (new_cmd_array);
 }
 
@@ -64,12 +71,16 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 
 void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 {
-	int	fd;
-	int	open_flags;
+	static size_t	hd_count;
+	int				fd;
+	int				open_flags;
 
 	fd = 0;
 	if (*str == '<' && *(str + 1) == '<')
-		ms_apply_heredoc(env, file);
+	{
+		ms_apply_heredoc(env, file, hd_count);
+		++hd_count;
+	}
 	else if (*str == '>' && *(str + 1) == '>')
 		ms_apply_append_mode(env, file);
 	else if (*str == '<')

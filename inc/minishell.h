@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 03:48:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/27 04:28:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char		*ms_print_last_exit_status(t_ms *env);
 ** redirections
 */
 void		ms_apply_append_mode(t_ppx *env, char *file);
-void		ms_apply_heredoc(t_ppx *env, char *file);
+void		ms_apply_heredoc(t_ppx *env, char *file, size_t hd_count);
 char		*ppx_check_outfile(\
 	t_ppx *env, char *file, size_t i, size_t *lines_to_del);
 
