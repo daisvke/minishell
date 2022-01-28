@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 04:43:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 07:05:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	ppx_wait_for_all_children(\
 		if (WIFEXITED(wstatus))
 		{
 			status_code = WEXITSTATUS(wstatus);
-			ms_env->last_pipe_exit_status = status_code;
+		//	ms_env->last_pipe_exit_status = status_code;
+			ms_env->last_pipe_exit_status = wstatus;
 			return ;
 		}
 		++i;
@@ -81,9 +82,10 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
-		ppx_detect_heredocs(ppx_env, cmd_line);
+		ppx_env->options &= MS_OPT_INIT;	
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) == 2)
 			return ;
+		ppx_detect_heredocs(ppx_env, ppx_env->cmd);
 		if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == true)
 			ppx_execute_implemented_cmd_in_parent(\
 				ms_env, ppx_env, cmd_code, ppx_env->cmd);
@@ -103,8 +105,6 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 				perror("ERROR WAITPID");
 		//		ppx_free_all_allocated_variables(&ms_env->ppx_env);
 		//		ppx_free_array_of_pointers(&ms_env->split_cmd_line, MS_ALL);
-
-		// status to $?
 			}
 			else
 				++wait_count;

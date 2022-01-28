@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 12:33:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 07:26:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	int		fd;
 	char	*line;
 	char	*file;
-	int i=0;
-	int j=0;
 
 	printf("lim: %s\n",limiter);
 	line = NULL;
@@ -68,26 +66,25 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	ppx_close(env, fd);
 }
 
-void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_count, size_t hd_total)
+void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 {
 	char		*in_file;
 	int			fd;
-// sep in out/in for better comprehension
+// sep in out/in for readability
 	ppx_request_heredoc_input(env, file);
 	in_file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
-	if (!(hd_total > 1 && hd_count == hd_total - 1))
+	if (hd_total != 1 || !(hd_total > 1 && hd_pos == hd_total - 1))
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	else
 	{
-		ppx_dup2(env, fd, STDOUT_FILENO);
-		env->fd_in = fd;	
+	ppx_close(env, fd);
+	//	ppx_dup2(env, fd, STDOUT_FILENO);
+//		env->fd_in = fd;
 	}
-
-	if (hd_count > 0 || (hd_total == 1 && hd_count == 0))
+	if (hd_pos > 0 || hd_total == 1)
 		ppx_dup2(env, fd, STDIN_FILENO);
-//	ppx_close(env, fd);
 	in_file = ppx_generate_filename(env, true);
 	unlink(in_file);
 	in_file = ms_free(in_file);
