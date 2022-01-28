@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:49:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 07:02:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,19 @@ void	ms_use_argv_to_create_cmd_line(int argc, char *argv[], t_ms *env)
 	env->split_cmd_line[j] = NULL;
 }
 
-int	ms_show_prompt_and_read_cmd_line(char **read_line)
+int	ms_show_prompt_and_read_cmd_line(t_ms *env, char **read_line)
 {
-	*read_line = readline(MS_PROMPT);
+	char	*prompt;
+
+//printf("last: %d\n",env->last_pipe_exit_status);
+	if (env->last_pipe_exit_status == 88)
+	{
+	//	printf("promtp============\n");
+		prompt = "";
+	}
+	else
+		prompt = "$ ";
+	*read_line = readline(prompt);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
@@ -82,7 +92,7 @@ int	ms_prompt_and_execute_cmd_line_with_pipex(t_ms *env, char *read_line)
 {
 	size_t	res;
 
-	res = ms_show_prompt_and_read_cmd_line(&read_line);
+	res = ms_show_prompt_and_read_cmd_line(env, &read_line);
 	if (res == MS_READ_EOF)
 		ms_quit_with_ctrl_d(env);
 	if (res == MS_READ_NONE)

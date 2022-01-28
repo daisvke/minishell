@@ -6,14 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 12:33:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 06:58:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_MACROS_STRUCTS_ENUMS_H
 # define MS_MACROS_STRUCTS_ENUMS_H
 
-# define MS_PROMPT						"$ "
 # define MS_ERR_MAX						16
 # define MS_FIRST_ARG_POS				1
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
@@ -129,6 +128,8 @@ enum e_error_print_options
 };
 
 // BITWISE FOR S_MS OPTIONS
+# define MS_OPT_INIT	16
+
 enum e_options
 {
 	MS_OPT_PIPE	= 16,
