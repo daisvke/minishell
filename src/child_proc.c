@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 10:01:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 22:04:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	ppx_handle_pipe_in_child_proc(t_ppx *env)
 {
 //	ppx_close(env, env->pipe_fds[env->i][0]);
 
+	if (env->options & MS_OPT_HEREDOC_IN_LAST_CHILD)
+	{
+		perror("here");
+//		ppx_close(env, env->pipe_fds[env->i][0]);
+	}
 	if ((env->options & MS_OPT_READ_FROM_FILE) == false)
 		ppx_dup2(env, env->fd_in, STDIN_FILENO);
 	/*

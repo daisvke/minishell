@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 10:01:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 21:33:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	else
 	{
-	ppx_close(env, fd);
+		ppx_dup2(env, env->fd_in, STDIN_FILENO);
 	//	ppx_dup2(env, fd, STDOUT_FILENO);
+	ppx_close(env, fd);
 //		env->fd_in = fd;
 	}
 	if (hd_pos > 0 || hd_total == 1)
