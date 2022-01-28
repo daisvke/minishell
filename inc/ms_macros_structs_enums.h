@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 06:58:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 20:31:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,12 @@ enum e_error_print_options
 };
 
 // BITWISE FOR S_MS OPTIONS
-# define MS_OPT_INIT	16
+# define MS_OPT_INIT_ALL_BUT_PIPE			48
+# define MS_OPT_INIT_HEREDOC_IN_LAST_CHILD	31
 
 enum e_options
 {
+	MS_OPT_HEREDOC_IN_LAST_CHILD = 32,
 	MS_OPT_PIPE	= 16,
 	MS_OPT_APPEND_OUTPUT = 8,
 	MS_OPT_READ_FROM_FILE = 4,

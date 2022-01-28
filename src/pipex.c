@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 07:05:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 22:40:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	t_ms *ms_env, t_ppx *ppx_env, pid_t *pid)
 {
-	if ((ppx_env->options & MS_OPT_HEREDOC) == false \
-		&& ppx_env->options & MS_OPT_PIPE)
+	if (ppx_env->options & MS_OPT_PIPE)
 		ppx_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
 	*pid = ppx_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
@@ -24,8 +23,7 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 		ppx_spawn_child_to_execute_cmd(ms_env, ppx_env);
 		exit(EXIT_SUCCESS);
 	}
-	if ((ppx_env->options & MS_OPT_HEREDOC) == false \
-		&& (ppx_env->options & MS_OPT_PIPE) \
+	if (ppx_env->options & MS_OPT_PIPE \
 		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
 		ppx_save_data_from_child(ms_env, ppx_env);
 }
@@ -82,7 +80,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
-		ppx_env->options &= MS_OPT_INIT;	
+		ppx_env->options &= MS_OPT_INIT_ALL_BUT_PIPE;
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) == 2)
 			return ;
 		ppx_detect_heredocs(ppx_env, ppx_env->cmd);
@@ -97,9 +95,12 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 				ms_env, ppx_env, &pid);
 		if (ppx_env->pos < ppx_env->cmd_nbr - 1)
 			ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
+		if (ppx_env->options & MS_OPT_HEREDOC_IN_LAST_CHILD)
+			ppx_env->options &= MS_OPT_INIT_HEREDOC_IN_LAST_CHILD;
 		if (ppx_env->options & MS_OPT_HEREDOC \
 			&& ppx_env->pos == ppx_env->heredoc_pos)
 		{
+			ppx_env->options |= MS_OPT_HEREDOC_IN_LAST_CHILD;
 			if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
 			{
 				perror("ERROR WAITPID");
