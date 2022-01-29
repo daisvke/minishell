@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 01:32:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/28 22:44:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ char	**ppx_del_redirection_section_iter(\
 		new_cmd_array = ms_free(new_cmd_array);
 	if (new_cmd_array)
 		new_cmd_array[j] = NULL;
-/*
-int fd;
-	for (fd=0;new_cmd_array[fd];++fd)
-		printf("cmd: %s\n",new_cmd_array[fd]);
-*/
 	return (new_cmd_array);
 }
 

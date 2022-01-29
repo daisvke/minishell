@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 20:31:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/29 01:10:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_ms
 	char		**split_cmd_line;
 	int			options;
 	int			last_pipe_exit_status;
+	int			exit_status;
 }				t_ms;
 
 // DELETE REDIRECTION SECTION
@@ -128,12 +129,10 @@ enum e_error_print_options
 };
 
 // BITWISE FOR S_MS OPTIONS
-# define MS_OPT_INIT_ALL_BUT_PIPE			48
-# define MS_OPT_INIT_HEREDOC_IN_LAST_CHILD	31
+# define MS_OPT_INIT_ALL_BUT_PIPE		48
 
 enum e_options
 {
-	MS_OPT_HEREDOC_IN_LAST_CHILD = 32,
 	MS_OPT_PIPE	= 16,
 	MS_OPT_APPEND_OUTPUT = 8,
 	MS_OPT_READ_FROM_FILE = 4,
@@ -141,11 +140,18 @@ enum e_options
 	MS_OPT_HEREDOC = 1
 };
 
+// EXIT STATUS
+enum e_exit
+{
+	MS_EXIT_SUCCESS,
+	MS_EXIT_SIGINT
+};
+
 /*
 ** FROM PIPEX
 */
-# define PPX_ERROR 				-1
-# define PPX_ERR_MAX			8
+# define PPX_ERROR 						-1
+# define PPX_ERR_MAX					8
 
 // PROCESSES WHILE FORKING
 enum e_processes

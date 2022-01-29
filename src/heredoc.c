@@ -6,36 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 21:33:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/29 07:08:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ppx_get_open_flags(t_ppx *env)
-{
-	int	flags;
-
-	flags = 0;
-	if (env->options & MS_OPT_APPEND_OUTPUT)
-		flags = O_CREAT | O_WRONLY | O_APPEND;
-	else if (env->options & MS_OPT_REDIR_OUTPUT)
-		flags = O_CREAT | O_WRONLY | O_TRUNC;
-	return (flags);
-}
-
-char	*ppx_generate_filename(t_ppx *env, bool increment)
-{
-	static size_t	i;
-	char			*fileno;
-	char			*file;
-	fileno = ppx_itoa(env, i);
-	file = ppx_join_three_str(env, ".", fileno,"heredoc.tmp");
-	fileno = ms_free(fileno);
-	if (increment == true)
-		++i;
-	return (file);
-}
 
 void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 {
@@ -43,7 +18,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	char	*line;
 	char	*file;
 
-	printf("lim: %s\n",limiter);
+printf("lim: |%s|",limiter);
 	line = NULL;
 	file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, file, \
@@ -54,6 +29,7 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	{
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
+			perror("cmp");
 			line = ms_free(line);
 			ppx_close(env, fd);
 			return ;
@@ -70,7 +46,8 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 {
 	char		*in_file;
 	int			fd;
-// sep in out/in for readability
+
+//	ppx_dup2(env, env->pipe_fds[env->i][0], STDIN_FILENO);
 	ppx_request_heredoc_input(env, file);
 	in_file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
@@ -79,10 +56,8 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
 	else
 	{
-		ppx_dup2(env, env->fd_in, STDIN_FILENO);
-	//	ppx_dup2(env, fd, STDOUT_FILENO);
-	ppx_close(env, fd);
-//		env->fd_in = fd;
+//		ppx_dup2(env, env->fd_in, STDIN_FILENO);
+		ppx_close(env, fd);
 	}
 	if (hd_pos > 0 || hd_total == 1)
 		ppx_dup2(env, fd, STDIN_FILENO);

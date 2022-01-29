@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 09:18:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/29 07:06:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int	gnl_get_line(t_ppx *env, char **data, int fd)
 		if (res < 0)
 			return (PPX_ERROR);
 		if (res == GNL_REACHED_EOF)
-		{
-	//		ppx_close(env, env->pipe_fds[env->i][0]);
 			break ;
-		}
 		buffer[res] = '\0';
 		tmp = gnl_concatenate(*data, buffer, GNL_OFF, false);
 		if (!tmp)

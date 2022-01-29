@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 22:40:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/29 01:49:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	ppx_wait_for_all_children(\
 		}
 		if (WIFEXITED(wstatus))
 		{
+			ms_env->exit_status = MS_EXIT_SUCCESS;
 			status_code = WEXITSTATUS(wstatus);
-		//	ms_env->last_pipe_exit_status = status_code;
 			ms_env->last_pipe_exit_status = wstatus;
 			return ;
 		}
@@ -75,6 +75,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	pid_t	pid;
 	size_t	cmd_code;
 
+	int	status_code;
 	int	wstatus;
 	size_t	wait_count = 0;
 
@@ -95,21 +96,21 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 				ms_env, ppx_env, &pid);
 		if (ppx_env->pos < ppx_env->cmd_nbr - 1)
 			ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
-		if (ppx_env->options & MS_OPT_HEREDOC_IN_LAST_CHILD)
-			ppx_env->options &= MS_OPT_INIT_HEREDOC_IN_LAST_CHILD;
+
 		if (ppx_env->options & MS_OPT_HEREDOC \
 			&& ppx_env->pos == ppx_env->heredoc_pos)
 		{
-			ppx_env->options |= MS_OPT_HEREDOC_IN_LAST_CHILD;
-			if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
+			ms_env->exit_status = MS_EXIT_SUCCESS;
+			waitpid(pid, &wstatus, WUNTRACED);
+			if (WIFEXITED(wstatus))
 			{
-				perror("ERROR WAITPID");
-		//		ppx_free_all_allocated_variables(&ms_env->ppx_env);
-		//		ppx_free_array_of_pointers(&ms_env->split_cmd_line, MS_ALL);
+				status_code = WEXITSTATUS(wstatus);
+				ms_env->last_pipe_exit_status = status_code;
 			}
 			else
 				++wait_count;
 		}
+
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
