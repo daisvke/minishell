@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 07:02:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/29 01:43:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ int	ms_show_prompt_and_read_cmd_line(t_ms *env, char **read_line)
 {
 	char	*prompt;
 
-//printf("last: %d\n",env->last_pipe_exit_status);
-	if (env->last_pipe_exit_status == 88)
-	{
-	//	printf("promtp============\n");
-		prompt = "";
-	}
-	else
+/*	if (env->last_pipe_exit_status == 88)
+	if (env->exit_status == MS_EXIT_SIGINT)
+		prompt = "\n";
+	else*/
 		prompt = "$ ";
+	env->exit_status = MS_EXIT_SIGINT;
 	*read_line = readline(prompt);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);

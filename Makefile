@@ -18,6 +18,7 @@ SRC_FILES			=	builtin_cmds_1.c \
 						expand_variables.c \
 						expand_variables_utils_1.c \
 						expand_variables_utils_2.c \
+						file_handler.c \
 						get_next_line.c \
 						heredoc.c \
 						linked_list.c \

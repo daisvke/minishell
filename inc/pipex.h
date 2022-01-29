@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/26 09:42:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/29 00:29:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ void	ppx_pipe(t_ms *env, int *fds);
 /*
 ** utils_fd
 */
+char	*ppx_check_outfile(\
+	t_ppx *env, char *file, size_t i, size_t *lines_to_del);
+char	*ppx_generate_filename(t_ppx *env, bool increment);
 void	ppx_get_fd(t_ppx *env, char *argv[]);
+int		ppx_get_open_flags(t_ppx *env);
 int		ppx_open_file(t_ppx *env, char *file_name, int flags, int mod);
 void	ppx_putstr_fd(char *s, int fd, bool option);
 
