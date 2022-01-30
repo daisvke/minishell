@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 22:44:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 11:31:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 		env->options |= MS_OPT_READ_FROM_FILE;
 		fd = ppx_open_file(env, file, O_RDONLY, 0);
 		ppx_dup2(env, fd, STDIN_FILENO);
+		ppx_close(env, fd);
 	}
 	else if (*str == '>')
 	{
@@ -92,6 +93,7 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 		open_flags = ppx_get_open_flags(env);
 		fd = ppx_open_file(env, file, open_flags, 0664);
 		ppx_dup2(env, fd, STDOUT_FILENO);
+		ppx_close(env, fd);
 	}
 }
 
