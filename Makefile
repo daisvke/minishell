@@ -55,7 +55,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(READ) -o $(NAME)
-	@echo "\n\033[32m[COMPILATION FINISHED]\033[0m\n"
+	@echo "\n\033[32m[COMPILATION COMPLETED]\033[0m\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p obj/

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 09:32:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 11:13:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ printf("lim: |%s|",limiter);
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(env, STDIN_FILENO, &line) >= 0)
 	{
-		perror("here");
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
-			perror("cmp");
 			line = ms_free(line);
 			ppx_close(env, fd);
+			perror("cmp");
 			return ;
 		}
-		ppx_putstr_fd(line, STDOUT_FILENO, MS_NONE);
-		ppx_putstr_fd("\n", STDOUT_FILENO, MS_NONE);
+		ppx_putstr_fd(line, STDOUT_FILENO, MS_PUT_NEWLINE);
 		line = ms_free(line);
 	}
 	line = NULL;
@@ -45,8 +43,8 @@ printf("lim: |%s|",limiter);
 
 void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 {
-	char		*in_file;
-	int			fd;
+	char	*in_file;
+	int		fd;
 
 //	ppx_dup2(env, env->pipe_fds[env->i][0], STDIN_FILENO);
 	ppx_request_heredoc_input(env, file);
