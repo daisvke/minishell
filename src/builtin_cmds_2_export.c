@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/18 11:55:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 09:54:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	ms_check_character_2(char *cmd[], size_t i, size_t j)
 {
 	if (j == 0 || cmd[i][j - 1] == ' ')
 	{
-		printf(\
-		"minishell: export: `%s' : not a valid identifier\n", cmd[i]);
+		ms_print_not_valid_identifier_err_message(cmd[i]);
 		return (MS_ERROR);
 	}
 	return (MS_SUCCESS);
@@ -28,8 +27,7 @@ int	ms_check_character_1(char *cmd[], size_t i, size_t j)
 	if ((j == 0 && ms_isdigit(cmd[i][j]) == true) \
 		|| (ms_isalnum(cmd[i][j]) == false && cmd[i][j] != '_'))
 	{
-		printf(\
-		"minishell: export: `%s' : not a valid identifier\n", cmd[i]);
+		ms_print_not_valid_identifier_err_message(cmd[i]);
 		return (MS_ERROR);
 	}
 	return (MS_SUCCESS);

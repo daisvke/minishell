@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/29 07:08:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 09:32:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ printf("lim: |%s|",limiter);
 	ppx_dup2(env, fd, STDOUT_FILENO);
 	while (get_next_line(env, STDIN_FILENO, &line) >= 0)
 	{
+		perror("here");
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
 			perror("cmp");
@@ -54,16 +55,12 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 	in_file = ms_free(in_file);
 	if (hd_total != 1 || !(hd_total > 1 && hd_pos == hd_total - 1))
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO);
-	else
-	{
-//		ppx_dup2(env, env->fd_in, STDIN_FILENO);
-		ppx_close(env, fd);
-	}
 	if (hd_pos > 0 || hd_total == 1)
 		ppx_dup2(env, fd, STDIN_FILENO);
 	in_file = ppx_generate_filename(env, true);
 	unlink(in_file);
 	in_file = ms_free(in_file);
+	ppx_close(env, fd);
 }
 
 void	ppx_detect_heredocs(t_ppx *env, char *cmd[])

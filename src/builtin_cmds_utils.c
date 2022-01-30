@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:58:10 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 09:48:43 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 09:54:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,11 @@ bool	ms_check_if_there_is_not_too_much_args(char **cmd_and_args)
 		++i;
 	}
 	return (MS_OK);
+}
+
+void	ms_print_not_valid_identifier_err_message(char *cmd)
+{
+	write(STDOUT_FILENO, "minishell: export: `", 20);
+	write(STDOUT_FILENO, cmd, ms_strlen(cmd));
+	write(STDOUT_FILENO, "\' : not a valid identifier\n", 27);
 }

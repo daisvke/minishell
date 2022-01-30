@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/29 01:49:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 09:32:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ppx_wait_for_all_children(\
 {
 	int	i;
 	int	size;
-	int	wstatus;
+	int	wstatus = 0;
 	int	status_code;
 
 	i = 0;
@@ -62,7 +62,7 @@ void	ppx_wait_for_all_children(\
 		{
 			ms_env->exit_status = MS_EXIT_SUCCESS;
 			status_code = WEXITSTATUS(wstatus);
-			ms_env->last_pipe_exit_status = wstatus;
+			ms_env->last_pipe_exit_status = wstatus; //or status_code ?
 			return ;
 		}
 		++i;
@@ -76,7 +76,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	size_t	cmd_code;
 
 	int	status_code;
-	int	wstatus;
+	int	wstatus = 0;
 	size_t	wait_count = 0;
 
 	while (ppx_env->pos < ppx_env->cmd_nbr)
@@ -110,7 +110,6 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 			else
 				++wait_count;
 		}
-
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
