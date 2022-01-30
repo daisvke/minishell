@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 22:06:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 23:52:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 	unlink(in_file);
 	in_file = ms_free(in_file);
 	ppx_close(env, STDOUT_FILENO);
-//	ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);//close ?
+	ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);//close ?
 }
 
 void	ppx_detect_heredocs(t_ppx *env, char *cmd[])
