@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 10:04:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 03:57:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 		}
 	}
-	exit(EXIT_SUCCESS);
+	return (0);
 }

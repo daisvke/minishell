@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 12:25:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 09:44:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 	node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
 	key_len = 4;
 	current_path = node->entry + key_len;
-	printf("%s\n", current_path);
+	write(STDOUT_FILENO, current_path, ms_strlen(current_path));
+	write(STDOUT_FILENO, "\n", 1);
 }
 
 void	ms_execute_cmd_env(t_env_lst *envp_head)
@@ -82,7 +83,8 @@ void	ms_execute_cmd_env(t_env_lst *envp_head)
 	node = envp_head;
 	while (node)
 	{
-		printf("%s\n", node->entry);
+		write(STDOUT_FILENO, node->entry, ms_strlen(node->entry));
+		write(STDOUT_FILENO, "\n", 1);
 		node = node->next;
 	}
 }
@@ -104,5 +106,5 @@ void	ms_execute_cmd_echo(char *cmd[])
 		++i;
 	}
 	if (opt_n == false)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 }
