@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/29 01:10:34 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 15:11:53 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_ppx
 	size_t	cmd_nbr;
 	size_t	i;
 	int		fd_in;
+	int		fd_out;
 	char	**cmd;
 	int		options;
 	size_t	heredoc_pos;
@@ -104,6 +105,13 @@ enum e_read
 	MS_READ_LINE,
 	MS_READ_EOF,
 	MS_READ_NONE
+};
+
+// CLOSE AFTER DUP2
+enum e_dup
+{
+	MS_DUP_OFF,
+	MS_DUP_CLOSE_FD
 };
 
 // IMPLEMENTED COMMANDS

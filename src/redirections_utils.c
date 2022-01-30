@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:18:52 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 23:20:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 14:37:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ms_apply_append_mode(t_ppx *env, char *file)
 	ppx_close(env, env->pipe_fds[env->i][1]);
 	open_flags = ppx_get_open_flags(env);
 	fd = ppx_open_file(env, file, open_flags, 0664);
-	ppx_dup2(env, fd, STDOUT_FILENO);
+	ppx_dup2(env, fd, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 }
 
 bool	ppx_is_a_line_to_del_not_starting_with_a_redir_symbol(\
