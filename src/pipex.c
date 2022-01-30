@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 11:25:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/30 15:31:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	if (ppx_env->options & MS_OPT_PIPE)
 		ppx_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
 
-//	stdin_cpy = dup(ppx_env->pipe_fds[ppx_env->i][0]);//check errs
-//	stdout_cpy = dup(ppx_env->pipe_fds[ppx_env->i][1]);
+	stdin_cpy = dup(ppx_env->pipe_fds[ppx_env->i][0]);//check errs
+	stdout_cpy = dup(ppx_env->pipe_fds[ppx_env->i][1]);
 
 	*pid = ppx_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
@@ -33,7 +33,9 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	if (ppx_env->options & MS_OPT_PIPE \
 		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
 		ppx_save_data_from_child(ms_env, ppx_env);
-
+	
+	ppx_close(ppx_env, stdin_cpy);
+	ppx_close(ppx_env, stdout_cpy);
 //	ppx_dup2(ppx_env, stdin_cpy, STDIN_FILENO);
 //	ppx_dup2(ppx_env, stdout_cpy, STDOUT_FILENO);
 }
