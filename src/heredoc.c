@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 23:52:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:23:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ printf("lim: |%s|",limiter);
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
 			line = ms_free(line);
+//	ppx_close(env, STDIN_FILENO);
 			perror("cmp");
 			return ;
 		}
 		ppx_putstr_fd(line, STDOUT_FILENO, MS_PUT_NEWLINE);
 		line = ms_free(line);
 	}
+//	ppx_close(env, STDIN_FILENO);
 	line = NULL;
 }
 
@@ -44,9 +46,12 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 	char	*in_file;
 	int		fd;
 	int		stdout_cpy;
+	int		stdin_cpy;
 
 	stdout_cpy = dup(STDOUT_FILENO);
+	stdin_cpy = dup(STDIN_FILENO);
 	ppx_request_heredoc_input(env, file);
+	ppx_dup2(env, stdin_cpy, STDIN_FILENO, MS_DUP_CLOSE_FD);//close ?
 	in_file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
