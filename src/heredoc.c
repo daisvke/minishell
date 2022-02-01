@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/31 12:23:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/01 06:21:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 	int		stdin_cpy;
 
 	stdout_cpy = dup(STDOUT_FILENO);
-	stdin_cpy = dup(STDIN_FILENO);
+//	stdin_cpy = dup(STDIN_FILENO);
 	ppx_request_heredoc_input(env, file);
-	ppx_dup2(env, stdin_cpy, STDIN_FILENO, MS_DUP_CLOSE_FD);//close ?
+//	ppx_dup2(env, stdin_cpy, STDIN_FILENO, MS_DUP_CLOSE_FD);//close ?
 	in_file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
