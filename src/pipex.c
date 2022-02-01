@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 22:39:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/01 06:13:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	if (ppx_env->options & MS_OPT_PIPE \
 		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
 		ppx_save_data_from_child(ms_env, ppx_env);
-	
-//	ppx_dup2(ppx_env, stdin_cpy, STDIN_FILENO);
-//	ppx_dup2(ppx_env, stdout_cpy, STDOUT_FILENO);
 }
 
 void	ppx_execute_implemented_cmd_in_parent(\
@@ -82,9 +79,13 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	int	status_code;
 	int	wstatus = 0;
 	size_t	wait_count = 0;
+	int		stdout_cpy;
+	int		stdin_cpy;
 
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
+	stdout_cpy = dup(STDOUT_FILENO);
+	stdin_cpy = dup(STDIN_FILENO);
 		ppx_env->options &= MS_OPT_INIT_ALL_BUT_PIPE;
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) == 2)
 			return ;
@@ -116,6 +117,8 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		}
 		++ppx_env->pos;
 		++ppx_env->i;
+	ppx_dup2(ppx_env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);//close ?
+	ppx_dup2(ppx_env, stdin_cpy, STDIN_FILENO, MS_DUP_CLOSE_FD);//close ?
 	}
 	if (ppx_env->cmd == NULL && ms_free(ms_env->cmd_line) == NULL)
 		return ;	

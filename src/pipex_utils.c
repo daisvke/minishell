@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:00:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 15:30:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:04:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ppx_save_data_from_child(t_ms *ms_env, t_ppx *ppx_env)
 {
-	if (ppx_env->i > 0)
-		ms_close(ms_env, ppx_env->pipe_fds[ppx_env->i - 1][0]);
 	ms_close(ms_env, ppx_env->pipe_fds[ppx_env->i][1]);
-	ppx_env->fd_in = ppx_env->pipe_fds[ppx_env->i][0];
+//	ppx_env->fd_in = ppx_env->pipe_fds[ppx_env->i][0];
 }
 
 int	ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])

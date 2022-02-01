@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/31 12:30:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/01 05:53:42 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ppx_handle_pipe_in_child_proc(t_ppx *env)
 {
-//	ppx_close(env, STDIN_FILENO); 
-	if ((env->options & MS_OPT_READ_FROM_FILE) == false)
-		ppx_dup2(env, env->fd_in, STDIN_FILENO, MS_DUP_OFF);
+	if ((env->options & MS_OPT_READ_FROM_FILE) == false \
+		&& env->pos > 0)
+		ppx_dup2(env,  env->pipe_fds[env->i - 1][0], STDIN_FILENO, MS_DUP_CLOSE_FD);
 	if ((env->options & MS_OPT_REDIR_OUTPUT) == false \
-		&& env->pos != env->cmd_nbr - 1)
+		&& env->pos < env->cmd_nbr - 1)
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO, MS_DUP_OFF);
 }
 
@@ -62,18 +62,22 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	ppx_handle_redirections(ppx_env);
 	if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
 		return ;
+		/*
+	int i;
+	for(i=0;i < ppx_env->i;++i)
+	{
+	if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
+		&& ppx_env->pos < ppx_env->cmd_nbr - 1)
+		ppx_close(ppx_env, STDOUT_FILENO);
+//		ppx_close(ppx_env, ppx_env->pipe_fds[i][0]);
+//		ppx_close(ppx_env, ppx_env->pipe_fds[i][1]);
+	}
+//	ppx_close(ppx_env, STDOUT_FILENO);
+*/
 	if (ms_check_if_the_cmd_is_implemented(\
 			ppx_env->cmd, &cmd_code, PPX_PROC_CHILD \
 		) == true)
 		ms_execute_implemented_cmd(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 	else
 		ppx_execute_unimplemented_cmd(ms_env, ppx_env);
-	ppx_close(ppx_env, ppx_env->pipe_fds[ppx_env->i][0]);
-	ppx_close(ppx_env, ppx_env->pipe_fds[ppx_env->i][1]);
-	int i;
-	for(i=0;i <= ppx_env->i;++i)
-	{
-		ppx_close(ppx_env, ppx_env->pipe_fds[i][0]);
-		ppx_close(ppx_env, ppx_env->pipe_fds[i][1]);
-	}
 }
