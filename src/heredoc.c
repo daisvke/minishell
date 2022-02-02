@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/01 06:21:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/02 01:27:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ printf("lim: |%s|",limiter);
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
 			line = ms_free(line);
+//	ppx_close(env, STDIN_FILENO);
 //	ppx_close(env, STDIN_FILENO);
 			perror("cmp");
 			return ;
@@ -55,8 +56,8 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 	in_file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
-	if (hd_total != 1 || !(hd_total > 1 && hd_pos == hd_total - 1))
-		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO, MS_DUP_CLOSE_FD);
+//	if (hd_total != 1 = !(hd_total > 1 && hd_pos == hd_total - 1))
+//		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO, MS_DUP_CLOSE_FD);
 	if (hd_pos > 0 || hd_total == 1)
 		ppx_dup2(env, fd, STDIN_FILENO, MS_DUP_CLOSE_FD);
 	in_file = ppx_generate_filename(env, true);
