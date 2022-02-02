@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/02 06:28:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/02 11:06:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 {
 	if (ppx_env->options & MS_OPT_PIPE)
 		ppx_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
-	ms_close(ms_env, ppx_env->pipe_fds[ppx_env->i][0]);
+//	ms_close(ms_env, ppx_env->pipe_fds[ppx_env->i][0]);
 
 	*pid = ppx_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
@@ -80,8 +80,8 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	int	status_code;
 	int	wstatus = 0;
 	size_t	wait_count = 0;
-	int		stdout_cpy;
-	int		stdin_cpy;
+//	int		stdout_cpy;
+//	int		stdin_cpy;
 //pos= i ?
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
@@ -117,11 +117,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
-			perror("one dup");
-	ppx_dup2(ppx_env, 1, STDOUT_FILENO, MS_DUP_OFF);//close ?
-			perror("twho dup");
-	ppx_dup2(ppx_env, 0, STDIN_FILENO, MS_DUP_OFF);//close ?
-			perror("three dup");
+
 	// in ms
 	int i;
 	for(i=0;i < ppx_env->i;++i)
@@ -136,11 +132,11 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 			&& ppx_env->pos != ppx_env->cmd_nbr - 1))
 		{
 		perror("close 1    0");
-			ms_close(ms_env, ppx_env->pipe_fds[i][1]);
+	//		ms_close(ms_env, ppx_env->pipe_fds[i][1]);
 		}
 		if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
 			&& ppx_env->pos < ppx_env->cmd_nbr - 1)
-			ms_close(ms_env, ppx_env->pipe_fds[i][0]);
+//			ms_close(ms_env, ppx_env->pipe_fds[i][0]);
 		perror("close");
 	}
 	if (ppx_env->cmd == NULL && ms_free(ms_env->cmd_line) == NULL)
