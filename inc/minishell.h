@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 09:54:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:27:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <termios.h>
+# include <unistd.h>
+
+# include <sys/types.h>
+# include <sys/stat.h>
+
 
 # include "ms_macros_structs_enums.h"
 # include "pipex.h"
@@ -142,6 +147,7 @@ char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 /*
 ** exit
 */
+void		ms_close_pipe_fds(t_ms *ms_env, t_ppx *ppx_env, bool after_increm);
 void		ms_exit_with_error_message(t_ms *env, int err_code);
 void		ms_free_all_allocated_variables(t_ms *env);
 void		ms_print_error_message(int err_code);

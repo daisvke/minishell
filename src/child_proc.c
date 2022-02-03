@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/02 05:43:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:26:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ppx_handle_pipe_in_child_proc(t_ppx *env)
 {
-	if ((env->options & MS_OPT_READ_FROM_FILE) == false \
+	if ((env->options & MS_OPT_HEREDOC) == false \
+		&& (env->options & MS_OPT_READ_FROM_FILE) == false \
 		&& env->pos > 0)
 		ppx_dup2(env,  env->pipe_fds[env->i - 1][0], STDIN_FILENO, MS_DUP_CLOSE_FD);
 	if ((env->options & MS_OPT_REDIR_OUTPUT) == false \
@@ -66,26 +67,10 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 		ppx_handle_pipe_in_child_proc(ppx_env);
 	ppx_handle_redirections(ppx_env);
 	if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
-		return ;
-	/*
-	int i;
-	for(i=0;i <= ppx_env->i;++i)
 	{
-		if (i == 0)
-			perror("one");
-		if (i == 1)
-			perror("two");
-		if (i == 2)
-			perror("three");
-	if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
-		&& ppx_env->pos < ppx_env->cmd_nbr - 1)
-		ppx_close(ppx_env, ppx_env->pipe_fds[i][0]);
-		perror("close");
-		ppx_close(ppx_env, ppx_env->pipe_fds[i][1]);
-		perror("succesz of curr");
+		ppx_close_pipe_fds(ppx_env);
+		return ;
 	}
-	*/
-//	ppx_close(ppx_env, STDOUT_FILENO);
 
 	if (ms_check_if_the_cmd_is_implemented(\
 			ppx_env->cmd, &cmd_code, PPX_PROC_CHILD \
@@ -93,4 +78,5 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 		ms_execute_implemented_cmd(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 	else
 		ppx_execute_unimplemented_cmd(ms_env, ppx_env);
+	ppx_close_pipe_fds(ppx_env);
 }

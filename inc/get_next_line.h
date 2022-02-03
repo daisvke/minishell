@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/27 03:31:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 19:22:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 	32
 # endif
-
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 # define GNL_NOT_FOUND	-1
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/01 06:07:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:40:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	get_next_line(t_ppx *env, int fd, char **line)
 	static char	*data;
 	char		*data_cpy;
 	int			res;
-
+	
 	if (BUFFER_SIZE <= 0 || !line)
 		return (PPX_ERROR);
 	data_cpy = data;
