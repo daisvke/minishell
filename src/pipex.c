@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/03 10:36:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:31:02 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 {
 	if (ppx_env->options & MS_OPT_PIPE)
 		ppx_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
-//	ms_close(ms_env, ppx_env->pipe_fds[ppx_env->i][0]);
-
 	*pid = ppx_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
 	{
@@ -80,8 +78,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	int	status_code;
 	int	wstatus = 0;
 	size_t	wait_count = 0;
-//	int		stdout_cpy;
-//	int		stdin_cpy;
+
 //pos= i ?
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
@@ -117,17 +114,8 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		++ppx_env->pos;
 		++ppx_env->i;
 	}
-
-	// in ms
-	int i;
-	for(i=0; i < ppx_env->i; ++i)
-	{
-	//	if (ppx_env->pos < ppx_env->cmd_nbr - 1)
-	//		ms_close(ms_env, ppx_env->pipe_fds[i][1]);
-	//	if (ppx_env->i != 0 && ppx_env < ppx_env->cmd_nbr)
-			ms_close(ms_env, ppx_env->pipe_fds[i][0]);
-	}
-			ms_close(ms_env, ppx_env->pipe_fds[i - 1][1]);
+	if (ppx_env->cmd_nbr > 1)
+		ms_close_pipe_fds(ms_env, ppx_env, MS_CPF_AFTER_INCREM);
 	if (ppx_env->cmd == NULL && ms_free(ms_env->cmd_line) == NULL)
 		return ;
 	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)

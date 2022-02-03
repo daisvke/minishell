@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 15:11:53 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:26:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,13 @@ enum e_dup
 {
 	MS_DUP_OFF,
 	MS_DUP_CLOSE_FD
+};
+
+// CLOSE PIPE FDS
+enum e_close_pipe_fds
+{
+	MS_CPF_OFF,
+	MS_CPF_AFTER_INCREM
 };
 
 // IMPLEMENTED COMMANDS

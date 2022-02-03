@@ -6,15 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 14:40:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:16:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <sys/types.h>
-# include <unistd.h>
 # include <sys/wait.h>
 # include <string.h>
 # include <fcntl.h>
@@ -72,6 +70,7 @@ void	ppx_save_data_from_child(t_ms *ms_env, t_ppx *ppx_env);
 /*
 ** exit
 */
+void	ppx_close_pipe_fds(t_ppx *env);
 void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd);
 void	ppx_exit_with_error_message(t_ppx *env, int err_code);
 void	ppx_free_all_allocated_variables(t_ppx *env);
