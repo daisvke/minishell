@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/02 11:06:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:36:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,27 +120,16 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 
 	// in ms
 	int i;
-	for(i=0;i < ppx_env->i;++i)
+	for(i=0; i < ppx_env->i; ++i)
 	{
-		if (i == 0)
-			perror("one");
-		if (i == 1)
-			perror("two");
-		if (i == 2)
-			perror("three");
-		if (ppx_env->cmd_nbr != 1 && !(ppx_env->options & MS_OPT_PIPE \
-			&& ppx_env->pos != ppx_env->cmd_nbr - 1))
-		{
-		perror("close 1    0");
+	//	if (ppx_env->pos < ppx_env->cmd_nbr - 1)
 	//		ms_close(ms_env, ppx_env->pipe_fds[i][1]);
-		}
-		if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
-			&& ppx_env->pos < ppx_env->cmd_nbr - 1)
-//			ms_close(ms_env, ppx_env->pipe_fds[i][0]);
-		perror("close");
+	//	if (ppx_env->i != 0 && ppx_env < ppx_env->cmd_nbr)
+			ms_close(ms_env, ppx_env->pipe_fds[i][0]);
 	}
+			ms_close(ms_env, ppx_env->pipe_fds[i - 1][1]);
 	if (ppx_env->cmd == NULL && ms_free(ms_env->cmd_line) == NULL)
-		return ;	
+		return ;
 	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
 		ppx_wait_for_all_children(ms_env, ppx_env, pid, wait_count);
 }
