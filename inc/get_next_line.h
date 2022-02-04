@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/03 19:22:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 00:51:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # endif
 
 # define GNL_NOT_FOUND	-1
-
 # define GNL_OFF		-1
 
 /*
