@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 07:23:04 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/29 01:43:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:54:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ms_handle_sigint(int signum)
 	rl_replace_line("", 0);
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
-	rl_redisplay();
 }
 
 void	ms_handle_sigquit(int signum)

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 01:34:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:42:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ size_t	ms_detect_overuse_of_consecutive_symbol(char *cmd_line)
 	symbol = cmd_line[i];
 	while (cmd_line && cmd_line[i] == symbol)
 		++i;
-	if (symbol == '<' && i == 2)
+	if (symbol == '<' && i == 3)
 		return (4);
 	if ((symbol == '|' && i > 1) \
-		|| (symbol == '<' && i > 2) \
+		|| (symbol == '<' && i > 3) \
 		|| (symbol == '>' && i > 3))
 		return (ms_get_symbol_error_code(symbol));
 	return (0);
