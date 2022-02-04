@@ -6,16 +6,22 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 01:34:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 03:12:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	ppx_check_access(char *path)
+bool	ppx_check_access(char *path, bool check_all)
 {
-	if (access(path, F_OK) == MS_SUCCESS \
-		&& access(path, X_OK) == MS_SUCCESS)
+	if (access(path, F_OK) == MS_SUCCESS)
+	{
+		if (check_all == false)
+			return (MS_SUCCESS);
+	}
+	else
+		return (MS_ERROR);
+	if (access(path, X_OK) == MS_SUCCESS)
 		return (MS_SUCCESS);
 	return (MS_ERROR);
 }
@@ -57,7 +63,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	char	*cmd_path_at_i;
 	size_t	i;
 
-	if (ppx_check_access(cmd) == MS_SUCCESS)
+	if (ppx_check_access(cmd, PPX_CHECK_ALL) == MS_SUCCESS)
 		return (cmd);
 	paths_envp_split = ppx_get_path(ms_env, ppx_env, key);
 	i = 0;
@@ -66,7 +72,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	{
 		cmd_path_at_i = ppx_join_three_str(\
 			ppx_env, paths_envp_split[i], "/", cmd);
-		if (ppx_check_access(cmd_path_at_i) == MS_SUCCESS)
+		if (ppx_check_access(cmd_path_at_i, PPX_CHECK_ALL) == MS_SUCCESS)
 			break ;
 		cmd_path_at_i = ms_free(cmd_path_at_i);
 		cmd_path_at_i = NULL;
