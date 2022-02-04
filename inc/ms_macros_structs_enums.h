@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/03 23:26:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 03:12:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,12 @@ enum e_processes
 {
 	PPX_PROC_CHILD,
 	PPX_PROC_PARENT
+};
+
+enum e_access
+{
+	PPX_OFF,
+	PPX_CHECK_ALL
 };
 
 #endif

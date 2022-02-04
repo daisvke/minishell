@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 01:21:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 02:03:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ppx_wait_for_all_children(\
 		{
 			ms_env->exit_status = MS_EXIT_SUCCESS;
 			status_code = WEXITSTATUS(wstatus);
-			ms_env->last_pipe_exit_status = wstatus; //or status_code ?
+			ms_env->last_pipe_exit_status = status_code;
 			return ;
 		}
 		++i;
