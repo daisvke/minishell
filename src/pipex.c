@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 01:13:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:19:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 		exit(EXIT_SUCCESS);
 	}
 	if (ppx_env->options & MS_OPT_PIPE \
-		&& ppx_env->pos != ppx_env->cmd_nbr - 1)
+		&& ppx_env->i != ppx_env->cmd_nbr - 1)
 		ppx_save_data_from_child(ms_env, ppx_env);
 }
 
@@ -80,11 +80,9 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	size_t	wait_count = 0;
 
 //pos= i ?
-	while (ppx_env->pos < ppx_env->cmd_nbr)
+	while (ppx_env->i < ppx_env->cmd_nbr)
 	{
 		ppx_env->options &= MS_OPT_INIT_ALL_BUT_PIPE;
-		if (ppx_env->options & MS_OPT_PIPE)
-			printf("IN ON+++++++++++++++++++++++++\n");
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) == 2)
 			return ;
 		ppx_detect_heredocs(ppx_env, ppx_env->cmd);
@@ -97,11 +95,11 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 		else
 			ppx_execute_pipe_and_run_cmd_in_child_process(\
 				ms_env, ppx_env, &pid);
-		if (ppx_env->pos < ppx_env->cmd_nbr - 1)
+		if (ppx_env->i < ppx_env->cmd_nbr - 1)
 			ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
 
 		if (ppx_env->options & MS_OPT_HEREDOC \
-			&& ppx_env->pos == ppx_env->heredoc_pos)
+			&& ppx_env->i == ppx_env->heredoc_pos)
 		{
 			ms_env->exit_status = MS_EXIT_SUCCESS;
 			waitpid(pid, &wstatus, WUNTRACED);
@@ -113,7 +111,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 			else
 				++wait_count;
 		}
-		++ppx_env->pos;
+		++ppx_env->i;
 		++ppx_env->i;
 	}
 	if (ppx_env->cmd_nbr > 1)

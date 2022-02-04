@@ -16,10 +16,10 @@ void	ppx_handle_pipe_in_child_proc(t_ppx *env)
 {
 	if ((env->options & MS_OPT_HEREDOC) == false \
 		&& (env->options & MS_OPT_READ_FROM_FILE) == false \
-		&& env->pos > 0)
+		&& env->i > 0)
 		ppx_dup2(env,  env->pipe_fds[env->i - 1][0], STDIN_FILENO, MS_DUP_CLOSE_FD);
 	if ((env->options & MS_OPT_REDIR_OUTPUT) == false \
-		&& env->pos < env->cmd_nbr - 1)
+		&& env->i < env->cmd_nbr - 1)
 		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO, MS_DUP_OFF);
 }
 

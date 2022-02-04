@@ -20,7 +20,7 @@ void	ppx_save_data_from_child(t_ms *ms_env, t_ppx *ppx_env)
 
 int	ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 {
-	ppx_env->cmd = ppx_split(cmd_line[ppx_env->pos], ' ');
+	ppx_env->cmd = ppx_split(cmd_line[ppx_env->i], ' ');
 	if (!ppx_env->cmd)
 		ms_exit_with_error_message(ms_env, 7);
 	if (!*ppx_env->cmd)
