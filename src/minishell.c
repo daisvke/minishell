@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 01:35:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:59:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ms_launch_prompt(t_ms *env)
 	err_code = ms_parse_cmd_line(env, &env->cmd_line);
 	if (err_code != MS_SUCCESS)
 	{
-		if (err_code == 4)
+		if (err_code != 4)
 			ms_print_error_message(err_code);
 		env->cmd_line = ms_free(env->cmd_line);
 		return ;
