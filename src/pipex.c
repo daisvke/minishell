@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/03 23:31:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:13:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	while (ppx_env->pos < ppx_env->cmd_nbr)
 	{
 		ppx_env->options &= MS_OPT_INIT_ALL_BUT_PIPE;
+		if (ppx_env->options & MS_OPT_PIPE)
+			printf("IN ON+++++++++++++++++++++++++\n");
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmd_line) == 2)
 			return ;
 		ppx_detect_heredocs(ppx_env, ppx_env->cmd);
