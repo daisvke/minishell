@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 01:19:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:21:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 	int	wstatus = 0;
 	size_t	wait_count = 0;
 
-//pos= i ?
 	while (ppx_env->i < ppx_env->cmd_nbr)
 	{
 		ppx_env->options &= MS_OPT_INIT_ALL_BUT_PIPE;
