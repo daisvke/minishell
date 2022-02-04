@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/03 23:26:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 04:39:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,26 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 	char	*file;
 	int		stdout_cpy;
 
-//printf("lim: |%s|",limiter);
 	line = NULL;
 	file = ppx_generate_filename(env, false);
 	fd = ppx_open_file(env, file, \
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	file = ms_free(file);
 	stdout_cpy = dup(STDOUT_FILENO);
-	ppx_dup2(env, fd, STDOUT_FILENO, MS_DUP_OFF);
+	ppx_dup2(env, fd, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 	while (get_next_line(env, STDIN_FILENO, &line) >= 0)
 	{
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
 			line = ms_free(line);
-			ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);//close ?
-			ppx_close(env, fd);
+			ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 			return ;
 		}
 		ppx_putstr_fd(line, STDOUT_FILENO, MS_PUT_NEWLINE);
 		line = ms_free(line);
 	}
 	line = NULL;
-	ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);//close ?
-	ppx_close(env, fd);
+	ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 }
 
 void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
