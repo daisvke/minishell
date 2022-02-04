@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/03 23:27:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 04:44:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 # include <signal.h>
 # include <termios.h>
 # include <unistd.h>
-
 # include <sys/types.h>
 # include <sys/stat.h>
-
 
 # include "ms_macros_structs_enums.h"
 # include "pipex.h"

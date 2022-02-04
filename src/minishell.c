@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 01:59:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 04:43:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ms_convert_envp_into_linked_list(char *envp[], t_ms *env)
 }
 
 void	ms_launch_prompt(t_ms *env)
-
 {
 	char	*read_line;
 	int		err_code;

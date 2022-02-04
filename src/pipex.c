@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 02:03:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:21:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmd_line[])
 			else
 				++wait_count;
 		}
-		++ppx_env->i;
 		++ppx_env->i;
 	}
 	if (ppx_env->cmd_nbr > 1)
