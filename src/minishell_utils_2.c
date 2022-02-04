@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 00:01:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 02:49:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:34:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ size_t	ms_detect_overuse_of_consecutive_symbol(char *cmd_line)
 	symbol = cmd_line[i];
 	while (cmd_line && cmd_line[i] == symbol)
 		++i;
+	if (symbol == '<' && i == 2)
+		return (4);
 	if ((symbol == '|' && i > 1) \
-		|| (symbol == '<' && i > 3) \
-		|| (symbol == '>' && i > 2))
+		|| (symbol == '<' && i > 2) \
+		|| (symbol == '>' && i > 3))
 		return (ms_get_symbol_error_code(symbol));
 	return (0);
 }
@@ -73,10 +75,8 @@ int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
 	}
 	while (len > 1 && (*cmd_line == ' ' || *cmd_line == '\0'))
 		cmd_line--;
-	if (*(cmd_line) == '|')
-		return (2);
-	if (*(cmd_line) == '<' || *(cmd_line) == '>')
-		return (3);
+	if (*cmd_line == '|' || *cmd_line == '<' || *cmd_line == '>')
+		return (ms_get_symbol_error_code(*cmd_line));
 	return (MS_SUCCESS);
 }
 
