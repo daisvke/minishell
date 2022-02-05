@@ -1,6 +1,6 @@
 NAME				=	minishell
 
-CC					=	clang $(INC) $(WFLAGS) -g3
+CC					=	clang $(INC) $(WFLAGS) -g3 $(MEM)
 WFLAGS				=	-Wall -Wextra #-Werror
 READ				=	-lreadline	
 INC					=	-I inc/
@@ -26,6 +26,7 @@ SRC_FILES			=	builtin_cmds_1.c \
 						minishell.c \
 						minishell_utils_1.c \
 						minishell_utils_2.c \
+						ms_init_env.c \
 						path.c \
 						pipex.c \
 						pipex_utils.c \

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 09:54:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:49:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,19 @@ int	ms_check_export_args(char *cmd[])
 	return (0);
 }
 
-int	ms_create_entry_if_not_already_existing(\
-	t_ms *env, t_env_lst *node, char *cmdline[], size_t i)
+int	ms_assign_or_create_entry_if_not_already_existing(\
+	t_ms *env, t_env_lst *node, char *cmdline)
 {
 	t_env_lst	*new;
 
-	if (ms_compare_with_envp_key(node->entry, cmdline[i], true) == MS_SAME)
+	if (ms_compare_with_envp_key(node->entry, cmdline, true) == MS_SAME)
 	{
-		ms_lst_assign_entry_to_node(env, node, cmdline[i]);
+		ms_lst_assign_entry_to_node(env, node, cmdline);
 		return (MS_FOUND);
 	}
 	else if (node->next == NULL)
 	{
-		new = ms_lst_create_new_node(env, cmdline[i]);
+		new = ms_lst_create_new_node(env, cmdline);
 		ms_lst_add_back(env->envp_lst, new);
 	}
 	return (MS_NOT_FOUND);
@@ -91,8 +91,8 @@ void	ms_execute_cmd_export(t_ms *env, char *cmdline[])
 		node = env->envp_lst;
 		while (node)
 		{
-			if (ms_create_entry_if_not_already_existing(\
-				env, node, cmdline, i) == MS_FOUND)
+			if (ms_assign_or_create_entry_if_not_already_existing(\
+				env, node, cmdline[i]) == MS_FOUND)
 				break ;
 			node = node->next;
 		}

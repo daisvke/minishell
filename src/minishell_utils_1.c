@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 04:44:45 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 05:26:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	ms_use_argv_to_create_cmdline(int argc, char *argv[], t_ms *env)
 
 int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 {
-	char	*prompt;
-
-	prompt = "$ ";
-	*read_line = readline(prompt);
+	*read_line = readline(env->cmd_prompt.prompt);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')

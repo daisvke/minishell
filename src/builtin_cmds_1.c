@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 05:11:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 08:31:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path)
 		current_absolute_path = ms_free(current_absolute_path);
 		ms_lst_assign_entry_to_node(ms_env, node, new_path);
 		new_path = ms_free(new_path);
+		ms_get_new_path_for_prompt(\
+			ms_env, ms_env->envp_lst, &ms_env->cmd_prompt);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 04:44:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 08:31:55 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data);
 void		ms_lst_del_node(t_env_lst *node);
 t_env_lst	*ms_lst_get_last_node(t_env_lst *node);
 int			ms_lst_lstsize(t_env_lst *head);
+
+/*
+** command prompt
+*/
+void		ms_generate_new_path_for_prompt(\
+	t_ms *env, char *current_path, int len, bool first_time);
 
 /*
 ** parsing
