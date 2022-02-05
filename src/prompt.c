@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 11:28:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 00:50:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ void	ms_generate_new_path_for_prompt(\
 		go_forward = 0;
 	if (len == MS_PMP_AT_HOME)
 		env->cmd_prompt.prompt = ms_strdup("~$ ", 3);
+	else if (ms_strcmp(current_path, "/") == MS_SAME)
+	{
+		new_path = ppx_join_three_str(\
+			&env->ppx_env, \
+			"/", \
+			"$",
+			" "
+		);//ms vers ?
+		env->cmd_prompt.prompt = new_path;
+	}
 	else
 	{
 		new_path = ppx_join_three_str(\
