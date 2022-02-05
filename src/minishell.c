@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 04:43:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 09:04:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char *argv[], char *envp[])
 	ms_memset(&env, 0, sizeof(t_ms));
 	if (ms_check_arguments(envp, argc) == MS_OK)
 	{
-		ms_convert_envp_into_linked_list(envp, &env);
+		ms_init_env(envp, &env);
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
 			if (argc == 1)
