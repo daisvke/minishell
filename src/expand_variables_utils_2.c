@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-bool	ms_found_last_pipe_exit_status_symbols(char *cmd_line, t_expv *vars)
+bool	ms_found_last_pipe_exit_status_symbols(char *cmdline, t_expv *vars)
 {
-	if (cmd_line[vars->i] == '$' && cmd_line[vars->i + 1] == '?')
+	if (cmdline[vars->i] == '$' && cmdline[vars->i + 1] == '?')
 	{
 		vars->found_var = true;
 		return (true);
@@ -31,12 +31,12 @@ void	ms_get_last_pipe_exit_status_length(t_ms *env, t_expv *vars)
 }
 
 void	ms_expand_last_pipe_exit_status(\
-	t_ms *env, char *new_cmd_line, t_expv *vars)
+	t_ms *env, char *new_cmdline, t_expv *vars)
 {
 	char	*exit_status;
 
 	exit_status = ms_itoa(env, env->last_pipe_exit_status);
-	ms_copy_value_to_the_expansion_location(exit_status, new_cmd_line, vars);
+	ms_copy_value_to_the_expansion_location(exit_status, new_cmdline, vars);
 	exit_status = ms_free(exit_status);
 	++vars->i;
 }

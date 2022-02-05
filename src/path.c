@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 03:12:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 05:18:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,59 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	paths_envp_split = NULL;
 	return (cmd_path_at_i);
 }
+
+size_t	ms_get_new_path_length(\
+	char *home_path, char *current_path, size_t home_path_len)
+{
+	size_t	i;
+	size_t	curr_path_len;
+
+	curr_path_len = ms_strlen(current_path);
+	i = 0;
+	while (current_path[i] == home_path[i])
+		++i;
+	if (i == 0)
+		return (curr_path_len);
+	if (i == ms_strlen(home_path) && i == curr_path_len)
+		return (MS_PMP_AT_HOME);
+	else
+		return (MS_PMP_TILDE_LEN + (curr_path_len - home_path_len));
+}
+
+void	ms_generate_new_path_for_prompt(\
+	t_ms *env, t_prompt *cmd_prompt, int len)
+{
+	ms_free(cmd_prompt->prompt);
+	if (len == MS_PMP_AT_HOME)
+		len = 1;
+	cmd_prompt->prompt = ms_malloc(env, len + 1, sizeof(char));
+	if (len == MS_PMP_AT_HOME)
+	{
+		cmd_prompt->prompt[0] = '~';
+		return ;
+	}
+}
+
+void	ms_get_new_path_for_prompt(\
+	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt)
+{
+	t_env_lst	*pwd_node;
+	t_env_lst	*home_node;
+	size_t		key_len;
+	char		*current_path;
+	char		*home_path;
+	size_t		new_path_len;
+
+	pwd_node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
+	home_node = ms_lst_get_node_with_the_same_key(envp_lst, "HOME=");
+	key_len = 4;
+	current_path = pwd_node->entry + key_len;
+	home_path = home_node->entry + key_len;
+	if (ms_strcmp(cmd_prompt->prompt, current_path) == MS_SAME)
+		return ;
+	new_path_len = ms_get_new_path_length(\
+		home_path, current_path, cmd_prompt->home_path_len \
+	);
+	ms_generate_new_path_for_prompt(env, cmd_prompt, new_path_len);
+}
+

@@ -57,9 +57,9 @@ void	ms_free_all_allocated_variables(t_ms *env)
 	rl_clear_history();
 	ms_lst_clear_list(env->envp_lst);
 	ppx_free_all_allocated_variables(&env->ppx_env);
-	ppx_free_array_of_pointers(&env->split_cmd_line, MS_ALL);
-	if (env->cmd_line && *env->cmd_line)
-		env->cmd_line = ms_free(env->cmd_line);
+	ppx_free_array_of_pointers(&env->split_cmdline, MS_ALL);
+	if (env->cmdline && *env->cmdline)
+		env->cmdline = ms_free(env->cmdline);
 }
 
 void	ms_exit_with_error_message(t_ms *env, int err_code)

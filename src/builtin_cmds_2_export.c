@@ -61,38 +61,38 @@ int	ms_check_export_args(char *cmd[])
 }
 
 int	ms_create_entry_if_not_already_existing(\
-	t_ms *env, t_env_lst *node, char *cmd_line[], size_t i)
+	t_ms *env, t_env_lst *node, char *cmdline[], size_t i)
 {
 	t_env_lst	*new;
 
-	if (ms_compare_with_envp_key(node->entry, cmd_line[i], true) == MS_SAME)
+	if (ms_compare_with_envp_key(node->entry, cmdline[i], true) == MS_SAME)
 	{
-		ms_lst_assign_entry_to_node(env, node, cmd_line[i]);
+		ms_lst_assign_entry_to_node(env, node, cmdline[i]);
 		return (MS_FOUND);
 	}
 	else if (node->next == NULL)
 	{
-		new = ms_lst_create_new_node(env, cmd_line[i]);
+		new = ms_lst_create_new_node(env, cmdline[i]);
 		ms_lst_add_back(env->envp_lst, new);
 	}
 	return (MS_NOT_FOUND);
 }
 
-void	ms_execute_cmd_export(t_ms *env, char *cmd_line[])
+void	ms_execute_cmd_export(t_ms *env, char *cmdline[])
 {
 	size_t		i;
 	t_env_lst	*node;
 
-	if (ms_check_export_args(cmd_line) == MS_NO_EXPORT)
+	if (ms_check_export_args(cmdline) == MS_NO_EXPORT)
 		return ;
 	i = MS_FIRST_ARG_POS;
-	while (cmd_line[i])
+	while (cmdline[i])
 	{
 		node = env->envp_lst;
 		while (node)
 		{
 			if (ms_create_entry_if_not_already_existing(\
-				env, node, cmd_line, i) == MS_FOUND)
+				env, node, cmdline, i) == MS_FOUND)
 				break ;
 			node = node->next;
 		}

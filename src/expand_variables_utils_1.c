@@ -51,9 +51,9 @@ char	*ms_print_last_exit_status(t_ms *env)
 }
 
 bool	ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-	char *cmd_line, t_expv *vars)
+	char *cmdline, t_expv *vars)
 {
-	return ((vars->i == 0 && cmd_line[vars->i] == '$') \
+	return ((vars->i == 0 && cmdline[vars->i] == '$') \
 			|| (vars->i != 0 \
-			&& cmd_line[vars->i - 1] != '\'' && cmd_line[vars->i] == '$'));
+			&& cmdline[vars->i - 1] != '\'' && cmdline[vars->i] == '$'));
 }

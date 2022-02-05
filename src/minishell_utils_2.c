@@ -35,14 +35,14 @@ size_t	ms_get_symbol_error_code(char symbol)
 		return (3);
 }
 
-size_t	ms_detect_overuse_of_consecutive_symbol(char *cmd_line)
+size_t	ms_detect_overuse_of_consecutive_symbol(char *cmdline)
 {
 	char	symbol;
 	size_t	i;
 
 	i = 0;
-	symbol = cmd_line[i];
-	while (cmd_line && cmd_line[i] == symbol)
+	symbol = cmdline[i];
+	while (cmdline && cmdline[i] == symbol)
 		++i;
 	if (symbol == '<' && i == 3)
 		return (4);
@@ -53,47 +53,47 @@ size_t	ms_detect_overuse_of_consecutive_symbol(char *cmd_line)
 	return (0);
 }
 
-int	ms_check_pipes_and_redirections(t_ms *env, char *cmd_line)
+int	ms_check_pipes_and_redirections(t_ms *env, char *cmdline)
 {
 	size_t	len;
 	size_t	res;
 
-	len = ms_strlen(env->cmd_line);
-	if (env->cmd_line[0] == '|' \
-		|| (len > 0 && env->cmd_line[len - 1] == '|'))
+	len = ms_strlen(env->cmdline);
+	if (env->cmdline[0] == '|' \
+		|| (len > 0 && env->cmdline[len - 1] == '|'))
 		return (2);
-	while (cmd_line && *cmd_line)
+	while (cmdline && *cmdline)
 	{
-		if (*cmd_line == '|' || *cmd_line == '<' || *cmd_line == '>')
+		if (*cmdline == '|' || *cmdline == '<' || *cmdline == '>')
 		{
-			res = ms_detect_overuse_of_consecutive_symbol(cmd_line);
+			res = ms_detect_overuse_of_consecutive_symbol(cmdline);
 			if (res > 1)
 				return (res);
 		}
-		if (*cmd_line)
-			cmd_line++;
+		if (*cmdline)
+			cmdline++;
 	}
-	while (len > 1 && (*cmd_line == ' ' || *cmd_line == '\0'))
-		cmd_line--;
-	if (*cmd_line == '|' || *cmd_line == '<' || *cmd_line == '>')
-		return (ms_get_symbol_error_code(*cmd_line));
+	while (len > 1 && (*cmdline == ' ' || *cmdline == '\0'))
+		cmdline--;
+	if (*cmdline == '|' || *cmdline == '<' || *cmdline == '>')
+		return (ms_get_symbol_error_code(*cmdline));
 	return (MS_SUCCESS);
 }
 
-int	ms_check_if_quote_nbr_is_even(char *cmd_line)
+int	ms_check_if_quote_nbr_is_even(char *cmdline)
 {
 	size_t	count_sgl;
 	size_t	count_dbl;
 
 	count_sgl = 0;
 	count_dbl = 0;
-	while (cmd_line && *cmd_line)
+	while (cmdline && *cmdline)
 	{
-		if (*cmd_line == '\'')
+		if (*cmdline == '\'')
 			++count_sgl;
-		else if (*cmd_line == '\"')
+		else if (*cmdline == '\"')
 			++count_dbl;
-		cmd_line++;
+		cmdline++;
 	}
 	if (count_sgl % 2 != MS_EVEN || count_dbl % 2 != MS_EVEN)
 		return (15);
