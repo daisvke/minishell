@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 09:49:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 10:10:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ size_t	ms_get_new_path_length(\
 
 	curr_path_len = ms_strlen(current_path);
 	i = 0;
-	while (current_path[i] == home_path[i])
+	while (current_path[i] && home_path[i] && current_path[i] == home_path[i])
 		++i;
 	if (i == 0)
 		return (curr_path_len);
