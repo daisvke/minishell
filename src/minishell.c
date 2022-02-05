@@ -38,30 +38,30 @@ void	ms_launch_prompt(t_ms *env)
 	int		err_code;
 
 	read_line = NULL;
-	err_code = ms_prompt_and_execute_cmd_line_with_pipex(env, read_line);
+	err_code = ms_prompt_and_execute_cmdline_with_pipex(env, read_line);
 	if (err_code == MS_ERROR)
 		return ;
-	err_code = ms_parse_cmd_line(env, &env->cmd_line);
+	err_code = ms_parse_cmdline(env, &env->cmdline);
 	if (err_code != MS_SUCCESS)
 	{
 		if (err_code != 4)
 			ms_print_error_message(err_code);
-		env->cmd_line = ms_free(env->cmd_line);
+		env->cmdline = ms_free(env->cmdline);
 		return ;
 	}
-	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
+	ms_execute_cmdline_with_pipex(env, env->split_cmdline);
 	env->options = 0;
 	ppx_free_all_allocated_variables(&env->ppx_env);
-	ppx_free_array_of_pointers(&env->split_cmd_line, MS_ALL);
+	ppx_free_array_of_pointers(&env->split_cmdline, MS_ALL);
 }
 
 void	ms_run_command_and_quit(int argc, char *argv[], t_ms *env)
 {
-	env->cmd_line = ms_convert_array_of_str_to_str(env, argc, argv);
-	if (ms_parse_cmd_line(env, &env->cmd_line) == 1)
+	env->cmdline = ms_convert_array_of_str_to_str(env, argc, argv);
+	if (ms_parse_cmdline(env, &env->cmdline) == 1)
 		return ;
 	ms_free_all_allocated_variables(env);
-	ms_execute_cmdline_with_pipex(env, env->split_cmd_line);
+	ms_execute_cmdline_with_pipex(env, env->split_cmdline);
 	return ;
 }
 

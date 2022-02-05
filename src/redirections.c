@@ -98,7 +98,7 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
 {
 	char	*file;
-	char	**cmd_line_without_redir_section;
+	char	**cmdline_without_redir_section;
 	t_del	del;
 
 	file = ms_search_redir_symbol(&env->cmd[i][j]);
@@ -106,9 +106,9 @@ void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
 	ppx_apply_redirection(env, &env->cmd[i][j], file);
 	del.line = i;
 	del.pos = j;
-	cmd_line_without_redir_section = ppx_del_redirection_section_at_i(env, del);
+	cmdline_without_redir_section = ppx_del_redirection_section_at_i(env, del);
 	ppx_free_array_of_pointers(&env->cmd, MS_ALL);
-	env->cmd = cmd_line_without_redir_section;
+	env->cmd = cmdline_without_redir_section;
 }
 
 void	ppx_handle_redirections(t_ppx *env)

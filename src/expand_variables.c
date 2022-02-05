@@ -12,21 +12,21 @@
 
 #include "minishell.h"
 
-void	*ms_get_expanded_value_from_cmd_line(\
-	t_ms *env, char *cmd_line, t_expv *vars, int mode)
+void	*ms_get_expanded_value_from_cmdline(\
+	t_ms *env, char *cmdline, t_expv *vars, int mode)
 {
 	char	*key;
 	char	*value;
 
 	vars->j = vars->start;
-	while (cmd_line[vars->j] != ' ' && cmd_line[vars->j] != '\0' \
-		&& cmd_line[vars->j] != '\"')
+	while (cmdline[vars->j] != ' ' && cmdline[vars->j] != '\0' \
+		&& cmdline[vars->j] != '\"')
 	{
 		++vars->i;
 		++vars->j;
 	}
-	vars->double_quote = cmd_line[vars->j] == '\"';
-	key = ms_strdup(&cmd_line[vars->start], vars->j - vars->start);
+	vars->double_quote = cmdline[vars->j] == '\"';
+	key = ms_strdup(&cmdline[vars->start], vars->j - vars->start);
 	if (key == NULL)
 		ms_exit_with_error_message(env, 11);
 	value = ms_get_envp_value_from_key(env, key);
@@ -42,20 +42,20 @@ void	*ms_get_expanded_value_from_cmd_line(\
 	return (value);
 }
 
-int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
+int	ms_get_new_expanded_cmdline_length(t_ms *env, char *cmdline)
 {
 	t_expv	vars;
 
 	ms_memset(&vars, 0, sizeof(t_expv));
-	while (cmd_line[vars.i])
+	while (cmdline[vars.i])
 	{
-		if (ms_found_last_pipe_exit_status_symbols(cmd_line, &vars))
+		if (ms_found_last_pipe_exit_status_symbols(cmdline, &vars))
 			ms_get_last_pipe_exit_status_length(env, &vars);
 		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-			cmd_line, &vars) == true)
+			cmdline, &vars) == true)
 		{
 			vars.start = vars.i + 1;
-			ms_get_expanded_value_from_cmd_line(env, cmd_line, &vars, 0);
+			ms_get_expanded_value_from_cmdline(env, cmdline, &vars, 0);
 		}
 		else
 			++vars.len;
@@ -67,68 +67,68 @@ int	ms_get_new_expanded_cmd_line_length(t_ms *env, char *cmd_line)
 }
 
 char	*ms_expand_last_exit_status_or_value_from_envp(\
-	t_ms *env, char *cmd_line, t_expv *vars, char *new_cmd_line)
+	t_ms *env, char *cmdline, t_expv *vars, char *new_cmdline)
 {
 	char		*value;
 	static int	i;
 
 	vars->status = 0;
-	if (cmd_line[vars->i + 1] == ' ' || cmd_line[vars->i + 1] == '\0')
+	if (cmdline[vars->i + 1] == ' ' || cmdline[vars->i + 1] == '\0')
 	{
 		vars->status = 1;
-		ms_free(new_cmd_line);
-		cmd_line = ms_free(cmd_line);
-		new_cmd_line = ms_strdup("$", 2);
-		if (new_cmd_line == NULL)
+		ms_free(new_cmdline);
+		cmdline = ms_free(cmdline);
+		new_cmdline = ms_strdup("$", 2);
+		if (new_cmdline == NULL)
 			ms_exit_with_error_message(env, 11);
-		return (new_cmd_line);
+		return (new_cmdline);
 	}
 	else
 	{
 		vars->start = vars->i + 1;
-		value = ms_get_expanded_value_from_cmd_line(\
-			env, cmd_line, vars, 1);
+		value = ms_get_expanded_value_from_cmdline(\
+			env, cmdline, vars, 1);
 	}
-	ms_copy_value_to_the_expansion_location(value, new_cmd_line, vars);
+	ms_copy_value_to_the_expansion_location(value, new_cmdline, vars);
 	++i;
-	return (new_cmd_line);
+	return (new_cmdline);
 }
 
-int	ms_fill_new_cmd_line(\
-	t_ms *env, char *cmd_line, t_expv *vars, char *new_cmd_line)
+int	ms_fill_new_cmdline(\
+	t_ms *env, char *cmdline, t_expv *vars, char *new_cmdline)
 {
-	while (cmd_line[vars->i])
+	while (cmdline[vars->i])
 	{
-		if (ms_found_last_pipe_exit_status_symbols(cmd_line, vars))
-			ms_expand_last_pipe_exit_status(env, new_cmd_line, vars);
+		if (ms_found_last_pipe_exit_status_symbols(cmdline, vars))
+			ms_expand_last_pipe_exit_status(env, new_cmdline, vars);
 		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-			cmd_line, vars) == true)
+			cmdline, vars) == true)
 		{
-			new_cmd_line = ms_expand_last_exit_status_or_value_from_envp(\
-				env, cmd_line, vars, new_cmd_line);
+			new_cmdline = ms_expand_last_exit_status_or_value_from_envp(\
+				env, cmdline, vars, new_cmdline);
 			if (vars->status == 1)
 				return (1);
 		}
 		else
-			new_cmd_line[vars->k++] = cmd_line[vars->i];
+			new_cmdline[vars->k++] = cmdline[vars->i];
 		++vars->i;
 	}
 	return (0);
 }
 
-char	*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars)
+char	*ms_expand_variables(t_ms *env, char *cmdline, t_expv *vars)
 {
 	int		len;
-	char	*new_cmd_line;
+	char	*new_cmdline;
 
-	len = ms_get_new_expanded_cmd_line_length(env, cmd_line);
+	len = ms_get_new_expanded_cmdline_length(env, cmdline);
 	if (len < 0)
-		return (cmd_line);
-	new_cmd_line = ms_malloc(env, len + 1, sizeof(char));
-	if (ms_fill_new_cmd_line(env, cmd_line, vars, new_cmd_line) == 1)
-		return (new_cmd_line);
-	new_cmd_line[vars->k] = '\0';
+		return (cmdline);
+	new_cmdline = ms_malloc(env, len + 1, sizeof(char));
+	if (ms_fill_new_cmdline(env, cmdline, vars, new_cmdline) == 1)
+		return (new_cmdline);
+	new_cmdline[vars->k] = '\0';
 	if (vars->found_var == false)
-		cmd_line = ms_free(cmd_line);
-	return (new_cmd_line);
+		cmdline = ms_free(cmdline);
+	return (new_cmdline);
 }

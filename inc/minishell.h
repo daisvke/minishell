@@ -75,28 +75,28 @@ int			ms_lst_lstsize(t_env_lst *head);
 ** parsing
 */
 int			ms_check_arguments(char *envp[], int argc);
-int			ms_check_if_quote_nbr_is_even(char *cmd_line);
-int			ms_check_pipes_and_redirections(t_ms *env, char *cmd_line);
+int			ms_check_if_quote_nbr_is_even(char *cmdline);
+int			ms_check_pipes_and_redirections(t_ms *env, char *cmdline);
 int			ms_compare_with_envp_key(\
 	const char *envp_entry, const char *str, bool equal_in_str);
-int			ms_parse_cmd_line(t_ms *env, char **cmd_line);
+int			ms_parse_cmdline(t_ms *env, char **cmdline);
 
 /*
 ** expand variables
 */
 bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
-	char *cmd_line, t_expv *vars);
+	char *cmdline, t_expv *vars);
 void		ms_copy_value_to_the_expansion_location(\
 	char *value, char *location, t_expv *vars);
 void		ms_expand_last_pipe_exit_status(\
-	t_ms *env, char *new_cmd_line, t_expv *vars);
-char		*ms_expand_variables(t_ms *env, char *cmd_line, t_expv *vars);
+	t_ms *env, char *new_cmdline, t_expv *vars);
+char		*ms_expand_variables(t_ms *env, char *cmdline, t_expv *vars);
 bool		ms_found_last_pipe_exit_status_symbols(\
-	char *cmd_line, t_expv *vars);
+	char *cmdline, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
 void		ms_get_last_pipe_exit_status_length(t_ms *env, t_expv *vars);
-char		*ms_get_new_cmd_line_with_expanded_variables(\
-	t_ms *env, char **cmd_line);
+char		*ms_get_new_cmdline_with_expanded_variables(\
+	t_ms *env, char **cmdline);
 char		*ms_print_last_exit_status(t_ms *env);
 
 /*
@@ -112,17 +112,17 @@ char		*ppx_check_outfile(\
 ** commands
 */
 bool		ms_check_if_the_cmd_is_implemented(\
-	char **cmd_line, size_t *cmd_code, bool process);
+	char **cmdline, size_t *cmd_code, bool process);
 bool		ms_check_if_there_is_not_too_much_args(char **cmd_and_args);
 void		ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *path);
 void		ms_execute_cmd_echo(char *cmd[]);
 void		ms_execute_cmd_env(t_env_lst *envp_head);
-void		ms_execute_cmd_export(t_ms *env, char *cmd_line[]);
+void		ms_execute_cmd_export(t_ms *env, char *cmdline[]);
 void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
-void		ms_execute_cmd_unset(t_ms *env, char *cmd_line[]);
-void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmd_line);
+void		ms_execute_cmd_unset(t_ms *env, char *cmdline[]);
+void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmdline);
 void		ms_print_not_valid_identifier_err_message(char *cmd);
-int			ms_prompt_and_execute_cmd_line_with_pipex(\
+int			ms_prompt_and_execute_cmdline_with_pipex(\
 	t_ms *env, char *readline);
 
 /*

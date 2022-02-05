@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 04:59:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 05:10:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,27 @@ typedef struct s_ppx
 	size_t	heredoc_pos;
 }			t_ppx;
 
+// PROMPT
+typedef struct s_prompt
+{
+	char	*prompt;
+	size_t	home_path_len;
+}			t_prompt;
+
+enum e_prompt
+{
+	MS_PMP_AT_HOME,
+	MS_PMP_TILDE_LEN
+};
+
 // MINISHELL ENV
 typedef struct s_ms
 {
 	t_ppx		ppx_env;
 	t_env_lst	*envp_lst;
-	char		*cmd_line;
-	char		**split_cmd_line;
+	t_prompt	prompt;
+	char		*cmdline;
+	char		**split_cmdline;
 	int			options;
 	int			last_pipe_exit_status;
 	int			exit_status;
@@ -153,13 +167,6 @@ enum e_options
 	MS_OPT_READ_FROM_FILE = 4,
 	MS_OPT_REDIR_OUTPUT	= 2,
 	MS_OPT_HEREDOC = 1
-};
-
-// EXIT STATUS
-enum e_exit
-{
-	MS_EXIT_SUCCESS,
-	MS_EXIT_SIGINT
 };
 
 /*

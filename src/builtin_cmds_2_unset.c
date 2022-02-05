@@ -49,21 +49,21 @@ void	ms_del_node_from_lst_and_stick_back_lst(t_env_lst *node)
 	ms_lst_del_node(node);
 }
 
-void	ms_execute_cmd_unset(t_ms *env, char *cmd_line[])
+void	ms_execute_cmd_unset(t_ms *env, char *cmdline[])
 {
 	size_t		i;
 	t_env_lst	*node;
 
-	if (ms_check_unset_args(cmd_line) == MS_ERROR)
+	if (ms_check_unset_args(cmdline) == MS_ERROR)
 		return ;
 	i = MS_FIRST_ARG_POS;
-	while (cmd_line[i])
+	while (cmdline[i])
 	{
 		node = env->envp_lst;
 		while (node)
 		{
 			if (node->next && ms_compare_with_envp_key(\
-					((t_env_lst *)node->next)->entry, cmd_line[i], false \
+					((t_env_lst *)node->next)->entry, cmdline[i], false \
 				) == MS_SAME)
 			{
 				ms_del_node_from_lst_and_stick_back_lst(node);
