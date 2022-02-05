@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 09:51:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 10:06:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ms_init_cmd_prompt(t_ms *env)
 	
 	//if home = null, look for all cases like this
 	home_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "HOME=");
-	key_len = 0;
-	home_path = home_node->entry + key_len;
+	key_len = 5;
+	home_path = home_node->entry + 5;
 	env->cmd_prompt.home_path_len = ms_strlen(home_path);
 	ms_generate_new_path_for_prompt(\
 		env, NULL, MS_PMP_AT_HOME, MS_PMP_FIRST_TIME \
@@ -43,13 +43,10 @@ void	ms_init_env(char *envp[], t_ms *env)
 	path_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "PWD=");
 	pwd = ms_strdup(path_node->entry, ms_strlen(path_node->entry)); //check err
 	key_len = 4;
-	pwd += key_len;
-	joined = ppx_join_three_str(&env->ppx_env, "HOME=", pwd, "");
+	joined = ppx_join_three_str(&env->ppx_env, "HOME=", pwd + key_len, "");
 	ms_free(home_node->entry);
-	home_node->entry = ms_strdup(joined, ms_strlen(pwd));
+	home_node->entry = ms_strdup(joined, ms_strlen(joined));
 	joined = ms_free(joined);
-//	ms_lst_assign_entry_to_node(env, home_node, pwd);
-	printf("home: %s\n", home_node->entry);
 
 	ms_init_cmd_prompt(env);
 }
