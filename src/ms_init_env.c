@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 10:06:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/05 11:07:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ms_init_env(char *envp[], t_ms *env)
 	pwd = ms_strdup(path_node->entry, ms_strlen(path_node->entry)); //check err
 	key_len = 4;
 	joined = ppx_join_three_str(&env->ppx_env, "HOME=", pwd + key_len, "");
+	pwd = ms_free(pwd);
 	ms_free(home_node->entry);
 	home_node->entry = ms_strdup(joined, ms_strlen(joined));
 	joined = ms_free(joined);
