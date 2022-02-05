@@ -37,4 +37,41 @@ cat: -: input file is output file
 /************************************************************
 ************************************************************/
 
+*
+05/02:
+before cmd prompt:
+
+LOGNAME = A
+NAME = B
+
+A@B
+
+* protect readline with strlen (no longer than intmax ?)
+* free char *prompt ?
+* cd => go to HOME
+* cd - => go to OLDPWD
+* expansion (echo, cd etc) with ~ => PWD ?
+* void *env to use ms/ppx
+* unset/export => if unset, pwd
+ for both, modify cmd prompt when reput prompt
+* if pwd before ~ => /$ only
+
+/************************************************************
+************************************************************/
+
+split & activate => do it with && and ||
+
+/************************************************************
+************************************************************/
+
+ms_macro => macro ?
+        => ms_macro + ppx_macro
+
+/************************************************************
+************************************************************/
+
+SIGINT => exit status code ?
+
+/************************************************************
+************************************************************/
 
