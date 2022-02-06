@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 02:53:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 06:00:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,46 @@ void	ms_set_logname_and_name(t_ms *env)
 	);
 }
 
+char	*ms_color_string(t_ms *env, char *str, char *color)
+{
+	char	*colored_str;
+
+	colored_str = ppx_join_three_str(\
+		&env->ppx_env, \
+		color, \
+		str, \
+		MS_CLR_FAINT_WHITE
+	);//ms vers ?
+	return (colored_str);
+}
+
 void	ms_set_first_part_of_cmd_prompt(t_ms *env, t_prompt *cmd_prompt)
 {
-	char		*first_part;
-	char		*last_part;
+	char	*first_part;
+	char	*last_part;
+	char	*colored_first_part;
+	char	*colored_last_part;
 
 	ms_set_logname_and_name(env);
-	first_part =  ppx_join_three_str(\
+	first_part = ppx_join_three_str(\
 		&env->ppx_env, \
 		env->cmd_prompt.logname, \
 		"@", \
 		env->cmd_prompt.name
 	);//ms vers ?
-
+	colored_first_part = ms_color_string(env, first_part, MS_CLR_BRIGHT_GREEN);
+	first_part = ms_free(first_part);
 	last_part = env->cmd_prompt.prompt;
+	colored_last_part = ms_color_string(env, last_part, MS_CLR_BOLD_BLUE);
 	env->cmd_prompt.prompt = ppx_join_three_str(\
 		&env->ppx_env, \
-		first_part, \
+		colored_first_part, \
 		":",
-		last_part
+		colored_last_part
 	);//ms vers ?
-	first_part = ms_free(first_part);
 	last_part = ms_free(last_part);
+	colored_first_part = ms_free(colored_first_part);
+	colored_last_part = ms_free(colored_last_part);
 }
 
 void	ms_init_cmd_prompt(t_ms *env)

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 09:04:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 05:06:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ms_run_command_and_quit(int argc, char *argv[], t_ms *env)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	env;
-
+	printf("%shere is some color%s, len: %d\n", "\033[0;92m", "\033[0;37m", ms_strlen("\001\x1B[2m\x1B[1m\x1B[37m\002"));
 	ms_handle_signals();
 	ms_memset(&env, 0, sizeof(t_ms));
 	if (ms_check_arguments(envp, argc) == MS_OK)

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 03:13:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 06:00:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # define MS_LOOP_NOT_ENDED_BY_CTRL_D	1
 # define MS_EVEN						0
 # define MS_ALL							0
+
+// COLORS
+# define MS_CLR_FAINT_WHITE				"\001\x1B[2m\x1B[1m\x1B[37m\002"
+# define MS_CLR_BRIGHT_GREEN			"\001\x1B[1m\x1B[92m\002"
+# define MS_CLR_BOLD_BLUE				"\001\x1B[1m\x1B[34m\002"
 
 // LINKED LIST CONTAINING ENV ENTRIES
 typedef struct s_env_lst
