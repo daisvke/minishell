@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 06:48:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 09:14:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,9 @@ int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 
 	*read_line = readline(env->cmd_prompt.prompt);
 	if (*read_line == NULL)
-	{
-	printf("***4    here========\n");
 		return (MS_READ_EOF);
-	}
 	if (*read_line[0] == '\0')
-	{
-	printf("***5    here========\n");
 		return (MS_READ_NONE);
-	}
-	printf("***6    here========\n");
 	read_line_cpy = (char *)*readline;
 	i = 0;
 	while (read_line_cpy[i])
@@ -59,7 +52,6 @@ int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 			ms_exit_with_error_message(env, 17);
 		++i;
 	}
-	printf("***7    here========\n");
 	add_history(*read_line);
 	return (MS_READ_LINE);
 }

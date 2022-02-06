@@ -8,6 +8,7 @@ MEM					=	-fsanitize=address -fsanitize=undefined
 
 SRC_DIR				=	src/
 SRC_FILES			=	builtin_cmds_1.c \
+						builtin_cmds_1_cd.c \
 						builtin_cmds_2_export.c \
 						builtin_cmds_2_unset.c \
 						builtin_cmds_utils.c \

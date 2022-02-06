@@ -7,13 +7,10 @@ cat: -: input file is output file
 /************************************************************
 ************************************************************/
 * free char *prompt ?
-* cd => go to HOME
 * cd - => go to OLDPWD
 * expansion (echo, cd etc) with ~ => PWD ?
 * void *env to use ms/ppx
-* unset/export => if unset, pwd
- for both, modify cmd prompt when reput prompt
-	 also handle unset/exp for LOGNAME + NAMmE
+* modify cmd prompt when unset/exp
 /************************************************************
 ************************************************************/
 
