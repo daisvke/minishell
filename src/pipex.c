@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 03:39:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 06:59:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,6 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 		if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == true)
 			ppx_execute_implemented_cmd_in_parent(\
 				ms_env, ppx_env, cmd_code, ppx_env->cmd);
-		else if (ms_check_if_the_cmd_is_implemented(\
-			ppx_env->cmd, &cmd_code, PPX_PROC_PARENT) == true)
-			continue ;
 		else
 			ppx_execute_pipe_and_run_cmd_in_child_process(\
 				ms_env, ppx_env, &pid);

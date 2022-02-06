@@ -14,8 +14,6 @@ cat: -: input file is output file
 * unset/export => if unset, pwd
  for both, modify cmd prompt when reput prompt
 	 also handle unset/exp for LOGNAME + NAMmE
-* if pwd before ~ => /$ only
-
 /************************************************************
 ************************************************************/
 

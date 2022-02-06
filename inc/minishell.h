@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 02:47:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 06:26:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,7 @@ void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
 void		ms_execute_cmd_unset(t_ms *env, char *cmdline[]);
 void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmdline);
 void		ms_print_not_valid_identifier_err_message(char *cmd);
-int			ms_prompt_and_execute_cmdline_with_pipex(\
-	t_ms *env, char *readline);
+int			ms_run_readline(t_ms *env, char *read_line);
 
 /*
 ** utils: strings
