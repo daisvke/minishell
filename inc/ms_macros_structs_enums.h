@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 06:26:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 02:19:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_prompt
 {
 	char	*prompt;
 	size_t	home_path_len;
+	char	*logname;
+	char	*name;
 }			t_prompt;
 
 enum e_prompt
