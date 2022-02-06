@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 04:42:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 07:00:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	if (ppx_env->options & MS_OPT_PIPE)
 		ppx_handle_pipe_in_child_proc(ppx_env);
 	ppx_handle_redirections(ppx_env);
+		printf("*****************************\n");
 	if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
 	{
 		ppx_close_pipe_fds(ppx_env);
