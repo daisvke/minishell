@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 06:00:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 09:54:08 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,20 @@ void	ms_set_logname_and_name(t_ms *env)
 	size_t		name_key_len;
 
 	logname_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "LOGNAME=");
-	logname_key_len = 8;
+	if (logname_node == NULL)
+	{
+		logname_node->entry = "";
+		logname_key_len = 0;
+	}
+	else
+		logname_key_len = 8;
 	name_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "NAME=");
+	if (name_node == NULL)
+	{
+		name_node->entry = "";
+		name_key_len = 0;
+	}
+	else
 	name_key_len = 5;
 	if (env->cmd_prompt.logname)
 		ms_free(env->cmd_prompt.logname);
@@ -86,10 +98,9 @@ void	ms_init_cmd_prompt(t_ms *env)
 	size_t		key_len;
 	
 	//if home = null, look for all cases like this
-	home_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "HOME=");
-	key_len = 5;
-	home_path = home_node->entry + 5;
+	home_path = ms_get_home_value_from_envp_lst(env);
 	env->cmd_prompt.home_path_len = ms_strlen(home_path);
+	home_path = ms_free(home_path);
 	ms_generate_new_path_for_prompt(\
 		env, NULL, MS_PMP_AT_HOME, MS_PMP_FIRST_TIME \
 	);
@@ -105,8 +116,6 @@ void	ms_init_env(char *envp[], t_ms *env)
 	size_t		key_len;
 
 	ms_convert_envp_into_linked_list(envp, env);
-
-	//init home
 	home_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "HOME=");
 	path_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "PWD=");
 	pwd = ms_strdup(path_node->entry, ms_strlen(path_node->entry)); //check err
