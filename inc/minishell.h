@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 08:31:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 02:47:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int			ms_lst_lstsize(t_env_lst *head);
 */
 void		ms_generate_new_path_for_prompt(\
 	t_ms *env, char *current_path, int len, bool first_time);
+void		ms_set_first_part_of_cmd_prompt(t_ms *env, t_prompt *cmd_prompt);
 
 /*
 ** parsing

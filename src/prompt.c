@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 01:07:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 02:57:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,37 @@ int	ms_get_new_path_length(\
 void	ms_generate_new_path_for_prompt(\
 	t_ms *env, char *current_path, int len, bool first_time)
 {
-	char	*new_path;
 	size_t	go_forward;
+	char	*tilde;
 
+	tilde = "~";
 	go_forward = env->cmd_prompt.home_path_len;
 	if (first_time == false)
 		ms_free(env->cmd_prompt.prompt);
 	if (len < 0)
+	{
 		go_forward = 0;
+		tilde = "";
+	}
 	if (len == MS_PMP_AT_HOME)
 		env->cmd_prompt.prompt = ms_strdup("~$ ", 3);
 	else if (ms_strcmp(current_path, "/") == MS_SAME)
 	{
-		new_path = ppx_join_three_str(\
+		env->cmd_prompt.prompt = ppx_join_three_str(\
 			&env->ppx_env, \
 			"/", \
 			"$",
 			" "
 		);//ms vers ?
-		env->cmd_prompt.prompt = new_path;
 	}
 	else
 	{
-		new_path = ppx_join_three_str(\
+		env->cmd_prompt.prompt = ppx_join_three_str(\
 			&env->ppx_env, \
-			"", \
+			tilde, \
 			current_path + go_forward, \
 			"$ "
 		);//ms vers ?
-		env->cmd_prompt.prompt = new_path;
 	}
 }
 
@@ -90,4 +92,5 @@ void	ms_get_new_path_for_prompt(\
 		home_path, current_path, cmd_prompt->home_path_len \
 	);
 	ms_generate_new_path_for_prompt(env, current_path, new_path_len, false);
+	ms_set_first_part_of_cmd_prompt(env, &env->cmd_prompt);
 }
