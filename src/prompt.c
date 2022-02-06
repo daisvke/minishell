@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 00:50:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 01:07:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ms_generate_new_path_for_prompt(\
 	{
 		new_path = ppx_join_three_str(\
 			&env->ppx_env, \
-			"~", \
+			"", \
 			current_path + go_forward, \
 			"$ "
 		);//ms vers ?
