@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 00:55:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 03:16:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,22 @@ void	ms_use_argv_to_create_cmdline(int argc, char *argv[], t_ms *env)
 
 int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 {
+	size_t	i;
+	char	*read_line_cpy;
+
 	*read_line = readline(env->cmd_prompt.prompt);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
 		return (MS_READ_NONE);
+	read_line_cpy = *readline;
+	i = 0;
+	while (read_line_cpy[i])
+	{
+		if (i > 2147483647)
+			ms_exit_with_error_message(env, 17);
+		++i;
+	}
 	add_history(*read_line);
 	return (MS_READ_LINE);
 }

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 02:01:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 03:13:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**ppx_get_array_of_error_messages(char *errors[])
 
 char	*ppx_get_err_message_from_err_code(int err_code)
 {
-	char	*err_messages[PPX_ERR_MAX + 1];
+	char	*err_messages[8 + 1];
 
 	ppx_get_array_of_error_messages(err_messages);
 	return (err_messages[err_code]);

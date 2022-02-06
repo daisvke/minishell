@@ -39,13 +39,6 @@ cat: -: input file is output file
 
 *
 05/02:
-before cmd prompt:
-
-LOGNAME = A
-NAME = B
-
-A@B
-
 * protect readline with strlen (no longer than intmax ?)
 * free char *prompt ?
 * cd => go to HOME
@@ -54,6 +47,7 @@ A@B
 * void *env to use ms/ppx
 * unset/export => if unset, pwd
  for both, modify cmd prompt when reput prompt
+	 also handle unset/exp for LOGNAME + NAMmE
 * if pwd before ~ => /$ only
 
 /************************************************************
@@ -74,4 +68,4 @@ SIGINT => exit status code ?
 
 /************************************************************
 ************************************************************/
-
+desactivate ./minishell arg ?

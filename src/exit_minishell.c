@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 04:59:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 03:13:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ char	**ms_get_array_of_error_messages(char *errors[])
 	errors[14] = "sigaction failed";
 	errors[15] = "unclosed quotes are forbidden";
 	errors[16] = "itoa: failed to allocate memory";
+	errors[17] = "readline: input exceeded max length";
 	return (errors);
 }
 
 char	*ms_get_err_message_from_err_code(int err_code)
 {
-	char	*err_messages[MS_ERR_MAX + 1];
+	char	*err_messages[17 + 1];
 
 	ms_get_array_of_error_messages(err_messages);
 	return (err_messages[err_code]);
