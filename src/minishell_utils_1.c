@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 03:16:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/06 04:02:43 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')
 		return (MS_READ_NONE);
-	read_line_cpy = *readline;
+	read_line_cpy = (char *)*readline;
 	i = 0;
 	while (read_line_cpy[i])
 	{
