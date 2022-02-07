@@ -6,29 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 10:07:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 01:29:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:55:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ms_get_oldpwd_value_from_envp_lst(t_ms *env) // =>have to update oldpwd when cd
-{
-	char		*oldpwd_path;
-	t_env_lst	*oldpwd_node;
-	size_t		key_len;
-	
-	oldpwd_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "OLDPWD=");
-	if (oldpwd_node == NULL)
-		oldpwd_path = getcwd(NULL, 0);
-	else
-	{
-		key_len = 7;
-		oldpwd_path = ms_strdup(oldpwd_node->entry + 7, \
-			ms_strlen(oldpwd_node->entry) - 7);//protect?
-	}
-	return (oldpwd_path); 
-}
 
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path)
 {

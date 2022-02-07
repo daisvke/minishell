@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 05:09:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 03:30:10 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,24 @@ void	ms_get_new_path_for_prompt(\
 	size_t		new_path_len;
 
 	pwd_node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
-	home_node = ms_lst_get_node_with_the_same_key(envp_lst, "HOME=");
 	key_len = 4;
 	current_path = pwd_node->entry + key_len;
-	home_path = home_node->entry + key_len + 1;
-	if (ms_strcmp(cmd_prompt->prompt, current_path) == MS_SAME)
-		return ;
-	new_path_len = ms_get_new_path_length(\
-		home_path, current_path, cmd_prompt->home_path_len \
-	);
+	home_node = ms_lst_get_node_with_the_same_key(envp_lst, "HOME=");
+	if (home_node == NULL)
+	{
+		home_path = NULL;
+		env->cmd_prompt.home_path_len = 0;
+		new_path_len = MS_PMP_NO_HOME;
+	}
+	else
+	{
+		home_path = home_node->entry + key_len + 1;
+		if (ms_strcmp(cmd_prompt->prompt, current_path) == MS_SAME)
+			return ;
+		new_path_len = ms_get_new_path_length(\
+			home_path, current_path, cmd_prompt->home_path_len \
+		);
+	}
 	ms_generate_new_path_for_prompt(env, current_path, new_path_len, false);
 	ms_set_first_part_of_cmd_prompt(env, &env->cmd_prompt);
 }
