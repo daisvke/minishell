@@ -6,11 +6,24 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 05:15:41 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 06:43:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ms_color_string(t_ms *env, char *str, char *color)
+{
+	char	*colored_str;
+
+	colored_str = ppx_join_three_str(\
+		&env->ppx_env, \
+		color, \
+		str, \
+		MS_CLR_FAINT_WHITE
+	);//ms vers ?
+	return (colored_str);
+}
 
 void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size)
 {
