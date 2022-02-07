@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 10:07:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 11:35:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:06:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path)
 			ppx_putstr_fd(path, STDERR_FILENO, MS_NONE);
 			write(STDERR_FILENO, ": No such file or directory\n", 28);
 		}
-		ms_update_prompt_when_home_is_unset(ms_env);
+		ms_update_prompt_when_home_is_unset(ms_env, false);
 	}
 	else
 	{

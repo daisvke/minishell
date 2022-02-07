@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 11:42:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:07:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ int			ms_lst_lstsize(t_env_lst *head);
 void		ms_generate_new_path_for_prompt(\
 	t_ms *env, char *current_path, int len, bool first_time);
 char		*ms_get_home_value_from_envp_lst(t_ms *env);
-void		ms_get_new_path_for_prompt(\
-	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt);
-void		ms_set_first_part_of_cmd_prompt(t_ms *env, t_prompt *cmd_prompt);
+void	ms_get_new_path_for_prompt(\
+	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt, bool first_time);
+void		ms_set_first_part_of_cmd_prompt(\
+	t_ms *env, t_prompt *cmd_prompt, bool first_time);
 
 /*
 ** parsing
@@ -134,7 +135,7 @@ void		ms_execute_cmd_unset(t_ms *env, char *cmdline[]);
 void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmdline);
 void		ms_print_not_valid_identifier_err_message(char *cmd);
 int			ms_run_readline(t_ms *env, char *read_line);
-void		ms_update_prompt_when_home_is_unset(t_ms *env);
+void		ms_update_prompt_when_home_is_unset(t_ms *env, bool first_time);
 
 /*
 ** utils: numbers

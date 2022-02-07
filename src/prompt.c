@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 03:30:10 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:06:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ms_generate_new_path_for_prompt(\
 }
 
 void	ms_get_new_path_for_prompt(\
-	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt)
+	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt, bool first_time)
 {
 	t_env_lst	*pwd_node;
 	t_env_lst	*home_node;
@@ -101,5 +101,5 @@ void	ms_get_new_path_for_prompt(\
 		);
 	}
 	ms_generate_new_path_for_prompt(env, current_path, new_path_len, false);
-	ms_set_first_part_of_cmd_prompt(env, &env->cmd_prompt);
+	ms_set_first_part_of_cmd_prompt(env, &env->cmd_prompt, first_time);
 }

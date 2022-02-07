@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 03:56:35 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:06:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ms_del_node_from_lst_and_stick_back_lst(t_env_lst *node)
 	ms_lst_del_node(node);
 }
 
-void	ms_update_prompt_when_home_is_unset(t_ms *env)
+void	ms_update_prompt_when_home_is_unset(t_ms *env, bool first_time)
 {
 	t_env_lst	*node;
 	char		*current_absolute_path;
@@ -65,7 +65,8 @@ void	ms_update_prompt_when_home_is_unset(t_ms *env)
 	current_absolute_path = ms_free(current_absolute_path);
 	ms_lst_assign_entry_to_node(env, node, new_path);
 	new_path = ms_free(new_path);
-	ms_get_new_path_for_prompt(env, env->envp_lst, &env->cmd_prompt);
+	ms_get_new_path_for_prompt(\
+		env, env->envp_lst, &env->cmd_prompt, first_time);
 }
 
 void	ms_execute_cmd_unset(t_ms *env, char *cmdline[])
@@ -91,7 +92,7 @@ void	ms_execute_cmd_unset(t_ms *env, char *cmdline[])
 			node = node->next;
 		}
 		if (ms_strcmp(cmdline[i], "HOME") == MS_SAME)
-			ms_update_prompt_when_home_is_unset(env);
+			ms_update_prompt_when_home_is_unset(env, false);
 		++i;
 	}
 }
