@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 05:20:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 11:42:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		ms_init_env(char *envp[], t_ms *env);
 */
 char		**ms_convert_envp_lst_to_array_of_pointers(\
 	t_ms *env, t_env_lst *envp_lst, size_t lst_size);
+void		ms_convert_envp_into_linked_list(char *envp[], t_ms *env);
 t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key);
 void		ms_lst_add_back(t_env_lst *head, t_env_lst *new);
 void		ms_lst_assign_entry_to_node(\
@@ -77,6 +78,8 @@ int			ms_lst_lstsize(t_env_lst *head);
 void		ms_generate_new_path_for_prompt(\
 	t_ms *env, char *current_path, int len, bool first_time);
 char		*ms_get_home_value_from_envp_lst(t_ms *env);
+void		ms_get_new_path_for_prompt(\
+	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt);
 void		ms_set_first_part_of_cmd_prompt(t_ms *env, t_prompt *cmd_prompt);
 
 /*
@@ -131,6 +134,7 @@ void		ms_execute_cmd_unset(t_ms *env, char *cmdline[]);
 void		ms_execute_cmdline_with_pipex(t_ms *env, char **cmdline);
 void		ms_print_not_valid_identifier_err_message(char *cmd);
 int			ms_run_readline(t_ms *env, char *read_line);
+void		ms_update_prompt_when_home_is_unset(t_ms *env);
 
 /*
 ** utils: numbers
@@ -143,6 +147,7 @@ int			ms_nbrlen(long long int n);
 ** utils: strings
 */
 char		ms_check_if_char_is_a_redir_symbol(int c);
+char		*ms_color_string(t_ms *env, char *str, char *color);
 size_t		ms_handle_quotes(char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
