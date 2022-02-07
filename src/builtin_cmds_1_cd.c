@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 10:07:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 04:00:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 11:35:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path)
 {
-	char		*current_absolute_path;
-	t_env_lst	*node;
 	char		*path;
-	char		*new_path;
 	bool		malloced;
 
 	malloced = false;
