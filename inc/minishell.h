@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 09:59:30 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 05:20:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,13 @@ void		ms_print_not_valid_identifier_err_message(char *cmd);
 int			ms_run_readline(t_ms *env, char *read_line);
 
 /*
+** utils: numbers
+*/
+int			ms_get_absolute_value(long long int nbr);
+char		*ms_itoa(t_ms *env, int n);
+int			ms_nbrlen(long long int n);
+
+/*
 ** utils: strings
 */
 char		ms_check_if_char_is_a_redir_symbol(int c);
@@ -140,8 +147,6 @@ size_t		ms_handle_quotes(char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);
-char		*ms_itoa(t_ms *env, int n);
-int			ms_nbrlen(long long int n);
 char		*ms_search_redir_symbol(char *str);
 int			ms_strcmp(const char *s1, const char *s2);
 int			ms_strncmp(const char *s1, const char *s2, size_t n);

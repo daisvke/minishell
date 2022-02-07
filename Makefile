@@ -44,6 +44,7 @@ SRC_FILES			=	builtin_cmds_1.c \
 						system_calls_string_2.c \
 						system_calls_pipex.c \
 						system_calls_unistd.c \
+						utils_nbr.c \
 						utils_strings_1.c \
 						utils_strings_2.c
 SRC					=	$(addprefix $(SRC_DIR), $(SRC_FILES))
