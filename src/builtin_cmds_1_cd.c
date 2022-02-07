@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 10:07:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 11:36:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:29:49 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path)
 	if (arg_path == NULL || arg_path[0] == 0)
 	{
 		path = ms_get_home_value_from_envp_lst(ms_env);
-		malloced = true;
-	}
-	else if (ms_strcmp(arg_path, "-") == MS_SAME)
-	{
-		path = ms_get_oldpwd_value_from_envp_lst(ms_env);//init: oldpwd= NULL?
 		malloced = true;
 	}
 	else
