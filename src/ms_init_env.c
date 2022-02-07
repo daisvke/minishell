@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 12:07:32 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:17:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 		entry = ms_free(entry);
 }
 
+void	ms_set_logname_and_name(t_ms *env, t_prompt *cmd_prompt)
+{
+	ms_set_var_according_to_envp_entry(\
+		env, &cmd_prompt->logname, "LOGNAME=");
+	ms_set_var_according_to_envp_entry(\
+		env, &cmd_prompt->name, "NAME=");
+}
+
 void	ms_set_first_part_of_cmd_prompt(\
 	t_ms *env, t_prompt *cmd_prompt, bool first_time)
 {
@@ -49,10 +57,7 @@ void	ms_set_first_part_of_cmd_prompt(\
 	char	*colored_last_part;
 
 	if (first_time == true)
-	{
-		ms_set_var_according_to_envp_entry(env, &cmd_prompt->logname, "LOGNAME=");
-		ms_set_var_according_to_envp_entry(env, &cmd_prompt->name, "NAME=");
-	}
+		ms_set_logname_and_name(env, cmd_prompt);
 	first_part = ppx_join_three_str(\
 		&env->ppx_env, \
 		cmd_prompt->logname, "@", cmd_prompt->name
