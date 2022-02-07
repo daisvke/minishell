@@ -4,7 +4,7 @@
 * $HOME is initialized as the $PWD (= the path) of the projet's root directory
 
 ### command prompt
-* It is composed of:<br />
+* The command prompt is displayed in the following way:<br />
 [$LOGNAME]@[$NAME]:[PATH]$
 * If the current directory is the one that figures inside the $HOME value, the path is replaced by a tilde : '~'
 * If the current directory's position is lower than $HOME, the tilde does not appear
