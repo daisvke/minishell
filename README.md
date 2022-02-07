@@ -8,6 +8,7 @@
 [$LOGNAME]@[$NAME]:[PATH]$
 * If the current directory is the one that figures inside the $HOME value, the path is replaced by a tilde : '~'
 * If the current directory's position is lower than $HOME, the tilde does not appear
+* "unset HOME" sets the current absolute path as the command prompt path
 * If the current directory is the root directory of all the system files, only "\$" is shown
 
 ## Implemented commands

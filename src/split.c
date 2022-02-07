@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 08:18:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/07 05:01:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ppx_split_iter(char *split[], char *str, t_split opt)
 {
-	int	get_start;
 	int	len;
 
 	while (*str)
@@ -30,13 +29,10 @@ int	ppx_split_iter(char *split[], char *str, t_split opt)
 		str += ppx_check_quotes(str, *str, &opt.quotes);
 		while (*str && *str != opt.sep && *str != '\'' && *str != '\"')
 			str++;
-		get_start = opt.quotes - opt.first_char_not_quote;
-		if (get_start < 0)
-			get_start = 0;
 		len = str - opt.start - (2 * (opt.quotes));
 		if (len < 0)
 			len = 0;
-		split[opt.i] = ppx_strdup(opt.start + get_start, len);
+		split[opt.i] = ppx_strdup(opt.start, len);
 		if (!split[opt.i])
 		{
 			ppx_free_array_of_pointers(&split, opt.i);
