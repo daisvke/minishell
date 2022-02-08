@@ -6,11 +6,16 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 06:43:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/08 04:25:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ms_reset_color_settings(void)
+{
+	write(STDOUT_FILENO, "\x1B[0m", 4);
+}
 
 char	*ms_color_string(t_ms *env, char *str, char *color)
 {
