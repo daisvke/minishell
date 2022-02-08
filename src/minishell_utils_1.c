@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 09:14:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/08 13:43:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 	size_t	i;
 	char	*read_line_cpy;
 
+	ms_reset_color_settings();
 	*read_line = readline(env->cmd_prompt.prompt);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
