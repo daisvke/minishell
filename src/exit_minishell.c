@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 03:13:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/08 04:25:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void	ms_exit_with_error_message(t_ms *env, int err_code)
 	ms_print_error_message(err_code);
 	ms_close_pipe_fds(env, &env->ppx_env, MS_CPF_OFF);
 	ms_free_all_allocated_variables(env);
+	ms_reset_color_settings();
 	exit(EXIT_FAILURE);
 }

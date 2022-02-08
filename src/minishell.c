@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 06:35:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/08 04:25:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ void	ms_run_command_and_quit(int argc, char *argv[], t_ms *env)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	env;
-
+	
 	ms_handle_signals();
 	ms_memset(&env, 0, sizeof(t_ms));
 	if (ms_check_arguments(envp, argc) == MS_OK)
 	{
 		ms_init_env(envp, &env);
+		ms_reset_color_settings();
 		while (MS_LOOP_NOT_ENDED_BY_CTRL_D)
 		{
 			if (argc == 1)
@@ -85,5 +86,6 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 		}
 	}
+	ms_reset_color_settings();
 	return (0);
 }

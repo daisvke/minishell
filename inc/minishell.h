@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 12:07:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/08 04:13:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void		ms_update_prompt_when_home_is_unset(t_ms *env, bool first_time);
 */
 int			ms_get_absolute_value(long long int nbr);
 char		*ms_itoa(t_ms *env, int n);
-int			ms_nbrlen(long long int n);
+size_t		ms_nbrlen(long long int n);
 
 /*
 ** utils: strings

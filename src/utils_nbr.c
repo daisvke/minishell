@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 05:13:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 05:25:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/08 04:13:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	ms_get_absolute_value(long long int nbr)
 	return (nbr);
 }
 
-int	ms_nbrlen(long long int n)
+size_t	ms_nbrlen(long long int n)
 {
-	int	len;
+	size_t	len;
 
 	if (n == 0)
 		return (1);
