@@ -6,12 +6,12 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 04:02:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:49:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key);
 char	*ms_set_var_using_session_manager(t_ms *env, char **var)
 {
@@ -19,23 +19,25 @@ char	*ms_set_var_using_session_manager(t_ms *env, char **var)
 	size_t	i;
 
 	ms_set_var_according_to_envp_entry(env, var, "SESSION_MANAGER=");
-	tmp = *var;
+	tmp = ms_strdup(*var, ms_strlen(*var));
 	i = 0;
 	while (tmp[i] != '/')
 		++i;
 	ms_free(*var);
 	*var = ms_strdup(&tmp[i + 1], ms_strlen(tmp) - i - 1);
+	tmp = ms_free(tmp);
+	return ();
 }
-
+*/
 char	*ms_handle_case_null(\
 	t_ms *env, char *key, char **var, size_t *key_len, bool *malloced)
 {
 	char	*entry;
-/*
-	if (ms_strcmp(key, "NAME=") == MS_SAME)
-		entry = ms_set_var_using_session_manager(env, var);
-	else
-	{*/
+
+//	if (ms_strcmp(key, "NAME=") == MS_SAME)
+//		entry = ms_set_var_using_session_manager(env, var);
+//	else
+//	{
 		entry = ms_strdup("", 1);
 		*malloced = true;
 		*key_len = 0;
@@ -45,6 +47,8 @@ char	*ms_handle_case_null(\
 
 void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 {
+	size_t		i;
+	size_t		colon_pos;
 	t_env_lst	*node;
 	char		*entry;
 	size_t		key_len;
@@ -62,17 +66,33 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 	}
 	if (*var)
 		ms_free(*var);
-	*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len); //check err
+	if (ms_strcmp(key, "SESSION_MANAGER=local/") == MS_SAME)
+	{
+		i = 0;
+		colon_pos = 0;
+		while (entry[i])
+		{
+			if (entry[i] == ':')
+			{
+				colon_pos = i;
+				break ;
+			}
+			++i;
+		}
+		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len - (ms_strlen(entry) - colon_pos)); //check err
+	}
+	else
+		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len); //check err
 	if (malloced == true)
 		entry = ms_free(entry);
 }
 
-void	ms_set_logname_and_name(t_ms *env, t_prompt *cmd_prompt)
+void	ms_set_logname_and_name(t_ms *env, t_prompt *cmd_prompt)//+session manager
 {
-	ms_set_var_according_to_envp_entry(\
-		env, &cmd_prompt->logname, "LOGNAME=");
-	ms_set_var_according_to_envp_entry(\
-		env, &cmd_prompt->name, "NAME=");
+	ms_set_var_according_to_envp_entry(env, &cmd_prompt->logname, "LOGNAME=");
+	ms_set_var_according_to_envp_entry(env, &cmd_prompt->name, "NAME=");
+	if (*cmd_prompt->name == '\0')
+		ms_set_var_according_to_envp_entry(env, &cmd_prompt->name, "SESSION_MANAGER=local/");
 }
 
 void	ms_set_first_part_of_cmd_prompt(\
