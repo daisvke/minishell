@@ -6,42 +6,20 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 04:49:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 06:10:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key);
-char	*ms_set_var_using_session_manager(t_ms *env, char **var)
-{
-	char	*tmp;
-	size_t	i;
 
-	ms_set_var_according_to_envp_entry(env, var, "SESSION_MANAGER=");
-	tmp = ms_strdup(*var, ms_strlen(*var));
-	i = 0;
-	while (tmp[i] != '/')
-		++i;
-	ms_free(*var);
-	*var = ms_strdup(&tmp[i + 1], ms_strlen(tmp) - i - 1);
-	tmp = ms_free(tmp);
-	return ();
-}
-*/
 char	*ms_handle_case_null(\
 	t_ms *env, char *key, char **var, size_t *key_len, bool *malloced)
 {
 	char	*entry;
 
-//	if (ms_strcmp(key, "NAME=") == MS_SAME)
-//		entry = ms_set_var_using_session_manager(env, var);
-//	else
-//	{
-		entry = ms_strdup("", 1);
-		*malloced = true;
-		*key_len = 0;
-//	}
+	entry = ms_strdup("", 1);
+	*malloced = true;
+	*key_len = 0;
 	return (entry);
 }
 
@@ -126,7 +104,6 @@ void	ms_init_cmd_prompt(t_ms *env)
 {
 	char		*home_path;
 	
-	//if home = null, look for all cases like this
 	home_path = ms_get_home_value_from_envp_lst(env);
 	env->cmd_prompt.home_path_len = ms_strlen(home_path);
 	home_path = ms_free(home_path);
@@ -147,8 +124,16 @@ void	ms_init_env(char *envp[], t_ms *env)
 	ms_convert_envp_into_linked_list(envp, env);
 	home_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "HOME=");
 	path_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "PWD=");
-	pwd = ms_strdup(path_node->entry, ms_strlen(path_node->entry)); //check err
-	key_len = 4;
+	if (path_node == NULL)
+	{
+		pwd = ms_strdup("", 0);
+		key_len = 0;
+	}
+	else
+	{
+		pwd = ms_strdup(path_node->entry, ms_strlen(path_node->entry)); //check err
+		key_len = 4;
+	}
 	joined = ppx_join_three_str(&env->ppx_env, "HOME=", pwd + key_len, "");
 	pwd = ms_free(pwd);
 	ms_free(home_node->entry);
