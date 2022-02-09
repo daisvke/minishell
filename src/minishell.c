@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/08 04:25:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 06:53:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,21 @@ void	ms_launch_prompt(t_ms *env)
 
 void	ms_run_command_and_quit(int argc, char *argv[], t_ms *env)
 {
+	int	err_code;
+
 	env->cmdline = ms_convert_array_of_str_to_str(env, argc, argv);
-	if (ms_parse_cmdline(env, &env->cmdline) == 1)
+	err_code = ms_parse_cmdline(env, &env->cmdline);
+	if (err_code != MS_SUCCESS)
+	{
+		if (err_code != 4)
+			ms_print_error_message(err_code);
+		env->cmdline = ms_free(env->cmdline);
 		return ;
-	ms_free_all_allocated_variables(env);
+	}
 	ms_execute_cmdline_with_pipex(env, env->split_cmdline);
-	return ;
+	env->options = 0;
+	ppx_free_all_allocated_variables(&env->ppx_env);
+	ppx_free_array_of_pointers(&env->split_cmdline, MS_ALL);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -86,6 +95,5 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 		}
 	}
-	ms_reset_color_settings();
 	return (0);
 }

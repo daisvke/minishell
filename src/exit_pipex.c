@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/08 04:25:49 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 06:52:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	ppx_exit_with_error_message(t_ppx *env, int err_code)
 	ppx_putstr_fd("minishell: ", STDERR_FILENO, MS_NONE);
 	ppx_putstr_fd(err_message, STDERR_FILENO, MS_PUT_NEWLINE);
 	ppx_free_all_allocated_variables(env);
-	//clear hist ? close fds ?
-	ms_reset_color_settings();
 	exit(EXIT_FAILURE);
 }
 
@@ -63,6 +61,5 @@ void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
 	ppx_free_pipe_fds(&env->ppx_env);
 	ppx_close_pipe_fds(&env->ppx_env);
 	ms_lst_clear_list(env->envp_lst);
-	ms_reset_color_settings();
 	exit(EXIT_FAILURE);
 }
