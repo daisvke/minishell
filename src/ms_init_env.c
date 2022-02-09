@@ -6,11 +6,42 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 12:17:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:02:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key);
+char	*ms_set_var_using_session_manager(t_ms *env, char **var)
+{
+	char	*tmp;
+	size_t	i;
+
+	ms_set_var_according_to_envp_entry(env, var, "SESSION_MANAGER=");
+	tmp = *var;
+	i = 0;
+	while (tmp[i] != '/')
+		++i;
+	ms_free(*var);
+	*var = ms_strdup(&tmp[i + 1], ms_strlen(tmp) - i - 1);
+}
+
+char	*ms_handle_case_null(\
+	t_ms *env, char *key, char **var, size_t *key_len, bool *malloced)
+{
+	char	*entry;
+/*
+	if (ms_strcmp(key, "NAME=") == MS_SAME)
+		entry = ms_set_var_using_session_manager(env, var);
+	else
+	{*/
+		entry = ms_strdup("", 1);
+		*malloced = true;
+		*key_len = 0;
+//	}
+	return (entry);
+}
 
 void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 {
@@ -23,11 +54,7 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 	malloced = false;
 	node = ms_lst_get_node_with_the_same_key(env->envp_lst, key);
 	if (node == NULL)
-	{
-		entry = ms_strdup("", 1);
-		malloced = true;
-		key_len = 0;
-	}
+		entry = ms_handle_case_null(env, key, var, &key_len, &malloced);
 	else
 	{
 		entry = node->entry;
