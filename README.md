@@ -5,8 +5,9 @@
 
 ### command prompt
 * It is composed of:<br />
-[$LOGNAME]@[$NAME]:[PATH]$
-* Unsetting LOGNAME or NAME does not change the concerned part
+[$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$
+* $NAME or $SESSION_MANAGER is used, depending on the system
+* Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part
 * If the current directory is the one that figures inside the $HOME value, the path is replaced by a tilde : '~'
 * If the current directory's position is lower than $HOME, the tilde does not appear
 * If the current directory is the root directory of all the system files, only "\$" is shown
