@@ -6,12 +6,16 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 03:22:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 03:26:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+/**************************************
+			M A C R O S
+**************************************/
 
 # define GNL_NOT_FOUND		-1
 # define GNL_OFF			-1

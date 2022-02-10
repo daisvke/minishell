@@ -6,17 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:00:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 06:53:17 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 03:28:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ppx_save_data_from_child(t_ms *ms_env, t_ppx *ppx_env)
-{
-	ms_close(ms_env, ppx_env->pipe_fds[ppx_env->i][1]);
-//	ppx_env->fd_in = ppx_env->pipe_fds[ppx_env->i][0];
-}
 
 int	ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 {
