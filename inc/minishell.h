@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 21:15:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:56:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ char		**ms_convert_envp_lst_to_array_of_pointers(\
 void		ms_convert_envp_into_linked_list(char *envp[], t_ms *env);
 t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key);
 void		ms_lst_add_back(t_env_lst *head, t_env_lst *new);
-void		ms_lst_assign_entry_to_node(\
-	t_ms *env, t_env_lst *node, char *entry);
+void		ms_lst_assign_entry_to_node(t_env_lst *node, char *entry);
 void		ms_lst_clear_list(t_env_lst *node);
 t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data);
 void		ms_lst_del_node(t_env_lst *node);
@@ -153,6 +152,7 @@ size_t		ms_handle_quotes(char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);
+void		ms_reset_color_settings(void);
 char		*ms_search_redir_symbol(char *str);
 int			ms_strcmp(const char *s1, const char *s2);
 int			ms_strncmp(const char *s1, const char *s2, size_t n);

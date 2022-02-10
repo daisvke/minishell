@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 00:51:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:53:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ enum e_gnl_return
 	GNL_READ_LINE
 };
 
-int	get_next_line(t_ppx *env, int fd, char **line);
+int	get_next_line(int fd, char **line);
 
 #endif

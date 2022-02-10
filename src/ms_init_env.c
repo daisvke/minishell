@@ -6,14 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 02:49:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:58:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_handle_case_null(\
-	t_ms *env, char *key, char **var, size_t *key_len, bool *malloced)
+char	*ms_handle_case_null(size_t *key_len, bool *malloced)
 {
 	char	*entry;
 
@@ -38,7 +37,7 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 	malloced = false;
 	node = ms_lst_get_node_with_the_same_key(env->envp_lst, key);
 	if (node == NULL)
-		entry = ms_handle_case_null(env, key, var, &key_len, &malloced);
+		entry = ms_handle_case_null(&key_len, &malloced);
 	else
 	{
 		entry = node->entry;
@@ -64,9 +63,11 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 			exit(EXIT_FAILURE);
 	}
 	else
+	{
 		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len);
 		if (*var == NULL)
 			exit(EXIT_FAILURE);
+	}
 	if (malloced == true)
 		entry = ms_free(entry);
 }
@@ -92,7 +93,7 @@ void	ms_set_first_part_of_cmd_prompt(\
 	first_part = ppx_join_three_str(\
 		&env->ppx_env, \
 		cmd_prompt->logname, "@", cmd_prompt->name
-	);//ms vers ?
+	);
 	colored_first_part = ms_color_string(env, first_part, MS_CLR_BRIGHT_GREEN);
 	first_part = ms_free(first_part);
 	last_part = cmd_prompt->prompt;
@@ -100,7 +101,7 @@ void	ms_set_first_part_of_cmd_prompt(\
 	cmd_prompt->prompt= ppx_join_three_str(\
 		&env->ppx_env, \
 		colored_first_part, ":", colored_last_part
-	);//ms vers ?
+	);
 	last_part = ms_free(last_part);
 	colored_first_part = ms_free(colored_first_part);
 	colored_last_part = ms_free(colored_last_part);

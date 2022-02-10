@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 06:31:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:57:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ms_update_prompt_when_home_is_unset(t_ms *env, bool first_time)
 			&env->ppx_env, "PWD", "=", current_absolute_path \
 		);
 		current_absolute_path = ms_free(current_absolute_path);
-		ms_lst_assign_entry_to_node(env, node, new_path);
+		ms_lst_assign_entry_to_node(node, new_path);
 		new_path = ms_free(new_path);
 		ms_get_new_path_for_prompt(\
 			env, env->envp_lst, &env->cmd_prompt, first_time);
