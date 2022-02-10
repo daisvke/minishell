@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/16 08:46:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:43:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ms_lst_assign_entry_to_node(t_ms *env, t_env_lst *node, char *entry)
 	len = ms_strlen(entry);
 	node->entry = ms_strdup(entry, len);
 	if (node->entry == NULL)
-		ms_exit_with_error_message(env, 11);
+		exit(EXIT_FAILURE);
 }
 
 t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data)

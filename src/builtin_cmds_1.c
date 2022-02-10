@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 10:14:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 21:17:18 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	ms_check_if_the_cmd_is_implemented(\
 	char **cmdline, size_t *cmd_code, bool process)
 {
 	*cmd_code = 0;
-	if (process == PPX_PROC_PARENT ||process == PPX_PROC_CHILD)
+	if (process == PPX_PROC_PARENT || process == PPX_PROC_CHILD)
 	{
 		if (ms_strcmp(cmdline[0], "cd") == MS_SAME)
 			*cmd_code = MS_CMD_CD;

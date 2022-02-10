@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 06:10:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:49:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ms_handle_case_null(\
 	char	*entry;
 
 	entry = ms_strdup("", 1);
+	if (entry == NULL)
+		exit(EXIT_FAILURE);
 	*malloced = true;
 	*key_len = 0;
 	return (entry);
@@ -57,15 +59,19 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 			}
 			++i;
 		}
-		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len - (ms_strlen(entry) - colon_pos)); //check err
+		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len - (ms_strlen(entry) - colon_pos));
+		if (*var == NULL)
+			exit(EXIT_FAILURE);
 	}
 	else
-		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len); //check err
+		*var = ms_strdup(entry + key_len, ms_strlen(entry) - key_len);
+		if (*var == NULL)
+			exit(EXIT_FAILURE);
 	if (malloced == true)
 		entry = ms_free(entry);
 }
 
-void	ms_set_logname_and_name(t_ms *env, t_prompt *cmd_prompt)//+session manager
+void	ms_set_variables_for_cmd_prompt(t_ms *env, t_prompt *cmd_prompt)
 {
 	ms_set_var_according_to_envp_entry(env, &cmd_prompt->logname, "LOGNAME=");
 	ms_set_var_according_to_envp_entry(env, &cmd_prompt->name, "NAME=");
@@ -82,7 +88,7 @@ void	ms_set_first_part_of_cmd_prompt(\
 	char	*colored_last_part;
 
 	if (first_time == true)
-		ms_set_logname_and_name(env, cmd_prompt);
+		ms_set_variables_for_cmd_prompt(env, cmd_prompt);
 	first_part = ppx_join_three_str(\
 		&env->ppx_env, \
 		cmd_prompt->logname, "@", cmd_prompt->name
@@ -127,17 +133,23 @@ void	ms_init_env(char *envp[], t_ms *env)
 	if (path_node == NULL)
 	{
 		pwd = ms_strdup("", 0);
+		if (pwd == NULL)
+			exit(EXIT_FAILURE);
 		key_len = 0;
 	}
 	else
 	{
 		pwd = ms_strdup(path_node->entry, ms_strlen(path_node->entry)); //check err
+		if (home_node->entry == NULL)
+			ms_exit_with_error_message(env, 11);
 		key_len = 4;
 	}
 	joined = ppx_join_three_str(&env->ppx_env, "HOME=", pwd + key_len, "");
 	pwd = ms_free(pwd);
 	ms_free(home_node->entry);
 	home_node->entry = ms_strdup(joined, ms_strlen(joined));
+	if (home_node->entry == NULL)
+		ms_exit_with_error_message(env, 11);
 	joined = ms_free(joined);
 	ms_init_cmd_prompt(env);
 }

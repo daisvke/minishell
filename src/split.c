@@ -6,16 +6,43 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 02:03:33 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/07 05:01:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/09 21:14:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ppx_split_iter(char *split[], char *str, t_split opt)
+char	*ppx_strdup(char *src, size_t size)
 {
-	int	len;
+	size_t		i;
+	size_t		j;
+	char		*dest;
 
+	dest = (char *)malloc(sizeof(*dest) * (size + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (i < size)
+	{
+		while (src[j] == '\'' || src[j] == '\"')
+			++j;
+		dest[i] = src[j];
+		++i;
+		++j;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+int	ms_free_split_and_return_error(char *split[], t_split opt)
+{
+	ppx_free_array_of_pointers(&split, opt.i);
+	return (MS_ERROR);
+}
+
+int	ppx_split_iter(char *split[], char *str, t_split opt, int len)
+{
 	while (*str)
 	{
 		while (*str == opt.sep)
@@ -34,10 +61,7 @@ int	ppx_split_iter(char *split[], char *str, t_split opt)
 			len = 0;
 		split[opt.i] = ppx_strdup(opt.start, len);
 		if (!split[opt.i])
-		{
-			ppx_free_array_of_pointers(&split, opt.i);
-			return (MS_ERROR);
-		}
+			ms_free_split_and_return_error(split, opt);
 		opt.first_char_not_quote = false;
 		++opt.i;
 	}
@@ -48,7 +72,7 @@ int	ppx_split_iter(char *split[], char *str, t_split opt)
 char	**ppx_split(char const *str, char sep)
 {
 	int		res;
-	size_t	len;
+	int		len;
 	char	**split;
 	t_split	opt;
 
@@ -62,7 +86,8 @@ char	**ppx_split(char const *str, char sep)
 	opt.first_char_not_quote = false;
 	if (opt.quotes == true && (*str != '\'' && *str != '\"'))
 		opt.first_char_not_quote = true;
-	res = ppx_split_iter(split, (char *)str, opt);
+	len = 0;
+	res = ppx_split_iter(split, (char *)str, opt, len);
 	if (res == MS_ERROR)
 		return (NULL);
 	return (split);
