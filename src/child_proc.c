@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/06 09:14:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:33:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	size_t	lst_size;
 	char	**envp;
 	char	*path_to_cmd;
-	
+
 	path_to_cmd = ppx_get_the_right_cmd_path(\
 			ms_env, ppx_env, "PATH=", ppx_env->cmd[0] \
 		);
