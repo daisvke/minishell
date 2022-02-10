@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 23:02:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 03:00:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ char	*ms_color_string(t_ms *env, char *str, char *color)
 		&env->ppx_env, \
 		color, \
 		str, \
-		MS_CLR_FAINT_WHITE
-	);//ms vers ?
+		MS_CLR_FAINT_WHITE);
 	return (colored_str);
 }
 
