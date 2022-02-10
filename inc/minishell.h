@@ -6,12 +6,16 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 02:56:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 04:52:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/**************************************
+			H E A D E R S
+**************************************/
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -27,38 +31,25 @@
 # include "ms_macros_structs_enums.h"
 # include "pipex.h"
 
-/*
-** system calls
-*/
+/**************************************
+ F U N C T I O N  P R O T O T Y P E S
+**************************************/
+
+//			 SYSTEM CALLS
+
 void		*ms_free(void *data);
 void		*ms_malloc(t_ms *env, size_t num, size_t size);
 void		*ms_memset(void *s, int c, size_t n);
-
-/*
-** system calls unistd
-*/
 void		ms_close(t_ms *env, int fd);
 void		ms_dup2(t_ms *env, int fd1, int fd2);
 void		ms_pipe(t_ms *env, int *fds);
 
-/*
-** signals
-*/
-void		ms_handle_signals(void);
-
-/*
-** when argc > 1
-*/
+//			INIT
 char		*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[]);
-
-/*
-** init
-*/
+void		ms_handle_signals(void);
 void		ms_init_env(char *envp[], t_ms *env);
 
-/*
-** envp
-*/
+//			ENVP
 char		**ms_convert_envp_lst_to_array_of_pointers(\
 	t_ms *env, t_env_lst *envp_lst, size_t lst_size);
 void		ms_convert_envp_into_linked_list(char *envp[], t_ms *env);
@@ -71,9 +62,17 @@ void		ms_lst_del_node(t_env_lst *node);
 t_env_lst	*ms_lst_get_last_node(t_env_lst *node);
 int			ms_lst_lstsize(t_env_lst *head);
 
-/*
-** command prompt
-*/
+//			PARSING
+
+int			ms_check_arguments(char *envp[], int argc);
+int			ms_check_if_quote_nbr_is_even(char *cmdline);
+int			ms_check_pipes_and_redirections(t_ms *env, char *cmdline);
+int			ms_compare_with_envp_key(\
+	const char *envp_entry, const char *str, bool equal_in_str);
+int			ms_parse_cmdline(t_ms *env, char **cmdline);
+
+//			COMMAND PROMPT
+
 void		ms_generate_new_path_for_prompt(\
 	t_ms *env, char *current_path, int len, bool first_time);
 char		*ms_get_home_value_from_envp_lst(t_ms *env);
@@ -82,19 +81,8 @@ void		ms_get_new_path_for_prompt(\
 void		ms_set_first_part_of_cmd_prompt(\
 	t_ms *env, t_prompt *cmd_prompt, bool first_time);
 
-/*
-** parsing
-*/
-int			ms_check_arguments(char *envp[], int argc);
-int			ms_check_if_quote_nbr_is_even(char *cmdline);
-int			ms_check_pipes_and_redirections(t_ms *env, char *cmdline);
-int			ms_compare_with_envp_key(\
-	const char *envp_entry, const char *str, bool equal_in_str);
-int			ms_parse_cmdline(t_ms *env, char **cmdline);
+//			EXPAND VARIABLES
 
-/*
-** expand variables
-*/
 bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 	char *cmdline, t_expv *vars);
 void		ms_copy_value_to_the_expansion_location(\
@@ -110,18 +98,16 @@ char		*ms_get_new_cmdline_with_expanded_variables(\
 	t_ms *env, char **cmdline);
 char		*ms_print_last_exit_status(t_ms *env);
 
-/*
-** redirections
-*/
+//			REDIRECTIONS
+
 void		ms_apply_append_mode(t_ppx *env, char *file);
 void		ms_apply_heredoc(\
 	t_ppx *env, char *file, size_t hd_count, size_t hd_total);
 char		*ppx_check_outfile(\
 	t_ppx *env, char *file, size_t i, size_t *lines_to_del);
 
-/*
-** commands
-*/
+//			COMMANDS
+
 bool		ms_check_if_the_cmd_is_implemented(\
 	char **cmdline, size_t *cmd_code, bool process);
 bool		ms_check_if_there_is_not_too_much_args(char **cmd_and_args);
@@ -136,16 +122,14 @@ void		ms_print_not_valid_identifier_err_message(char *cmd);
 int			ms_run_readline(t_ms *env, char *read_line);
 void		ms_update_prompt_when_home_is_unset(t_ms *env, bool first_time);
 
-/*
-** utils: numbers
-*/
+//			UTILS: NUMBERS
+
 int			ms_get_absolute_value(long long int nbr);
 char		*ms_itoa(t_ms *env, int n);
 size_t		ms_nbrlen(long long int n);
 
-/*
-** utils: strings
-*/
+//			UTILS: STRINGS
+
 char		ms_check_if_char_is_a_redir_symbol(int c);
 char		*ms_color_string(t_ms *env, char *str, char *color);
 size_t		ms_handle_quotes(char *str, char quote);
@@ -160,9 +144,8 @@ char		*ms_strdup(char *src, size_t size); //used
 size_t		ms_strlen(const char *s);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 
-/*
-** exit
-*/
+//			EXIT
+
 void		ms_close_pipe_fds(t_ms *ms_env, t_ppx *ppx_env, bool after_increm);
 void		ms_exit_with_error_message(t_ms *env, int err_code);
 void		ms_free_all_allocated_variables(t_ms *env);
