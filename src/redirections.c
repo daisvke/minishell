@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/30 14:56:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:04:54 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,11 @@ char	**ppx_del_redirection_section_iter(\
 	{
 		if (ppx_is_a_line_to_del_not_starting_with_a_redir_symbol(del, i, env) \
 			== true)
-		{
-			new_cmd_array[j++] = ppx_strdup_with_exit(\
-				env, env->cmd[i], del.pos);
-		}
+			new_cmd_array[j++] \
+				= ppx_strdup_with_exit(env, env->cmd[i], del.pos);
 		else if (ppx_is_not_a_line_to_del(del, i))
-		{
 			new_cmd_array[j++] = ppx_strdup_with_exit(\
 				env, env->cmd[i], ms_strlen(env->cmd[i]));
-		}
 		++i;
 	}
 	if ((new_cmd_array && new_cmd_array[0] && *new_cmd_array[0] == '\0') \
@@ -69,7 +65,6 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 	static size_t	hd_pos;
 	size_t			hd_total;
 	int				fd;
-	int				open_flags;
 
 	fd = 0;
 	if (*str == '<' && *(str + 1) == '<')
@@ -81,18 +76,9 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 	else if (*str == '>' && *(str + 1) == '>')
 		ms_apply_append_mode(env, file);
 	else if (*str == '<')
-	{
-		env->options |= MS_OPT_READ_FROM_FILE;
-		fd = ppx_open_file(env, file, O_RDONLY, 0);
-		ppx_dup2(env, fd, STDIN_FILENO, MS_DUP_CLOSE_FD);
-	}
+		ms_read_from_file(env, file);
 	else if (*str == '>')
-	{
-		env->options |= MS_OPT_REDIR_OUTPUT;
-		open_flags = ppx_get_open_flags(env);
-		fd = ppx_open_file(env, file, open_flags, 0664);
-		ppx_dup2(env, fd, STDOUT_FILENO, MS_DUP_CLOSE_FD);
-	}
+		ms_redirect_output(env, file);
 }
 
 void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
