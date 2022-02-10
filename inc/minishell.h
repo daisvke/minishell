@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 04:52:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 05:11:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ void		ms_dup2(t_ms *env, int fd1, int fd2);
 void		ms_pipe(t_ms *env, int *fds);
 
 //			INIT
+
 char		*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[]);
 void		ms_handle_signals(void);
 void		ms_init_env(char *envp[], t_ms *env);
 
 //			ENVP
+
 char		**ms_convert_envp_lst_to_array_of_pointers(\
 	t_ms *env, t_env_lst *envp_lst, size_t lst_size);
 void		ms_convert_envp_into_linked_list(char *envp[], t_ms *env);
@@ -76,7 +78,9 @@ int			ms_parse_cmdline(t_ms *env, char **cmdline);
 void		ms_generate_new_path_for_prompt(\
 	t_ms *env, char *current_path, int len, bool first_time);
 char		*ms_get_home_value_from_envp_lst(t_ms *env);
-void		ms_get_new_path_for_prompt(\
+void		ms_print_only_slash_and_dollar_when_before_home(t_ms *env);
+void		ms_print_only_tilde_and_dollar_when_at_home(t_ms *env);
+void		ms_update_prompt(\
 	t_ms *env, t_env_lst *envp_lst, t_prompt *cmd_prompt, bool first_time);
 void		ms_set_first_part_of_cmd_prompt(\
 	t_ms *env, t_prompt *cmd_prompt, bool first_time);

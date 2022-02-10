@@ -33,6 +33,7 @@ SRC_FILES			=	builtin_cmds_1.c \
 						pipex_utils.c \
 						ppx_init_env.c \
 						prompt.c \
+						prompt_utils.c \
 						redirections.c \
 						redirections_utils.c \
 						signals.c \

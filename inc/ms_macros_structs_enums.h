@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 04:05:31 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 06:16:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ typedef struct s_prompt
 
 enum e_prompt
 {
+	MS_PMP_KEEP_CURRENT_PROMPT = -1,
 	MS_PMP_NO_HOME = -1,
 	MS_PMP_AT_HOME = 0,
+	MS_PMP_FIRST_TIME = 1,
 	MS_PMP_TILDE_LEN = 1,
-	MS_PMP_DOLLAR_SPACE_LEN = 2,
-	MS_PMP_FIRST_TIME = 1
+	MS_PMP_DOLLAR_SPACE_LEN = 2
 };
 
 // MINISHELL ENV
