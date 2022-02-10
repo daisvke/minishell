@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:37 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 23:03:52 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:56:47 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ms_assign_or_create_entry_if_not_already_existing(\
 
 	if (ms_compare_with_envp_key(node->entry, cmdline, true) == MS_SAME)
 	{
-		ms_lst_assign_entry_to_node(env, node, cmdline);
+		ms_lst_assign_entry_to_node(node, cmdline);
 		return (MS_FOUND);
 	}
 	else if (node->next == NULL)

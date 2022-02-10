@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 02:43:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:55:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_lst_assign_entry_to_node(t_ms *env, t_env_lst *node, char *entry)
+void	ms_lst_assign_entry_to_node(t_env_lst *node, char *entry)
 {
 	size_t	len;
 
@@ -31,7 +31,7 @@ t_env_lst	*ms_lst_create_new_node(t_ms *env, char *data)
 	if (!new)
 		ms_exit_with_error_message(env, 12);
 	new->entry = NULL;
-	ms_lst_assign_entry_to_node(env, new, data);
+	ms_lst_assign_entry_to_node(new, data);
 	new->next = NULL;
 	return (new);
 }

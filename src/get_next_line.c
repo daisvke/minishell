@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 04:45:02 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 02:52:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*gnl_concatenate(char *s1, char *s2, int len, bool is_empty)
 	return (str);
 }
 
-int	gnl_get_line(t_ppx *env, char **data, int fd)
+int	gnl_get_line(char **data, int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	int			res;
@@ -78,7 +78,7 @@ int	gnl_get_line(t_ppx *env, char **data, int fd)
 	return (res);
 }
 
-int	gnl_run_and_return(t_ppx *env, char **data, char **line, int fd)
+int	gnl_run_and_return(char **data, char **line, int fd)
 {
 	int		res;
 	int		index;
@@ -86,7 +86,7 @@ int	gnl_run_and_return(t_ppx *env, char **data, char **line, int fd)
 	bool	is_empty;
 
 	tmp = NULL;
-	res = gnl_get_line(env, data, fd);
+	res = gnl_get_line(data, fd);
 	if (res == PPX_ERROR)
 		return (PPX_ERROR);
 	index = 0;
@@ -111,7 +111,7 @@ int	gnl_run_and_return(t_ppx *env, char **data, char **line, int fd)
 		return (GNL_READ_LINE);
 }
 
-int	get_next_line(t_ppx *env, int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*data;
 	char		*data_cpy;
@@ -120,7 +120,7 @@ int	get_next_line(t_ppx *env, int fd, char **line)
 	if (BUFFER_SIZE <= 0 || !line)
 		return (PPX_ERROR);
 	data_cpy = data;
-	res = gnl_run_and_return(env, &data_cpy, line, fd);
+	res = gnl_run_and_return(&data_cpy, line, fd);
 	if (res == GNL_REACHED_EOF || res == PPX_ERROR)
 		data_cpy = ms_free(data_cpy);
 	data = data_cpy;
