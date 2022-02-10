@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 04:07:23 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 02:52:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 03:23:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,34 +78,27 @@ int	gnl_get_line(char **data, int fd)
 	return (res);
 }
 
-int	gnl_run_and_return(char **data, char **line, int fd)
+int	gnl_run_and_return(t_gnl env, char **data, char **line, int fd)
 {
-	int		res;
-	int		index;
-	char	*tmp;
-	bool	is_empty;
-
-	tmp = NULL;
-	res = gnl_get_line(data, fd);
-	if (res == PPX_ERROR)
+	env.res = gnl_get_line(data, fd);
+	if (env.res == PPX_ERROR)
 		return (PPX_ERROR);
-	index = 0;
 	if (*data)
-		index = gnl_get_char_index(*data, '\n', true);
-	is_empty = index + 1 > gnl_get_char_index(*data, '\0', true);
-	*line = gnl_concatenate(*data, NULL, index, false);
+		env.i = gnl_get_char_index(*data, '\n', true);
+	env.is_empty = env.i + 1 > gnl_get_char_index(*data, '\0', true);
+	*line = gnl_concatenate(*data, NULL, env.i, false);
 	if (!line)
 		return (PPX_ERROR);
 	if (*data)
 	{
-		tmp = gnl_concatenate(*data + index + 1, NULL, \
-			gnl_get_char_index(*data, '\0', true) - index - 1, is_empty);
-		if (!tmp)
+		env.tmp = gnl_concatenate(*data + env.i + 1, NULL, \
+			gnl_get_char_index(*data, '\0', true) - env.i - 1, env.is_empty);
+		if (!env.tmp)
 			return (PPX_ERROR);
 	}
 	*data = ms_free(*data);
-	*data = tmp;
-	if (res == GNL_REACHED_EOF && is_empty)
+	*data = env.tmp;
+	if (env.res == GNL_REACHED_EOF && env.is_empty)
 		return (GNL_REACHED_EOF);
 	else
 		return (GNL_READ_LINE);
@@ -115,12 +108,14 @@ int	get_next_line(int fd, char **line)
 {
 	static char	*data;
 	char		*data_cpy;
+	t_gnl		env;
 	int			res;
 
 	if (BUFFER_SIZE <= 0 || !line)
 		return (PPX_ERROR);
 	data_cpy = data;
-	res = gnl_run_and_return(&data_cpy, line, fd);
+	ms_memset(&env, 0, sizeof(t_gnl));
+	res = gnl_run_and_return(env, &data_cpy, line, fd);
 	if (res == GNL_REACHED_EOF || res == PPX_ERROR)
 		data_cpy = ms_free(data_cpy);
 	data = data_cpy;

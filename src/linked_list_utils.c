@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:11 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 02:43:25 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 03:00:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ char	*ms_get_home_value_from_envp_lst(t_ms *env)
 		if (home_path == NULL)
 			exit(EXIT_FAILURE);
 	}
-	return (home_path); 
+	return (home_path);
 }
