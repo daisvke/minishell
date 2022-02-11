@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 10:04:35 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 23:05:26 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 int		ppx_create_array_of_commands(\
 	t_ms *ms_env, t_ppx *ppx_env, char *cmdline[]);
 bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code);
+void	ppx_wait_for_all_children(\
+	t_ms *ms_env, t_ppx *ppx_env, pid_t pid, size_t wait_count);
+void	ppx_wait_for_proc_with_heredoc(\
+	t_ms *ms_env, pid_t pid, size_t *wait_count);
 
 //		EXIT
 

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 05:11:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/11 04:50:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,25 @@ void		*ms_memset(void *s, int c, size_t n);
 void		ms_close(t_ms *env, int fd);
 void		ms_dup2(t_ms *env, int fd1, int fd2);
 void		ms_pipe(t_ms *env, int *fds);
+int			ms_strcmp(const char *s1, const char *s2);
+char		*ms_strdup_with_exit(t_ms *env, char *src, size_t size);
+int			ms_strncmp(const char *s1, const char *s2, size_t n);
+char		*ms_strdup(char *src, size_t size); //used
+size_t		ms_strlen(const char *s);
 
 //			INIT
 
+void		ms_assign_key_value_to_cmd_prompt(\
+	char **var, char *entry, size_t key_len);
 char		*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[]);
+char		*ms_get_pwd(t_ms *env, t_env_lst *path_node, size_t *key_len);
+char		*ms_handle_case_null(size_t *key_len, bool *malloced);
 void		ms_handle_signals(void);
+void		ms_init_cmd_prompt(t_ms *env);
 void		ms_init_env(char *envp[], t_ms *env);
+void		ms_set_var_according_to_envp_entry(\
+	t_ms *env, char **var, char *key);
+void		ms_set_variables_for_cmd_prompt(t_ms *env, t_prompt *cmd_prompt);
 
 //			ENVP
 
@@ -142,10 +155,6 @@ bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);
 void		ms_reset_color_settings(void);
 char		*ms_search_redir_symbol(char *str);
-int			ms_strcmp(const char *s1, const char *s2);
-int			ms_strncmp(const char *s1, const char *s2, size_t n);
-char		*ms_strdup(char *src, size_t size); //used
-size_t		ms_strlen(const char *s);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);
 
 //			EXIT
