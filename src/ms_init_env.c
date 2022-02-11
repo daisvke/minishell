@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/11 04:49:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/11 05:04:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,11 @@ void	ms_set_home_variable_in_envp_lst(t_ms *env)
 	joined = ms_free(joined);
 }
 
-void	ms_init_env(char *envp[], t_ms *env)
+void	ms_init_env(int argc, char *envp[], t_ms *env)
 {
 	ms_convert_envp_into_linked_list(envp, env);
 	ms_set_home_variable_in_envp_lst(env);
-	ms_init_cmd_prompt(env);
+	if (argc == 1)
+		ms_init_cmd_prompt(env);
+	env->argc = argc;
 }

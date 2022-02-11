@@ -10,9 +10,10 @@ ms_macro => macro ?
 /**********************/
 SIGINT => exit status code ?
 /**********************/
-desactivate ./minishell arg ?
-/**********************/
 colors:
 https://tforgione.fr/posts/ansi-escape-codes/
 /**********************/
 handle unset PWD, PATH
+/**********************/
+format macros header
+

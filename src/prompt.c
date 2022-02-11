@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 06:20:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/11 05:04:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	ms_update_prompt(\
 	char		*current_path;
 	int			new_path_len;
 
+	if (env->argc != 1)
+		return ;
 	pwd_node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
 	key_len = 4;
 	current_path = pwd_node->entry + key_len;

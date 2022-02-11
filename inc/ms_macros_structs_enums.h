@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 06:16:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/11 05:04:22 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ enum e_prompt
 // MINISHELL ENV
 typedef struct s_ms
 {
+	int			argc;
 	t_ppx		ppx_env;
 	t_env_lst	*envp_lst;
 	t_prompt	cmd_prompt;
