@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 03:28:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/11 03:08:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,70 +41,36 @@ void	ppx_execute_implemented_cmd_in_parent(\
 		exit(EXIT_SUCCESS);
 }
 
-void	ppx_wait_for_all_children(\
-	t_ms *ms_env, t_ppx *ppx_env, pid_t pid, size_t wait_count)
+void	ms_execute_command(\
+	t_ms *ms_env, t_ppx *ppx_env, pid_t *pid, size_t *cmd_code)
 {
-	int	i;
-	int	size;
-	int	wstatus = 0;
-	int	status_code;
-
-	i = 0;
-	size = ppx_env->cmd_nbr - wait_count;
-	while (i < size)
-	{
-		if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
-		{
-			ppx_free_all_allocated_variables(&ms_env->ppx_env);
-			ppx_free_array_of_pointers(&ms_env->split_cmdline, MS_ALL);
-		}
-		if (WIFEXITED(wstatus))
-		{
-			status_code = WEXITSTATUS(wstatus);
-			ms_env->last_pipe_exit_status = status_code;
-			return ;
-		}
-		++i;
-	}
-	return ;
+	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, cmd_code) == true)
+		ppx_execute_implemented_cmd_in_parent(\
+			ms_env, ppx_env, *cmd_code, ppx_env->cmd);
+	else
+		ppx_execute_pipe_and_run_cmd_in_child_process(\
+			ms_env, ppx_env, pid);
+	if (ppx_env->i < ppx_env->cmd_nbr - 1)
+		ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
 }
 
 void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 {
 	pid_t	pid;
 	size_t	cmd_code;
+	size_t	wait_count;
 
-	int	status_code;
-	int	wstatus = 0;
-	size_t	wait_count = 0;
-
+	wait_count = 0;
 	while (ppx_env->i < ppx_env->cmd_nbr)
 	{
 		ppx_env->options &= MS_OPT_INIT_ALL_BUT_PIPE;
 		if (ppx_create_array_of_commands(ms_env, ppx_env, cmdline) == 2)
 			return ;
 		ppx_detect_heredocs(ppx_env, ppx_env->cmd);
-		if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == true)
-			ppx_execute_implemented_cmd_in_parent(\
-				ms_env, ppx_env, cmd_code, ppx_env->cmd);
-		else
-			ppx_execute_pipe_and_run_cmd_in_child_process(\
-				ms_env, ppx_env, &pid);
-		if (ppx_env->i < ppx_env->cmd_nbr - 1)
-			ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
-
+		ms_execute_command(ms_env, ppx_env, &pid, &cmd_code);
 		if (ppx_env->options & MS_OPT_HEREDOC \
 			&& ppx_env->i == ppx_env->heredoc_pos)
-		{
-			waitpid(pid, &wstatus, WUNTRACED);
-			if (WIFEXITED(wstatus))
-			{
-				status_code = WEXITSTATUS(wstatus);
-				ms_env->last_pipe_exit_status = status_code;
-			}
-			else
-				++wait_count;
-		}
+			ppx_wait_for_proc_with_heredoc(ms_env, pid, &wait_count);
 		++ppx_env->i;
 	}
 	if (ppx_env->cmd_nbr > 1)

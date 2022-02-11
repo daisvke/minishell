@@ -6,11 +6,57 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:00:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 03:28:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/10 23:05:24 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ppx_wait_for_all_children(\
+	t_ms *ms_env, t_ppx *ppx_env, pid_t pid, size_t wait_count)
+{
+	int	i;
+	int	size;
+	int	wstatus;
+	int	status_code;
+
+	i = 0;
+	size = ppx_env->cmd_nbr - wait_count;
+	while (i < size)
+	{
+		wstatus = 0;
+		if (waitpid(pid, &wstatus, WUNTRACED) == PPX_ERROR)
+		{
+			ppx_free_all_allocated_variables(&ms_env->ppx_env);
+			ppx_free_array_of_pointers(&ms_env->split_cmdline, MS_ALL);
+		}
+		if (WIFEXITED(wstatus))
+		{
+			status_code = WEXITSTATUS(wstatus);
+			ms_env->last_pipe_exit_status = status_code;
+			return ;
+		}
+		++i;
+	}
+	return ;
+}
+
+void	ppx_wait_for_proc_with_heredoc(\
+	t_ms *ms_env, pid_t pid, size_t *wait_count)
+{
+	int	wstatus;
+	int	status_code;
+
+	wstatus = 0;
+	waitpid(pid, &wstatus, WUNTRACED);
+	if (WIFEXITED(wstatus))
+	{
+		status_code = WEXITSTATUS(wstatus);
+		ms_env->last_pipe_exit_status = status_code;
+	}
+	else
+		*wait_count += 1;
+}
 
 int	ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 {
