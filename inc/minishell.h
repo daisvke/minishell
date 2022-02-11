@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/11 04:50:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/11 04:57:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char		*ms_get_pwd(t_ms *env, t_env_lst *path_node, size_t *key_len);
 char		*ms_handle_case_null(size_t *key_len, bool *malloced);
 void		ms_handle_signals(void);
 void		ms_init_cmd_prompt(t_ms *env);
-void		ms_init_env(char *envp[], t_ms *env);
+void		ms_init_env(int argc, char *envp[], t_ms *env);
 void		ms_set_var_according_to_envp_entry(\
 	t_ms *env, char **var, char *key);
 void		ms_set_variables_for_cmd_prompt(t_ms *env, t_prompt *cmd_prompt);
