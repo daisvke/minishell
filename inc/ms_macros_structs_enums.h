@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 03:32:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 09:56:20 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ typedef struct s_ppx
 	size_t	pos;
 	size_t	cmd_nbr;
 	size_t	i;
-	int		fd_in;
-	int		fd_out;
 	char	**cmd;
 	int		options;
 	size_t	heredoc_pos;
