@@ -34,10 +34,15 @@ to run a command directly through minishell
 * "cd" alone gets to $HOME
 
 ### echo
+* every argument will be printed unless it begins with "-n", which will activate the -n option.
+
+### env
 
 ### exit
 
 ### export
+
+### pwd
 
 ### unset
 * Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar to bash.
