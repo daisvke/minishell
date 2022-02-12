@@ -44,7 +44,7 @@ to run a command directly through minishell
 
 ## Leaks
 
-To check leaks while ignoring leaks dued to readline(), create a file with the following content:
+To check all kinds of leaks while ignoring the onces dued to readline(), create a file with the following content:
 ```
 {
 	ignore_readline_leaks
