@@ -33,5 +33,31 @@ to run a command directly through minishell
 * cd returns an error if it comes with more than a single argument
 * "cd" alone gets to $HOME
 
+### echo
+
+### exit
+
+### export
+
 ### unset
 * Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar to bash.
+
+## Leaks
+
+To check leaks while ignoring leaks dued to readline(), create a file with the following content:
+```
+{
+	ignore_readline_leaks
+	Memcheck:Leak
+	...
+	obj:/lib/x86_64-linux-gnu/libreadline.so.7.0
+}
+```
+On the last line, replace what follows "obj:" with the path corresponding to your own system.<br />
+The path appears inside the valgrind reports.<br />
+<br />
+Then, run the following command:
+```
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks ./minishell
+```
+Here, the part following "--suppressions=" corresponds to the name of the file mentionned above.
