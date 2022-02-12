@@ -1,0 +1,6 @@
+{
+	ignore_readline_leaks
+	Memcheck:Leak
+	...
+	obj:/lib/x86_64-linux-gnu/libreadline.so.7.0
+}
