@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 10:46:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 10:51:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
 	path_to_cmd = ms_free(path_to_cmd);
 	ppx_free_pipe_fds(&env->ppx_env);
 	ppx_close_pipe_fds(&env->ppx_env);
-	ms_lst_clear_list(&env->envp_lst);
+	ms_lst_clear_list(env->envp_lst);
 	exit(EXIT_FAILURE);
 }

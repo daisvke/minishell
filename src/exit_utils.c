@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 02:52:55 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 10:49:19 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 10:51:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ppx_free_pipe_fds(t_ppx *env)
 void	ms_quit_with_ctrl_d(t_ms *env)
 {
 	rl_clear_history();
-	ms_lst_clear_list(&env->envp_lst);
+	ms_lst_clear_list(env->envp_lst);
 	ms_free_prompt_struct(env);
 	exit(EXIT_SUCCESS);
 }
