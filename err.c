@@ -6,3 +6,5 @@ https://tforgione.fr/posts/ansi-escape-codes/
 if unset pwd => getcwd
 /**********************/
 don't echo '\'
+/**********************/
+
