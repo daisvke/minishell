@@ -32,3 +32,6 @@ to run a command directly through minishell
 * "cd .." works, as chdir() understands it as an argument
 * cd returns an error if it comes with more than a single argument
 * "cd" alone gets to $HOME
+
+### unset
+* Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar to bash.

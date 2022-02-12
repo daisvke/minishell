@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/11 05:04:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 02:47:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ enum e_close_pipe_fds
 
 enum e_cmds
 {
+	MS_CMD_NONE,
 	MS_CMD_ECHO,
 	MS_CMD_CD,
 	MS_CMD_PWD,

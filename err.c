@@ -13,7 +13,5 @@ SIGINT => exit status code ?
 colors:
 https://tforgione.fr/posts/ansi-escape-codes/
 /**********************/
-handle unset PWD, PATH
-/**********************/
 format macros header
 

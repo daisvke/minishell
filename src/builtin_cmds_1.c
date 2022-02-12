@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/09 21:17:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 02:58:11 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	ms_check_if_the_cmd_is_implemented(\
 		else if (ms_strcmp(cmdline[0], "unset") == MS_SAME)
 			*cmd_code = MS_CMD_UNSET;
 	}
-	else if (process == PPX_PROC_CHILD)
+	if (process == PPX_PROC_CHILD)
 	{
 		if (ms_strcmp(cmdline[0], "pwd") == MS_SAME)
 			*cmd_code = MS_CMD_PWD;
@@ -71,12 +71,15 @@ void	ms_execute_cmd_echo(char *cmd[])
 	size_t	i;
 
 	opt_n = false;
-	if (ms_strcmp(cmd[1], "-n") == MS_SAME)
+	i = MS_FIRST_ARG_POS;
+	while (ms_strncmp(cmd[i], "-n", 2) == MS_SAME)
+	{
 		opt_n = true;
-	i = MS_FIRST_ARG_POS + opt_n;
+		++i;
+	}
 	while (cmd[i])
 	{
-		printf("%s", cmd[i]);
+		write(STDOUT_FILENO, cmd[i], ms_strlen(cmd[i]));
 		if (cmd[i + 1] != NULL)
 			write(STDOUT_FILENO, MS_SPACE_TO_SEP_PRINTED_ARGS, 1);
 		++i;
