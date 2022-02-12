@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 23:05:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 03:07:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,28 @@
 # include <errno.h>
 
 # include "get_next_line.h"
+
+/**************************************
+	M A C R O S  &  S T R U C T S
+**************************************/
+
+# define PPX_ERROR 	-1
+
+//	PROCESSES
+
+enum e_processes
+{
+	PPX_PROC_CHILD,
+	PPX_PROC_PARENT
+};
+
+//	CHECK ACCESS TO FILES
+
+enum e_access
+{
+	PPX_OFF,
+	PPX_CHECK_ALL
+};
 
 /**************************************
  F U N C T I O N  P R O T O T Y P E S
