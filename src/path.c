@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/05 11:17:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/12 02:59:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,16 @@ t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
 
 static char	**ppx_get_path(t_ms *ms_env, t_ppx *ppx_env, char *key)
 {
-	char	*paths_envp;
-	char	**paths_envp_split;
+	t_env_lst	*paths_node;
+	char		*paths_envp;
+	char		**paths_envp_split;
 
-	paths_envp = ms_lst_get_node_with_the_same_key(\
+	paths_node = ms_lst_get_node_with_the_same_key(\
 			ms_env->envp_lst, key \
-		)->entry;
+		);
+	if (paths_node == NULL)
+		return (NULL);
+	paths_envp = paths_node->entry;
 	if (paths_envp == NULL)
 		ppx_exit_with_error_message(ppx_env, 3);
 	paths_envp_split = ppx_split(paths_envp, ':');
@@ -68,7 +72,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	paths_envp_split = ppx_get_path(ms_env, ppx_env, key);
 	i = 0;
 	cmd_path_at_i = NULL;
-	while (paths_envp_split[i])
+	while (paths_envp_split && paths_envp_split[i])
 	{
 		cmd_path_at_i = ppx_join_three_str(\
 			ppx_env, paths_envp_split[i], "/", cmd);
