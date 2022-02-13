@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 10:51:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 09:43:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	ms_launch_prompt(t_ms *env)
 	}
 	ms_execute_cmdline_with_pipex(env, env->split_cmdline);
 	env->options = 0;
-	if (env->envp_lst == NULL)
-		ms_lst_clear_list(env->envp_lst);
 	ppx_free_all_allocated_variables(&env->ppx_env);
 	ppx_free_array_of_pointers(&env->split_cmdline, MS_ALL);
 }

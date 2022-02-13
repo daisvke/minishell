@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 07:23:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 09:55:13 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ms_execute_cmd_echo(char *cmd[])
 {
 	bool	opt_n;	
 	size_t	i;
+	size_t	j;
 
 	opt_n = false;
 	i = MS_FIRST_ARG_POS;
@@ -88,7 +89,13 @@ void	ms_execute_cmd_echo(char *cmd[])
 	}
 	while (cmd[i])
 	{
-		write(STDOUT_FILENO, cmd[i], ms_strlen(cmd[i]));
+		j = 0;
+		while(cmd[i][j])
+		{
+			if (cmd[i][j] != '\\')
+				write(STDOUT_FILENO, &cmd[i][j], 1);
+			++j;
+		}
 		if (cmd[i + 1] != NULL)
 			write(STDOUT_FILENO, MS_SPACE_TO_SEP_PRINTED_ARGS, 1);
 		++i;
