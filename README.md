@@ -22,7 +22,7 @@ to run a command directly through minishell
 
 ### Command prompt
 The command prompt is composed of:<br />
-<img src="screenshots/cmd_prompt.png" width="60%" /><br />
+<img src="screenshots/cmd_prompt.png" width="60%" />
 ```
 [$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$
 ```
