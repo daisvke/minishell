@@ -23,9 +23,7 @@ to run a command directly through minishell
 ### Command prompt
 <img src="screenshots/cmd_prompt.png" width=60% />
 * The command prompt is composed of:
-```
 
-```
 * $NAME or $SESSION_MANAGER is used, depending on the system<br />
 * Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part<br />
 * If the current directory's path is equal to $HOME, the path is replaced by a tilde ('~')<br />
