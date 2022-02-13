@@ -55,7 +55,7 @@ The command prompt is composed of:<br />
 ### unset
 * Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar in bash.
 * Every argument is unset from the minishell's envp, unless the variable is not found, or is invalid.
-* An argument is invalid when:<br />
+* An argument is invalid when:
 1. The first character of the variable's name is a digit.<br />
 2. At least one of the characters in the variable's name is not alphanumeric, except for the underscore character ('\_').
 
