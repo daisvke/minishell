@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 09:56:20 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 10:14:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ typedef struct s_ms
 	int			last_pipe_exit_status;
 	int			exit_status;
 }				t_ms;
-
 
 //	ENV.OPTIONS
 
