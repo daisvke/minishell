@@ -46,7 +46,7 @@ The command prompt is composed of:<br />
 
 ### export
 * Every argument is exported to the minishell's envp, unless it is invalid.
-* An argument is invalid when:<br />
+* An argument is invalid when:
 1. The first character of the variable's name is a digit.<br />
 2. At least one of the characters in the variable's name is not alphanumeric, except for the underscore character ('\_').
 3. The argument begins with the assigning equal character ('=').
