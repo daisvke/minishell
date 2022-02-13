@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 10:02:28 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 10:14:56 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ms_execute_cmd_env(t_env_lst *envp_head)
 
 void	ms_print_if_not_backslash(char *arg)
 {
-	while(*arg)
+	while (*arg)
 	{
 		if (*arg != '\\')
 			write(STDOUT_FILENO, &*arg, 1);
