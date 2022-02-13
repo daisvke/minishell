@@ -33,20 +33,30 @@ to run a command directly through minishell
 * cd returns an error if it comes with more than a single argument
 * "cd" alone gets to $HOME
 
+### exit
+* Any argument is ignored
+
+### export
+* Every argument is exported to the minishell's envp, unless it is invalid.
+* An argument is invalid when:<br />
+1. The first character of the variable's name is a digit.<br />
+2. At least one of the characters in the variable's name is not alphanumeric, except for the underscore character ("\_").
+3. The argument begins with the assigning equal character ("=").
+4. There is at least one space character before the equal character.
+
+### unset
+* Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar in bash.
+
+### pwd
+* When $PWD is unset, the pwd command will print the current absolute path, using getcwd().
+
 ### echo
-* Every argument will be printed unless it begins with "-n", which will activate the -n option.
+* Every argument will be printed, separated by a space, unless it begins with "-n", which will activate the -n option.
 * The character '\\' is not echoed, as in bash.
 
 ### env
-
-### exit
-
-### export
-
-### pwd
-
-### unset
-* Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar to bash.
+* Any argument is ignored
+* It prints all the environment variables that are active within minishell.
 
 ## Leaks
 
