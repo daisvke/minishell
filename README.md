@@ -30,7 +30,7 @@ The command prompt is composed of:<br />
 * Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part
 * If the current directory's path is equal to $HOME, the path is replaced by a tilde ('~')
 * If the current directory's position is lower than $HOME, the tilde does not appear
-* If the current directory is the root directory of all the system files, only "\$" is shown
+* If the current directory is the root directory of all the system files, only "\\$" is shown
 
 ## Implemented commands
 
