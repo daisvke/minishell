@@ -21,7 +21,9 @@ to run a command directly through minishell
 * $HOME is initialized as the $PWD (= the path) of the projet's root directory
 
 ### Command prompt
-
+<p>
+	<img src="screenshots/cmd_prompt.png" width=60% />
+</p>
 The command prompt is composed of:
 ```
 [$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$
