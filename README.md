@@ -74,6 +74,7 @@ To check all kinds of leaks while ignoring the onces dued to readline(), create 
 	obj:/lib/x86_64-linux-gnu/libreadline.so.7.0
 }
 ```
+You can name this file anything you want.< br />
 On the last line, replace what follows "obj:" with the path corresponding to your own system.<br />
 The path appears inside the valgrind reports.<br />
 <br />
