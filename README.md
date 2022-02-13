@@ -23,11 +23,11 @@ to run a command directly through minishell
 ### Command prompt
 <img src="screenshots/cmd_prompt.png" width=60% />
 * The command prompt is composed of:<br />
-[$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$
-* $NAME or $SESSION_MANAGER is used, depending on the system
-* Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part
-* If the current directory's path is equal to $HOME, the path is replaced by a tilde ('~')
-* If the current directory's position is lower than $HOME, the tilde does not appear
+[$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$<br />
+* $NAME or $SESSION_MANAGER is used, depending on the system<br />
+* Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part<br />
+* If the current directory's path is equal to $HOME, the path is replaced by a tilde ('~')<br />
+* If the current directory's position is lower than $HOME, the tilde does not appear<br />
 * If the current directory is the root directory of all the system files, only "\$" is shown
 
 ## Implemented commands
