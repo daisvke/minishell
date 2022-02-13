@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 02:58:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:23:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,17 @@ void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 	char		*current_path;
 
 	node = ms_lst_get_node_with_the_same_key(envp_lst, "PWD=");
-	key_len = 4;
-	current_path = node->entry + key_len;
+	if (node == NULL)
+	{
+		current_path = getcwd(NULL, 0);
+		if (current_path == NULL)
+			exit(EXIT_FAILURE);
+	}
+	else
+	{
+		key_len = 4;
+		current_path = node->entry + key_len;
+	}
 	write(STDOUT_FILENO, current_path, ms_strlen(current_path));
 	write(STDOUT_FILENO, "\n", 1);
 }
