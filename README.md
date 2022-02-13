@@ -1,5 +1,9 @@
 # minishell
 
+## Description
+
+This project is about creating a simple shell in C.
+
 ## Commands
 ```
 make
