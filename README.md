@@ -24,7 +24,7 @@ to run a command directly through minishell
 <img src="screenshots/cmd_prompt.png" width=60% />
 * The command prompt is composed of:
 ```
-[$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$
+
 ```
 * $NAME or $SESSION_MANAGER is used, depending on the system<br />
 * Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part<br />
