@@ -63,6 +63,6 @@ The path appears inside the valgrind reports.<br />
 <br />
 Then, run the following command:
 ```
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --suppressions=ignore_readline_leaks ./minishell
 ```
 Here, the part following "--suppressions=" corresponds to the name of the file mentionned above.
