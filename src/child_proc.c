@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 10:05:51 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 11:10:34 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
 	{
 		ppx_close_pipe_fds(ppx_env);
+		ppx_free_pipe_fds(ppx_env);
+		ms_lst_clear_list(ms_env->envp_lst);
+		ms_free_prompt_struct(ms_env);
+		ppx_free_array_of_pointers(&ms_env->split_cmdline, MS_ALL);
 		return ;
 	}
 	if (ms_check_if_the_cmd_is_implemented(\
