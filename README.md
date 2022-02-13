@@ -9,7 +9,7 @@ make
 Or,
 ```
 make
-./minishell cmd
+./minishell [command]
 ```
 to run a command directly through minishell
 
@@ -29,13 +29,13 @@ to run a command directly through minishell
 
 ### cd
 * The cd command updates $PWD and the path of the command prompt when the directory is changed
-* "cd .." works, as chdir() understands it as an argument
+* "cd .." works, as chdir() understands ".." as an argument
 * cd returns an error if it comes with more than a single argument
 * "cd" alone gets to $HOME
 
 ### echo
 * Every argument will be printed unless it begins with "-n", which will activate the -n option.
-* The character '\' is not echoed, as in bash.
+* The character '\\' is not echoed, as in bash.
 
 ### env
 
