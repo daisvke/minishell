@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 09:55:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/13 10:02:28 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,20 @@ void	ms_execute_cmd_env(t_env_lst *envp_head)
 	}
 }
 
+void	ms_print_if_not_backslash(char *arg)
+{
+	while(*arg)
+	{
+		if (*arg != '\\')
+			write(STDOUT_FILENO, &*arg, 1);
+		arg++;
+	}
+}
+
 void	ms_execute_cmd_echo(char *cmd[])
 {
 	bool	opt_n;	
 	size_t	i;
-	size_t	j;
 
 	opt_n = false;
 	i = MS_FIRST_ARG_POS;
@@ -89,13 +98,7 @@ void	ms_execute_cmd_echo(char *cmd[])
 	}
 	while (cmd[i])
 	{
-		j = 0;
-		while(cmd[i][j])
-		{
-			if (cmd[i][j] != '\\')
-				write(STDOUT_FILENO, &cmd[i][j], 1);
-			++j;
-		}
+		ms_print_if_not_backslash(cmd[i]);
 		if (cmd[i + 1] != NULL)
 			write(STDOUT_FILENO, MS_SPACE_TO_SEP_PRINTED_ARGS, 1);
 		++i;

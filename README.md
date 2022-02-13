@@ -34,7 +34,8 @@ to run a command directly through minishell
 * "cd" alone gets to $HOME
 
 ### echo
-* every argument will be printed unless it begins with "-n", which will activate the -n option.
+* Every argument will be printed unless it begins with "-n", which will activate the -n option.
+* The character '\' is not echoed, as in bash.
 
 ### env
 
