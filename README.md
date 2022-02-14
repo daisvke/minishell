@@ -27,7 +27,8 @@ The command prompt is composed of:<br />
 [$LOGNAME]@[$NAME / $SESSION_MANAGER]:[PATH]$
 ```
 * $NAME or $SESSION_MANAGER is used, depending on the system
-* Unsetting LOGNAME or NAME/SESSION_MANAGER does not change the concerned part
+* Unsetting $LOGNAME or $NAME/$SESSION_MANAGER does not change the concerned part
+* When $HOME is unset, the current abosulte path is used.
 * If the current directory's path is equal to $HOME, the path is replaced by a tilde ('~')
 * If the current directory's position is lower than $HOME, the tilde does not appear
 * If the current directory is the root directory of all the system files, only "\\$" is shown
@@ -45,7 +46,7 @@ The command prompt is composed of:<br />
 
 ### export
 * Every argument is exported to the minishell's envp, unless it is invalid.
-* An argument is invalid when:<br />
+* An argument is invalid when:
 1. The first character of the variable's name is a digit.<br />
 2. At least one of the characters in the variable's name is not alphanumeric, except for the underscore character ('\_').
 3. The argument begins with the assigning equal character ('=').
@@ -53,6 +54,10 @@ The command prompt is composed of:<br />
 
 ### unset
 * Unsetting $PATH and requesting a command throws and error except when running the following implemented commands: cd, echo, exit, export, unset. This behavior is similar in bash.
+* Every argument is unset from the minishell's envp, unless the variable is not found, or is invalid.
+* An argument is invalid when:
+1. The first character of the variable's name is a digit.<br />
+2. At least one of the characters in the variable's name is not alphanumeric, except for the underscore character ('\_').
 
 ### pwd
 * When $PWD is unset, the pwd command will print the current absolute path, using getcwd().
