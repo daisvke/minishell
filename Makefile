@@ -6,28 +6,38 @@
 #    By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 03:32:39 by dtanigaw          #+#    #+#              #
-#    Updated: 2022/02/15 04:50:39 by dtanigaw         ###   ########.fr        #
+#    Updated: 2022/02/16 00:24:38 by dtanigaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 #	 E X E C U T A B L E  N A M E	 #
 
+
 NAME				=	minishell
 
 
 #			C C  F L A G S			  #
 
+
 CC					=	clang $(INC) $(WFLAGS)
+
 WFLAGS				=	-Wall -Wextra -Werror
 READ				=	-lreadline	
 INC					=	-I inc/
 MEM					=	-fsanitize=address -fsanitize=undefined
 
 
+#######################################
+#				F I L E S			  #
+#######################################
+
+
 #		S O U R C E  F I L E S		  #
 
+
 SRC_DIR				=	src/
+
 SRC_FILES			=	builtin_cmds_1.c \
 						builtin_cmds_1_cd.c \
 						builtin_cmds_2_export.c \
@@ -70,31 +80,37 @@ SRC_FILES			=	builtin_cmds_1.c \
 						utils_nbr.c \
 						utils_strings_1.c \
 						utils_strings_2.c
+
 SRC					=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 
 
 #			O B J .  F I L E S		  #
+
 
 OBJ_DIR				=	obj/
 OBJ_FILES			=	$(SRC_FILES:.c=.o)
 OBJ					=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 
-#			B U I L D  R U L E S	  #
+#		- G  3  O B J .  F I L E S	  #
+
+
+G3_OBJ_DIR			=	g3_obj/
+G3_OBJ_FILES		=	$(SRC_FILES:.c=.o)
+G3_OBJ				=	$(addprefix $(G3_OBJ_DIR), $(G3_OBJ_FILES))
+
+
+#######################################
+#				R U L E S			  #
+#######################################
+
+
+#		  B U I L D  R U L E S		  #
+
 
 all: $(NAME)
 
-# With -g3:
-g: fclean $(OBJ)
-	$(CC) -g3 $(OBJ) $(READ) -o $(NAME)
-	@echo "\n\033[32m[COMPILATION WITH -G3 COMPLETED]\033[0m\n"
-
-# With -g3 & -fsanitize:
-gf: fclean $(OBJ)
-	$(CC) -g3 $(MEM) $(OBJ) $(READ) -o $(NAME)
-	@echo "\n\033[32m[COMPILATION WITH -G3 & -FSANITIZE COMPLETED]\033[0m\n"
-
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) 
 	$(CC) $(OBJ) $(READ) -o $(NAME)
 	@echo "\n\033[32m[COMPILATION COMPLETED]\033[0m\n"
 
@@ -103,12 +119,33 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) -c $< -o $@
 
 
+#	  - G 3  B U I L D  R U L E S	  #
+
+
+G3_CC					=	clang $(INC) -Wall -Wextra -g3
+
+# With -g3:
+g: fclean $(G3_OBJ)
+	$(G3_CC) $(G3_OBJ) $(READ) -o $(NAME)
+	@echo "\n\033[32m[COMPILATION WITH -G3 COMPLETED]\033[0m\n"
+
+# With -g3 & -fsanitize:
+gf: fclean $(G3_OBJ)
+	$(G3_CC) $(MEM) $(G3_OBJ) $(READ) -o $(NAME)
+	@echo "\n\033[32m[COMPILATION WITH -G3 & -FSANITIZE COMPLETED]\033[0m\n"
+
+$(G3_OBJ_DIR)%.o: $(SRC_DIR)%.c
+	mkdir -p g3_obj/
+	$(CC) -c $< -o $@
+
+
 # C L E A N  &  O T H E R  R U L E S  #
 
-RM					= 	rm -rf
+
+RM = rm -rf
 
 clean:
-	$(RM) $(OBJ_DIR)
+	$(RM) $(OBJ_DIR) $(G3_OBJ_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
