@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/14 02:15:24 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/14 23:12:25 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,4 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	ms_lst_clear_list(ms_env->envp_lst);
 	ms_free_prompt_struct(ms_env);
 	ppx_free_all_allocated_variables(ppx_env);
-	ppx_free_array_of_pointers(&ms_env->split_cmdline, MS_ALL);
-free(ms_env->split_cmdline);
 }

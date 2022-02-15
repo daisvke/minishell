@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 10:11:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/15 03:10:21 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
 	ppx_putstr_fd(": command not found", STDERR_FILENO, MS_PUT_NEWLINE);
 	ppx_close_pipe_fds(&env->ppx_env);
 	path_to_cmd = ms_free(path_to_cmd);
+	env->ppx_env.cmd = ms_free(env->ppx_env.cmd);
 	ppx_free_pipe_fds(&env->ppx_env);
 	ms_lst_clear_list(env->envp_lst);
 	ms_free_prompt_struct(env);
