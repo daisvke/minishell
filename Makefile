@@ -6,7 +6,7 @@
 #    By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 03:32:39 by dtanigaw          #+#    #+#              #
-#    Updated: 2022/02/15 04:16:43 by dtanigaw         ###   ########.fr        #
+#    Updated: 2022/02/15 04:50:39 by dtanigaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME				=	minishell
 
 #			C C  F L A G S			  #
 
-CC					=	clang $(INC) $(WFLAGS) # -g3 $(MEM)
+CC					=	clang $(INC) $(WFLAGS)
 WFLAGS				=	-Wall -Wextra -Werror
 READ				=	-lreadline	
 INC					=	-I inc/
@@ -83,6 +83,16 @@ OBJ					=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 #			B U I L D  R U L E S	  #
 
 all: $(NAME)
+
+# With -g3:
+g: fclean $(OBJ)
+	$(CC) -g3 $(OBJ) $(READ) -o $(NAME)
+	@echo "\n\033[32m[COMPILATION WITH -G3 COMPLETED]\033[0m\n"
+
+# With -g3 & -fsanitize:
+gf: fclean $(OBJ)
+	$(CC) -g3 $(MEM) $(OBJ) $(READ) -o $(NAME)
+	@echo "\n\033[32m[COMPILATION WITH -G3 & -FSANITIZE COMPLETED]\033[0m\n"
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(READ) -o $(NAME)
