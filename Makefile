@@ -6,7 +6,7 @@
 #    By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 03:32:39 by dtanigaw          #+#    #+#              #
-#    Updated: 2022/02/16 00:24:38 by dtanigaw         ###   ########.fr        #
+#    Updated: 2022/02/16 00:28:33 by dtanigaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 #	  - G 3  B U I L D  R U L E S	  #
 
 
-G3_CC					=	clang $(INC) -Wall -Wextra -g3
+G3_CC = clang $(INC) -Wall -Wextra -g3
 
 # With -g3:
 g: fclean $(G3_OBJ)
@@ -136,7 +136,7 @@ gf: fclean $(G3_OBJ)
 
 $(G3_OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p g3_obj/
-	$(CC) -c $< -o $@
+	$(G3_CC) -c $< -o $@
 
 
 # C L E A N  &  O T H E R  R U L E S  #
