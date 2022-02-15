@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 10:14:56 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/15 03:28:36 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 		current_path = getcwd(NULL, 0);
 		if (current_path == NULL)
 			exit(EXIT_FAILURE);
+		write(STDOUT_FILENO, current_path, ms_strlen(current_path));
+		write(STDOUT_FILENO, "\n", 1);
+		current_path = ms_free(current_path);
 	}
 	else
 	{
 		key_len = 4;
 		current_path = node->entry + key_len;
+		write(STDOUT_FILENO, current_path, ms_strlen(current_path));
+		write(STDOUT_FILENO, "\n", 1);
 	}
-	write(STDOUT_FILENO, current_path, ms_strlen(current_path));
-	write(STDOUT_FILENO, "\n", 1);
 }
 
 void	ms_execute_cmd_env(t_env_lst *envp_head)
