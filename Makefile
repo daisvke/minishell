@@ -1,10 +1,31 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/02/15 03:32:39 by dtanigaw          #+#    #+#              #
+#    Updated: 2022/02/15 04:16:43 by dtanigaw         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+#	 E X E C U T A B L E  N A M E	 #
+
 NAME				=	minishell
 
-CC					=	clang $(INC) $(WFLAGS) -g3 $(MEM)
-WFLAGS				=	-Wall -Wextra #-Werror
+
+#			C C  F L A G S			  #
+
+CC					=	clang $(INC) $(WFLAGS) # -g3 $(MEM)
+WFLAGS				=	-Wall -Wextra -Werror
 READ				=	-lreadline	
 INC					=	-I inc/
 MEM					=	-fsanitize=address -fsanitize=undefined
+
+
+#		S O U R C E  F I L E S		  #
 
 SRC_DIR				=	src/
 SRC_FILES			=	builtin_cmds_1.c \
@@ -51,11 +72,15 @@ SRC_FILES			=	builtin_cmds_1.c \
 						utils_strings_2.c
 SRC					=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 
+
+#			O B J .  F I L E S		  #
+
 OBJ_DIR				=	obj/
 OBJ_FILES			=	$(SRC_FILES:.c=.o)
 OBJ					=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-RM					= rm -rf
+
+#			B U I L D  R U L E S	  #
 
 all: $(NAME)
 
@@ -66,6 +91,11 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p obj/
 	$(CC) -c $< -o $@
+
+
+# C L E A N  &  O T H E R  R U L E S  #
+
+RM					= 	rm -rf
 
 clean:
 	$(RM) $(OBJ_DIR)
