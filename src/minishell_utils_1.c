@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 06:13:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:33:19 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 	return (MS_READ_LINE);
 }
 
-char	*ms_get_new_cmdline_with_expanded_variables(t_ms *env, char **cmdline)
+char	*ms_get_new_cmdline_with_expanded_variables(\
+	t_ms *env, char **cmdline, t_expv *vars)
 {
 	char	*new;
-	t_expv	vars;
 
-	ms_memset(&vars, 0, sizeof(t_expv));
-	new = ms_expand_variables(env, *cmdline, &vars);
-	if (vars.found_var == true)
+	new = ms_expand_variables(env, *cmdline, vars);
+	if (vars->found_var == true)
 		*cmdline = ms_free(*cmdline);
 	return (new);
 }
@@ -77,6 +76,7 @@ int	ms_parse_cmdline(t_ms *env, char **cmdline)
 {
 	int		err_code;
 	char	*new;
+	t_expv	vars;
 
 	err_code = ms_check_if_quote_nbr_is_even(*cmdline);
 	if (err_code != MS_SUCCESS)
@@ -84,11 +84,13 @@ int	ms_parse_cmdline(t_ms *env, char **cmdline)
 	err_code = ms_check_pipes_and_redirections(env, *cmdline);
 	if (err_code != MS_SUCCESS)
 		return (err_code);
-	new = ms_get_new_cmdline_with_expanded_variables(env, cmdline);
+	ms_memset(&vars, 0, sizeof(t_expv));
+	new = ms_get_new_cmdline_with_expanded_variables(env, cmdline, &vars);
 	if (new == NULL)
 		return (3);
 	env->split_cmdline = ms_split_and_activate_options(env, new, '|');
-	new = ms_free(new);
+	if (vars.found_var == true)
+		new = ms_free(new);
 	if (env->split_cmdline == NULL)
 		ms_exit_with_error_message(env, 7);
 	return (MS_SUCCESS);
