@@ -6,9 +6,15 @@
 #    By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 03:32:39 by dtanigaw          #+#    #+#              #
-#    Updated: 2022/02/16 00:28:33 by dtanigaw         ###   ########.fr        #
+#    Updated: 2022/02/16 03:23:36 by dtanigaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#
+# make		=> make with WFLAGS
+# make g	=> make with -g3 without -Werror
+# make gf	=> make with -g3 and fsanitize, without -Werror
+#
 
 
 #	 E X E C U T A B L E  N A M E	 #
