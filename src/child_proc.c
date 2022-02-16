@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 21:43:40 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:53:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	if (execve(path_to_cmd, ppx_env->cmd, envp) == PPX_ERROR)
 	{
 		ppx_free_array_of_pointers(&envp, lst_size);
-		ppx_exit_when_cmd_not_found(ms_env, ppx_env->cmd[0], path_to_cmd);
+		ppx_exit_when_cmd_not_found(ms_env, ppx_env->cmd[0]);
 	}
 }
 

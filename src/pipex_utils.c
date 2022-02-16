@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:00:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:55:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:48:30 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	ppx_wait_for_all_children(\
 	return ;
 }
 
-void	ppx_wait_for_proc_with_heredoc(\
-	t_ms *ms_env, pid_t pid, size_t *wait_count)
+void	ppx_wait_for_proc_with_heredoc(pid_t pid, size_t *wait_count)
 {
 	int	wstatus;
 	int	status_code;

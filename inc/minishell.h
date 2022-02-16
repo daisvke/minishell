@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:56:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:52:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char		*ms_expand_variables(t_ms *env, char *cmdline, t_expv *vars);
 bool		ms_found_exit_status_symbols(\
 	char *cmdline, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
-void		ms_get_exit_status_length(t_ms *env, t_expv *vars);
+void		ms_get_exit_status_length(t_expv *vars);
 char		*ms_get_new_cmdline_with_expanded_variables(\
 	t_ms *env, char **cmdline);
 char		*ms_print_last_exit_status(t_ms *env);
@@ -159,6 +159,7 @@ size_t		ms_handle_quotes(char *str, char quote);
 bool		ms_isalnum(int c);
 bool		ms_isalpha(int c);
 bool		ms_isdigit(int c);
+void		ms_print_if_not_backslash(char *arg);
 void		ms_reset_color_settings(void);
 char		*ms_search_redir_symbol(char *str);
 char		**ms_split_and_activate_options(t_ms *env, char const *s, char sep);

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 02:57:29 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:55:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:48:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	ms_found_exit_status_symbols(char *cmdline, t_expv *vars)
 	return (false);
 }
 
-void	ms_get_exit_status_length(t_ms *env, t_expv *vars)
+void	ms_get_exit_status_length(t_expv *vars)
 {
 	size_t	len;
 

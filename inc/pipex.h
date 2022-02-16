@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 03:07:46 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:53:57 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,12 @@ int		ppx_create_array_of_commands(\
 bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code);
 void	ppx_wait_for_all_children(\
 	t_ms *ms_env, t_ppx *ppx_env, pid_t pid, size_t wait_count);
-void	ppx_wait_for_proc_with_heredoc(\
-	t_ms *ms_env, pid_t pid, size_t *wait_count);
+void	ppx_wait_for_proc_with_heredoc(pid_t pid, size_t *wait_count);
 
 //		EXIT
 
 void	ppx_close_pipe_fds(t_ppx *env);
-void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd);
+void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd);
 void	ppx_exit_with_error_message(t_ppx *env, int err_code);
 void	ppx_free_all_allocated_variables(t_ppx *env);
 void	ppx_free_pipe_fds(t_ppx *env);

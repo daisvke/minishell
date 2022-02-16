@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 21:51:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:53:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 		ms_execute_command(ms_env, ppx_env, &pid, &cmd_code);
 		if (ppx_env->options & MS_OPT_HEREDOC \
 			&& ppx_env->i == ppx_env->heredoc_pos)
-			ppx_wait_for_proc_with_heredoc(ms_env, pid, &wait_count);
+			ppx_wait_for_proc_with_heredoc(pid, &wait_count);
 		++ppx_env->i;
 	}
 	if (ppx_env->cmd_nbr > 1)
