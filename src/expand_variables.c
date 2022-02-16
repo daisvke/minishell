@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/24 09:55:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 05:57:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	ms_get_new_expanded_cmdline_length(t_ms *env, char *cmdline)
 	ms_memset(&vars, 0, sizeof(t_expv));
 	while (cmdline[vars.i])
 	{
-		if (ms_found_last_pipe_exit_status_symbols(cmdline, &vars))
-			ms_get_last_pipe_exit_status_length(env, &vars);
+		if (ms_found_exit_status_symbols(cmdline, &vars))
+			ms_get_exit_status_length(env, &vars);
 		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 			cmdline, &vars) == true)
 		{
@@ -66,7 +66,7 @@ int	ms_get_new_expanded_cmdline_length(t_ms *env, char *cmdline)
 	return (vars.len);
 }
 
-char	*ms_expand_last_exit_status_or_value_from_envp(\
+char	*ms_expand_exit_status_or_value_from_envp(\
 	t_ms *env, char *cmdline, t_expv *vars, char *new_cmdline)
 {
 	char		*value;
@@ -99,12 +99,12 @@ int	ms_fill_new_cmdline(\
 {
 	while (cmdline[vars->i])
 	{
-		if (ms_found_last_pipe_exit_status_symbols(cmdline, vars))
-			ms_expand_last_pipe_exit_status(env, new_cmdline, vars);
+		if (ms_found_exit_status_symbols(cmdline, vars))
+			ms_expand_exit_status(env, new_cmdline, vars);
 		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 			cmdline, vars) == true)
 		{
-			new_cmdline = ms_expand_last_exit_status_or_value_from_envp(\
+			new_cmdline = ms_expand_exit_status_or_value_from_envp(\
 				env, cmdline, vars, new_cmdline);
 			if (vars->status == 1)
 				return (1);

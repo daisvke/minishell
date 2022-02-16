@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 02:24:29 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 05:56:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@
 # include "ms_macros_structs_enums.h"
 # include "pipex.h"
 
-extern bool	g_sigint;
+/**************************************
+	 G L O B A L  V A R I A B L E
+**************************************/
+
+extern int	g_exit_status;
 
 /**************************************
  F U N C T I O N  P R O T O T Y P E S
@@ -106,13 +110,13 @@ bool		ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 	char *cmdline, t_expv *vars);
 void		ms_copy_value_to_the_expansion_location(\
 	char *value, char *location, t_expv *vars);
-void		ms_expand_last_pipe_exit_status(\
+void		ms_expand_exit_status(\
 	t_ms *env, char *new_cmdline, t_expv *vars);
 char		*ms_expand_variables(t_ms *env, char *cmdline, t_expv *vars);
-bool		ms_found_last_pipe_exit_status_symbols(\
+bool		ms_found_exit_status_symbols(\
 	char *cmdline, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
-void		ms_get_last_pipe_exit_status_length(t_ms *env, t_expv *vars);
+void		ms_get_exit_status_length(t_ms *env, t_expv *vars);
 char		*ms_get_new_cmdline_with_expanded_variables(\
 	t_ms *env, char **cmdline);
 char		*ms_print_last_exit_status(t_ms *env);

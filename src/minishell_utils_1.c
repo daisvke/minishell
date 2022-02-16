@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:42:49 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:49:48 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 06:13:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_sigint = 0;
+int	g_exit_status = 0;
 
 void	ms_use_argv_to_create_cmdline(int argc, char *argv[], t_ms *env)
 {
@@ -42,11 +42,9 @@ int	ms_prompt_user_and_read_cmdline(t_ms *env, char **read_line)
 	char	*read_line_cpy;
 
 	ms_reset_color_settings();
-/*	if (g_sigint == true)
-		*read_line = readline("");
-	else*/
-		*read_line = readline(env->cmd_prompt.prompt);
-//	g_sigint = false;
+//	if (g_exit_status == 130)
+	//	*read_line = readline("");
+	*read_line = readline(env->cmd_prompt.prompt);
 	if (*read_line == NULL)
 		return (MS_READ_EOF);
 	if (*read_line[0] == '\0')

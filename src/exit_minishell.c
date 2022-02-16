@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/14 23:13:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 06:06:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ms_print_error_message(int err_code)
 {
 	char	*err_message;
 
+	if (err_code == 2 || err_code == 3 || err_code == 15)
+		g_exit_status = 2;
 	err_message = NULL;
 	err_message = ms_get_err_message_from_err_code(err_code);
 	ppx_putstr_fd("minishell: ", STDERR_FILENO, MS_NONE);
