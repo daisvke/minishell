@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 23:18:50 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/15 03:10:21 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 02:17:15 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ppx_exit_with_error_message(t_ppx *env, int err_code)
 	ppx_putstr_fd("minishell: ", STDERR_FILENO, MS_NONE);
 	ppx_putstr_fd(err_message, STDERR_FILENO, MS_PUT_NEWLINE);
 	ppx_free_all_allocated_variables(env);
-	exit(EXIT_FAILURE);
+	exit(err_code);
 }
 
 void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
@@ -64,5 +64,5 @@ void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd, char *path_to_cmd)
 	ms_lst_clear_list(env->envp_lst);
 	ms_free_prompt_struct(env);
 	ppx_free_array_of_pointers(&env->split_cmdline, MS_ALL);
-	exit(EXIT_FAILURE);
+	exit(127);
 }
