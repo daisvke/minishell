@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 06:06:06 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:37:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	ms_print_error_message(int err_code)
 void	ms_free_all_allocated_variables(t_ms *env)
 {
 	rl_clear_history();
+	ms_close_pipe_fds(env, &env->ppx_env, MS_CPF_OFF);
 	ms_lst_clear_list(env->envp_lst);
+	ms_free_prompt_struct(env);
 	ppx_free_all_allocated_variables(&env->ppx_env);
 	ppx_free_array_of_pointers(&env->split_cmdline, MS_ALL);
 	if (env->cmdline && *env->cmdline)
@@ -68,8 +70,6 @@ void	ms_free_all_allocated_variables(t_ms *env)
 void	ms_exit_with_error_message(t_ms *env, int err_code)
 {
 	ms_print_error_message(err_code);
-	ms_close_pipe_fds(env, &env->ppx_env, MS_CPF_OFF);
-	ms_free_prompt_struct(env);
 	ms_free_all_allocated_variables(env);
 	exit(EXIT_FAILURE);
 }

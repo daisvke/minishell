@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 22:52:03 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:31:51 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ bool		ms_found_exit_status_symbols(\
 	char *cmdline, t_expv *vars);
 char		*ms_get_envp_value_from_key(t_ms *env, char *key);
 void		ms_get_exit_status_length(t_expv *vars);
-char		*ms_get_new_cmdline_with_expanded_variables(\
-	t_ms *env, char **cmdline);
 char		*ms_print_last_exit_status(t_ms *env);
 
 //			REDIRECTIONS
