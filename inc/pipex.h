@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 22:53:57 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:01:16 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,7 @@ int		ppx_wordcount(char *str, int sep);
 
 //		REDIRECTIONS
 
-void	ms_apply_append_mode(t_ppx *env, char *file);
-void	ppx_handle_redirections(t_ppx *env);
+void	ppx_handle_redirections(t_ms *ms_env, t_ppx *ppx_env);
 bool	ppx_is_a_line_to_del_not_starting_with_a_redir_symbol(\
 	t_del del, size_t i, t_ppx *env);
 bool	ppx_is_not_a_line_to_del(t_del del, size_t i);
