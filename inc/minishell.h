@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/13 07:24:27 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 02:24:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 # include "ms_macros_structs_enums.h"
 # include "pipex.h"
+
+extern bool	g_sigint;
 
 /**************************************
  F U N C T I O N  P R O T O T Y P E S
