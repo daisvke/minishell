@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 04:00:34 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 00:40:18 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 05:55:50 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ppx_wait_for_all_children(\
 		if (WIFEXITED(wstatus))
 		{
 			status_code = WEXITSTATUS(wstatus);
-			ms_env->last_pipe_exit_status = status_code;
+			g_exit_status = status_code;
 			return ;
 		}
 		++i;
@@ -52,7 +52,7 @@ void	ppx_wait_for_proc_with_heredoc(\
 	if (WIFEXITED(wstatus))
 	{
 		status_code = WEXITSTATUS(wstatus);
-		ms_env->last_pipe_exit_status = status_code;
+		g_exit_status = status_code;
 	}
 	else
 		*wait_count += 1;
