@@ -16,8 +16,8 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	t_ms *ms_env, t_ppx *ppx_env, pid_t *pid)
 {
 	if (ppx_env->options & MS_OPT_PIPE)
-		ppx_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
-	*pid = ppx_fork(ms_env);
+		ms_pipe(ms_env, ppx_env->pipe_fds[ppx_env->i]);
+	*pid = ms_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
 	{
 		ppx_spawn_child_to_execute_cmd(ms_env, ppx_env);
@@ -44,7 +44,7 @@ void	ppx_execute_implemented_cmd_in_parent(\
 void	ms_execute_command(\
 	t_ms *ms_env, t_ppx *ppx_env, pid_t *pid, size_t *cmd_code)
 {
-	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, cmd_code) == true)
+	if (ms_pipe_is_off_and_cmd_is_implemented(ppx_env, cmd_code) == true)
 		ppx_execute_implemented_cmd_in_parent(\
 			ms_env, ppx_env, *cmd_code, ppx_env->cmd);
 	else
@@ -54,7 +54,7 @@ void	ms_execute_command(\
 		ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
 }
 
-void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
+void	ppx_pipe(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 {
 	pid_t	pid;
 	size_t	cmd_code;
@@ -77,7 +77,7 @@ void	ppx_pipex(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 		ms_close_pipe_fds(ms_env, ppx_env, MS_CPF_AFTER_INCREM);
 	if (ppx_env->cmd == NULL && ms_free(ms_env->cmdline) == NULL)
 		return ;
-	if (ppx_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
+	if (ms_pipe_is_off_and_cmd_is_implemented(ppx_env, &cmd_code) == false)
 		ppx_wait_for_all_children(ms_env, ppx_env, pid, wait_count);
 }
 
@@ -91,5 +91,5 @@ void	ms_execute_cmdline_with_pipex(t_ms *env, char **cmdline)
 		++i;
 	cmd_and_file_nbr = i;
 	ppx_init_ppx(env, &env->ppx_env, cmd_and_file_nbr);
-	ppx_pipex(env, &env->ppx_env, cmdline);
+	ppx_pipe(env, &env->ppx_env, cmdline);
 }

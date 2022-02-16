@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 00:01:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:49:58 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,18 @@ void	ppx_init_ppx(t_ms *ms_env, t_ppx *ppx_env, size_t cmd_and_file_nbr);
 
 //		SYSTEM CALLS
 
-void	ppx_close(t_ppx *env, int fd);
-void	ppx_dup2(t_ppx *env, int fd1, int fd2, bool close_fd);
-pid_t	ppx_fork(t_ms *env);
-void	*ppx_malloc(t_ppx *env, size_t num, size_t size);
-void	ppx_pipe(t_ms *env, int *fds);
+void	ms_close(t_ms *env, int fd);
+pid_t	ms_fork(t_ms *env);
+void	ms_pipe(t_ms *env, int *fds);
 
 //		UTILS: FD
 
 char	*ppx_check_outfile(\
 	t_ppx *env, char *file, size_t i, size_t *lines_to_del);
-char	*ppx_generate_filename(t_ppx *env, bool increment);
+char	*ppx_generate_filename(t_ms *env, bool increment);
 void	ppx_get_fd(t_ppx *env, char *argv[]);
 int		ppx_get_open_flags(t_ppx *env);
-int		ppx_open_file(t_ppx *env, char *file_name, int flags, int mod);
+int		ppx_open_file(t_ms *env, char *file_name, int flags, int mod);
 void	ppx_putstr_fd(char *s, int fd, bool option);
 
 //		EXECUTE COMMAND
@@ -88,7 +86,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 
 int		ppx_create_array_of_commands(\
 	t_ms *ms_env, t_ppx *ppx_env, char *cmdline[]);
-bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code);
+bool	ms_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code);
 void	ppx_wait_for_all_children(\
 	t_ms *ms_env, t_ppx *ppx_env, pid_t pid, size_t wait_count);
 void	ppx_wait_for_proc_with_heredoc(pid_t pid, size_t *wait_count);
@@ -105,7 +103,7 @@ void	ppx_free_pipe_fds(t_ppx *env);
 
 void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size);
 char	*ppx_itoa(t_ppx *env, int n);
-char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3);
+char	*ppx_join_three_str(t_ms *env, char *str1, char *str2, char *str3);
 void	*ppx_memcpy(void *dest, const void *src, size_t n);
 char	*ppx_strdup_with_exit(t_ppx *env, char *src, size_t size);
 
@@ -122,8 +120,8 @@ void	ppx_handle_redirections(t_ms *ms_env, t_ppx *ppx_env);
 bool	ppx_is_a_line_to_del_not_starting_with_a_redir_symbol(\
 	t_del del, size_t i, t_ppx *env);
 bool	ppx_is_not_a_line_to_del(t_del del, size_t i);
-void	ms_read_from_file(t_ppx *env, char *file);
-void	ms_redirect_output(t_ppx *env, char *file);
+void	ms_read_from_file(t_ms *ms_env, t_ppx *ppx_env, char *file);
+void	ms_redirect_output(t_ms *ms_env, t_ppx *ppx_env, char *file);
 
 //		HEREDOC
 

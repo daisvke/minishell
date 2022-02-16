@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 22:41:23 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:47:04 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ms_color_string(t_ms *env, char *str, char *color)
 	char	*colored_str;
 
 	colored_str = ppx_join_three_str(\
-		&env->ppx_env, \
+		env, \
 		color, \
 		str, \
 		MS_CLR_FAINT_WHITE);
@@ -65,7 +65,7 @@ void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size)
 	*array_of_pointers = ms_free(*array_of_pointers);
 }
 
-char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)
+char	*ppx_join_three_str(t_ms *env, char *str1, char *str2, char *str3)
 {
 	char	*joined;
 	size_t	joined_len;
@@ -74,12 +74,12 @@ char	*ppx_join_three_str(t_ppx *env, char *str1, char *str2, char *str3)
 	size_t	str3_len;
 
 	if (!str1 || !str2 || !str3)
-		ppx_exit_with_error_message(env, 2);
+		ms_exit_with_error_message(env, 18);
 	str1_len = ms_strlen(str1);
 	str2_len = ms_strlen(str2);
 	str3_len = ms_strlen(str3);
 	joined_len = str1_len + str2_len + str3_len;
-	joined = ppx_malloc(env, joined_len + 1, sizeof(*joined));
+	joined = ms_malloc(env, joined_len + 1, sizeof(*joined));
 	ppx_memcpy(joined, str1, str1_len);
 	ppx_memcpy(&joined[str1_len], str2, str2_len);
 	ppx_memcpy(&joined[str1_len + str2_len], str3, str3_len);

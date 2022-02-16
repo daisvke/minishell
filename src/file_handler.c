@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 23:18:51 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/01/28 23:20:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:36:00 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ppx_check_outfile(\
 		return (file);
 }
 
-int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
+int	ppx_open_file(t_ms *env, char *file_name, int flags, int mod)
 {
 	int		fd;
 	char	*err_message;
@@ -44,7 +44,7 @@ int	ppx_open_file(t_ppx *env, char *file_name, int flags, int mod)
 		ppx_putstr_fd(err_message, STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(": ", STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(file_name, STDERR_FILENO, MS_PUT_NEWLINE);
-		ppx_free_pipe_fds(env);
+		ppx_free_pipe_fds(&env->ppx_env);
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
@@ -62,13 +62,13 @@ int	ppx_get_open_flags(t_ppx *env)
 	return (flags);
 }
 
-char	*ppx_generate_filename(t_ppx *env, bool increment)
+char	*ppx_generate_filename(t_ms *env, bool increment)
 {
 	static size_t	i;
 	char			*fileno;
 	char			*file;
 
-	fileno = ppx_itoa(env, i);
+	fileno = ms_itoa(env, i);
 	file = ppx_join_three_str(env, ".", fileno, "heredoc.tmp");
 	fileno = ms_free(fileno);
 	if (increment == true)

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 09:02:30 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 05:01:26 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:37:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ms_update_prompt_when_home_is_unset(t_ms *env, bool first_time)
 	if (node != NULL)
 	{
 		new_path = ppx_join_three_str(\
-			&env->ppx_env, "PWD", "=", current_absolute_path \
+			env, "PWD", "=", current_absolute_path \
 		);
 		current_absolute_path = ms_free(current_absolute_path);
 		ms_lst_assign_entry_to_node(node, new_path);

@@ -6,7 +6,7 @@
 #    By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 03:32:39 by dtanigaw          #+#    #+#              #
-#    Updated: 2022/02/16 03:23:36 by dtanigaw         ###   ########.fr        #
+#    Updated: 2022/02/17 00:53:55 by dtanigaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,6 @@ SRC_FILES			=	builtin_cmds_1.c \
 						system_calls_stdlib.c \
 						system_calls_string_1.c \
 						system_calls_string_2.c \
-						system_calls_pipex.c \
 						system_calls_unistd.c \
 						utils_nbr.c \
 						utils_strings_1.c \
