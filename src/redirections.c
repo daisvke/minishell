@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/10 10:04:54 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:01:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**ppx_del_redirection_section_at_i(t_ppx *env, t_del del)
 	return (new_cmd_array);
 }
 
-void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
+void	ppx_apply_redirection(t_ms *ms_env, t_ppx *ppx_env, char *str, char *file)
 {
 	static size_t	hd_pos;
 	size_t			hd_total;
@@ -69,49 +69,49 @@ void	ppx_apply_redirection(t_ppx *env, char *str, char *file)
 	fd = 0;
 	if (*str == '<' && *(str + 1) == '<')
 	{
-		hd_total = ppx_count_heredoc(env->cmd);
-		ms_apply_heredoc(env, file, hd_pos, hd_total);
+		hd_total = ppx_count_heredoc(ppx_env->cmd);
+		ms_apply_heredoc(ppx_env, file, hd_pos, hd_total);
 		++hd_pos;
 	}
 	else if (*str == '>' && *(str + 1) == '>')
-		ms_apply_append_mode(env, file);
+		ms_apply_append_mode(ms_env, ppx_env, file);
 	else if (*str == '<')
-		ms_read_from_file(env, file);
+		ms_read_from_file(ppx_env, file);
 	else if (*str == '>')
-		ms_redirect_output(env, file);
+		ms_redirect_output(ppx_env, file);
 }
 
-void	ppx_check_and_apply_redirection(t_ppx *env, size_t i, size_t j)
+void	ppx_check_and_apply_redirection(t_ms *ms_env, t_ppx *ppx_env, size_t i, size_t j)
 {
 	char	*file;
 	char	**cmdline_without_redir_section;
 	t_del	del;
 
-	file = ms_search_redir_symbol(&env->cmd[i][j]);
-	file = ppx_check_outfile(env, file, i, &del.lines_to_del);
-	ppx_apply_redirection(env, &env->cmd[i][j], file);
+	file = ms_search_redir_symbol(&ppx_env->cmd[i][j]);
+	file = ppx_check_outfile(ppx_env, file, i, &del.lines_to_del);
+	ppx_apply_redirection(ms_env, ppx_env, &ppx_env->cmd[i][j], file);
 	del.line = i;
 	del.pos = j;
-	cmdline_without_redir_section = ppx_del_redirection_section_at_i(env, del);
-	ppx_free_array_of_pointers(&env->cmd, MS_ALL);
-	env->cmd = cmdline_without_redir_section;
+	cmdline_without_redir_section = ppx_del_redirection_section_at_i(ppx_env, del);
+	ppx_free_array_of_pointers(&ppx_env->cmd, MS_ALL);
+	ppx_env->cmd = cmdline_without_redir_section;
 }
 
-void	ppx_handle_redirections(t_ppx *env)
+void	ppx_handle_redirections(t_ms *ms_env, t_ppx *ppx_env)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	while (env->cmd[i])
+	while (ppx_env->cmd[i])
 	{
 		j = 0;
-		while (*env->cmd && env->cmd[i][j])
+		while (*ppx_env->cmd && ppx_env->cmd[i][j])
 		{
-			if (ms_search_redir_symbol(&env->cmd[i][j]))
+			if (ms_search_redir_symbol(&ppx_env->cmd[i][j]))
 			{
-				ppx_check_and_apply_redirection(env, i, j);
-				if (env->cmd == NULL)
+				ppx_check_and_apply_redirection(ms_env, ppx_env, i, j);
+				if (ppx_env->cmd == NULL)
 					return ;
 				i = -1;
 				break ;
