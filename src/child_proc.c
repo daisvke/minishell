@@ -6,23 +6,23 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 00:01:16 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:28:12 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_handle_pipe_in_child_proc(t_ppx *env)
+void	ppx_handle_pipe_in_child_proc(t_ms *ms_env, t_ppx *ppx_env)
 {
-	if ((env->options & MS_OPT_HEREDOC) == false \
-		&& (env->options & MS_OPT_READ_FROM_FILE) == false \
-		&& env->i > 0)
-		ppx_dup2(\
-			env, env->pipe_fds[env->i - 1][0], STDIN_FILENO, MS_DUP_CLOSE_FD \
+	if ((ppx_env->options & MS_OPT_HEREDOC) == false \
+		&& (ppx_env->options & MS_OPT_READ_FROM_FILE) == false \
+		&& ppx_env->i > 0)
+		ms_dup2(\
+			ms_env, ppx_env->pipe_fds[ppx_env->i - 1][0], STDIN_FILENO, MS_DUP_CLOSE_FD \
 		);
-	if ((env->options & MS_OPT_REDIR_OUTPUT) == false \
-		&& env->i < env->cmd_nbr - 1)
-		ppx_dup2(env, env->pipe_fds[env->i][1], STDOUT_FILENO, MS_DUP_OFF);
+	if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
+		&& ppx_env->i < ppx_env->cmd_nbr - 1)
+		ms_dup2(ms_env, ppx_env->pipe_fds[ppx_env->i][1], STDOUT_FILENO, MS_DUP_OFF);
 }
 
 void	ms_execute_implemented_cmd(\
@@ -61,7 +61,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	size_t	cmd_code;
 
 	if (ppx_env->options & MS_OPT_PIPE)
-		ppx_handle_pipe_in_child_proc(ppx_env);
+		ppx_handle_pipe_in_child_proc(ms_env, ppx_env);
 	ppx_handle_redirections(ms_env, ppx_env);
 	if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
 	{

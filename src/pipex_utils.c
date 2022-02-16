@@ -67,7 +67,7 @@ int	ppx_create_array_of_commands(t_ms *ms_env, t_ppx *ppx_env, char *cmdline[])
 	return (MS_SUCCESS);
 }
 
-bool	ppx_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code)
+bool	ms_pipe_is_off_and_cmd_is_implemented(t_ppx *env, size_t *cmd_code)
 {
 	return ((env->options & MS_OPT_PIPE) == false \
 		&& ms_check_if_the_cmd_is_implemented(\

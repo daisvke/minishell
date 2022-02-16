@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 11:17:16 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/11 05:04:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:40:39 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ms_generate_new_path_for_prompt(\
 	else
 	{
 		env->cmd_prompt.prompt = ppx_join_three_str(\
-			&env->ppx_env, \
+			env, \
 			tilde, \
 			current_path + go_forward, \
 			"\001\x1B[2m\x1B[37m\002$ ");

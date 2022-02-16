@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 02:52:55 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/15 01:57:38 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:09:29 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,6 @@ void	ms_close_pipe_fds(t_ms *ms_env, t_ppx *ppx_env, bool after_increm)
 				ms_close(ms_env, ppx_env->pipe_fds[i][0]);
 			if (fstat(ppx_env->pipe_fds[i][1], &statbuf) == MS_SUCCESS)
 				ms_close(ms_env, ppx_env->pipe_fds[i][1]);
-			++i;
-		}
-	}
-}
-
-void	ppx_close_pipe_fds(t_ppx *env)
-{
-	struct stat	statbuf;
-	size_t		i;
-
-	if (env->options & MS_OPT_PIPE)
-	{
-		i = 0;
-		while (i <= env->i)
-		{
-			if (fstat(env->pipe_fds[i][0], &statbuf) == MS_SUCCESS)
-				ppx_close(env, env->pipe_fds[i][0]);
-			if (fstat(env->pipe_fds[i][1], &statbuf) == MS_SUCCESS)
-				ppx_close(env, env->pipe_fds[i][1]);
 			++i;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:19:54 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/11 05:04:22 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:39:41 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ void	ms_set_first_part_of_cmd_prompt(\
 
 	if (first_time == true)
 		ms_set_variables_for_cmd_prompt(env, cmd_prompt);
-	first_part = ppx_join_three_str(&env->ppx_env, \
+	first_part = ppx_join_three_str(env, \
 		cmd_prompt->logname, "@", cmd_prompt->name);
 	colored_first_part = ms_color_string(env, first_part, MS_CLR_BRIGHT_GREEN);
 	first_part = ms_free(first_part);
 	last_part = cmd_prompt->prompt;
 	colored_last_part = ms_color_string(env, last_part, MS_CLR_BOLD_BLUE);
-	cmd_prompt->prompt = ppx_join_three_str(&env->ppx_env, \
+	cmd_prompt->prompt = ppx_join_three_str(env, \
 		colored_first_part, ":", colored_last_part);
 	last_part = ms_free(last_part);
 	colored_first_part = ms_free(colored_first_part);
@@ -98,7 +98,7 @@ void	ms_set_home_variable_in_envp_lst(t_ms *env)
 	home_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "HOME=");
 	path_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "PWD=");
 	pwd = ms_get_pwd(env, path_node, &key_len);
-	joined = ppx_join_three_str(&env->ppx_env, "HOME=", pwd + key_len, "");
+	joined = ppx_join_three_str(env, "HOME=", pwd + key_len, "");
 	pwd = ms_free(pwd);
 	ms_free(home_node->entry);
 	home_node->entry = ms_strdup_with_exit(env, joined, ms_strlen(joined));

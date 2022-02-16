@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:06:40 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 10:27:15 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:41:03 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ms_print_only_tilde_and_dollar_when_at_home(t_ms *env)
 void	ms_print_only_slash_and_dollar_when_before_home(t_ms *env)
 {
 	env->cmd_prompt.prompt = ppx_join_three_str(\
-		&env->ppx_env, \
+		env, \
 		"/", "\001\x1B[2m\x1B[37m\002$", " ");
 }
 

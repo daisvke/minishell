@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 01:34:45 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 02:59:09 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:40:09 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
 	while (paths_envp_split && paths_envp_split[i])
 	{
 		cmd_path_at_i = ppx_join_three_str(\
-			ppx_env, paths_envp_split[i], "/", cmd);
+			ms_env, paths_envp_split[i], "/", cmd);
 		if (ppx_check_access(cmd_path_at_i, PPX_CHECK_ALL) == MS_SUCCESS)
 			break ;
 		cmd_path_at_i = ms_free(cmd_path_at_i);

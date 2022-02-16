@@ -6,13 +6,13 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 03:34:35 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:40:11 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 00:16:38 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
+void	ppx_request_heredoc_input(t_ms *env, char *limiter)
 {
 	int		fd;
 	char	*line;
@@ -25,23 +25,23 @@ void	ppx_request_heredoc_input(t_ppx *env, char *limiter)
 		O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	file = ms_free(file);
 	stdout_cpy = dup(STDOUT_FILENO);
-	ppx_dup2(env, fd, STDOUT_FILENO, MS_DUP_CLOSE_FD);
+	ms_dup2(env, fd, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 	while (get_next_line(STDIN_FILENO, &line) >= 0)
 	{
 		if (ms_strcmp(line, limiter) == MS_SAME)
 		{
 			line = ms_free(line);
-			ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);
+			ms_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 			return ;
 		}
 		ppx_putstr_fd(line, STDOUT_FILENO, MS_PUT_NEWLINE);
 		line = ms_free(line);
 	}
 	line = ms_free(line);
-	ppx_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);
+	ms_dup2(env, stdout_cpy, STDOUT_FILENO, MS_DUP_CLOSE_FD);
 }
 
-void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
+void	ms_apply_heredoc(t_ms *env, char *file, size_t hd_pos, size_t hd_total)
 {
 	char	*in_file;
 	int		fd;
@@ -51,7 +51,7 @@ void	ms_apply_heredoc(t_ppx *env, char *file, size_t hd_pos, size_t hd_total)
 	fd = ppx_open_file(env, in_file, O_RDONLY, 0);
 	in_file = ms_free(in_file);
 	if (hd_pos > 0 || hd_total == 1)
-		ppx_dup2(env, fd, STDIN_FILENO, MS_DUP_CLOSE_FD);
+		ms_dup2(env, fd, STDIN_FILENO, MS_DUP_CLOSE_FD);
 	in_file = ppx_generate_filename(env, true);
 	unlink(in_file);
 	in_file = ms_free(in_file);
