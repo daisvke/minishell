@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:15:05 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:57:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:52:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ms_get_new_expanded_cmdline_length(t_ms *env, char *cmdline)
 	while (cmdline[vars.i])
 	{
 		if (ms_found_exit_status_symbols(cmdline, &vars))
-			ms_get_exit_status_length(env, &vars);
+			ms_get_exit_status_length(&vars);
 		else if (ms_begins_with_dollar_or_dollar_is_not_preceded_by_quote(\
 			cmdline, &vars) == true)
 		{
