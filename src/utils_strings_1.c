@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:29:43 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/15 03:11:07 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:41:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ char	*ms_color_string(t_ms *env, char *str, char *color)
 		str, \
 		MS_CLR_FAINT_WHITE);
 	return (colored_str);
+}
+
+void	ms_print_if_not_backslash(char *arg)
+{
+	while (*arg)
+	{
+		if (*arg != '\\')
+			write(STDOUT_FILENO, &*arg, 1);
+		arg++;
+	}
 }
 
 void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size)

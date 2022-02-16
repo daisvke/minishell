@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/15 03:28:36 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:41:23 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,21 @@ void	ms_execute_cmd_env(t_env_lst *envp_head)
 	}
 }
 
-void	ms_print_if_not_backslash(char *arg)
+bool	ms_check_echo_arg(char *arg)
 {
-	while (*arg)
+	if (arg && *arg == '-')
 	{
-		if (*arg != '\\')
-			write(STDOUT_FILENO, &*arg, 1);
 		arg++;
+		while (arg && *arg)
+		{
+			if (*arg != 'n')
+				return (false);
+			arg++;
+		}
 	}
+	else
+		return (false);
+	return (true);
 }
 
 void	ms_execute_cmd_echo(char *cmd[])
@@ -94,7 +101,7 @@ void	ms_execute_cmd_echo(char *cmd[])
 
 	opt_n = false;
 	i = MS_FIRST_ARG_POS;
-	while (ms_strncmp(cmd[i], "-n", 2) == MS_SAME)
+	while (cmd[i] && ms_check_echo_arg(cmd[i]))
 	{
 		opt_n = true;
 		++i;
