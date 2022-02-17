@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 00:49:58 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:51:01 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ms_pipe(t_ms *env, int *fds);
 //		UTILS: FD
 
 char	*ppx_check_outfile(\
-	t_ppx *env, char *file, size_t i, size_t *lines_to_del);
+	t_ms *env, char *file, size_t i, size_t *lines_to_del);
 char	*ppx_generate_filename(t_ms *env, bool increment);
 void	ppx_get_fd(t_ppx *env, char *argv[]);
 int		ppx_get_open_flags(t_ppx *env);
@@ -79,8 +79,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env);
 //		PATH
 
 bool	ppx_check_access(char *path, bool check_all);
-char	*ppx_get_the_right_cmd_path(t_ms *ms_env, t_ppx *ppx_env, \
-	char *key, char *cmd);
+char	*ppx_get_the_right_cmd_path(t_ms *ms_env, char *key, char *cmd);
 
 //		PIPE
 
@@ -95,17 +94,14 @@ void	ppx_wait_for_proc_with_heredoc(pid_t pid, size_t *wait_count);
 
 void	ppx_close_pipe_fds(t_ppx *env);
 void	ppx_exit_when_cmd_not_found(t_ms *env, char *cmd);
-void	ppx_exit_with_error_message(t_ppx *env, int err_code);
 void	ppx_free_all_allocated_variables(t_ppx *env);
 void	ppx_free_pipe_fds(t_ppx *env);
 
 //		UTILS_STR
 
 void	ppx_free_array_of_pointers(char ***array_of_pointers, size_t arr_size);
-char	*ppx_itoa(t_ppx *env, int n);
 char	*ppx_join_three_str(t_ms *env, char *str1, char *str2, char *str3);
 void	*ppx_memcpy(void *dest, const void *src, size_t n);
-char	*ppx_strdup_with_exit(t_ppx *env, char *src, size_t size);
 
 //		SPLIT
 

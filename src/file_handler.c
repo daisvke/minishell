@@ -6,21 +6,21 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 23:18:51 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 00:36:00 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:42:45 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*ppx_check_outfile(\
-	t_ppx *env, char *file, size_t i, size_t *lines_to_del)
+	t_ms *env, char *file, size_t i, size_t *lines_to_del)
 {
 	*lines_to_del = 1;
 	if (*file == '\0' || *file == '>')
 	{
-		if (env->cmd[i + 1] == NULL)
-			ppx_exit_with_error_message(env, 3);
-		file = env->cmd[i + 1];
+		if (env->ppx_env.cmd[i + 1] == NULL)
+			ms_exit_with_error_message(env, 19);
+		file = env->ppx_env.cmd[i + 1];
 		*lines_to_del = 2;
 		return (file);
 	}
