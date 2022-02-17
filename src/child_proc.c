@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 04:10:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 05:38:05 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ms_close_all_standard_fds(t_ms *env)
 {
 	ms_close(env, STDIN_FILENO);
 	ms_close(env, STDOUT_FILENO);
-	ms_close(env, STDERR_FILENO);
+//	ms_close(env, STDERR_FILENO);
 }
 
 void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)

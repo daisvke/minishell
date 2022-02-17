@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 09:21:17 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/04 08:21:04 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:42:33 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ char	*ms_convert_array_of_str_to_str(t_ms *env, int argc, char *argv[])
 	return (str - len + 1);
 }
 
-void	ppx_putstr_fd(char *s, int fd, bool option)
+void	ppx_putstr_fd(char *str, int fd, bool option)
 {
-	if (s)
+	if (str)
 	{
-		write(fd, s, ms_strlen(s));
+		write(fd, str, ms_strlen(str));
 		if (option == MS_PUT_NEWLINE)
 			write(fd, "\n", 1);
 	}
