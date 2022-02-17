@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 02:26:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 01:51:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:40:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	ms_pipe(t_ms *env, int *fds);
 
 char	*ppx_check_outfile(\
 	t_ms *env, char *file, size_t i, size_t *lines_to_del);
+void	ms_close_stdio(t_ms *env);
 char	*ppx_generate_filename(t_ms *env, bool increment);
 void	ppx_get_fd(t_ppx *env, char *argv[]);
 int		ppx_get_open_flags(t_ppx *env);
