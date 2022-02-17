@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 01:53:59 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:02:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ppx_handle_pipe_in_child_proc(t_ms *ms_env, t_ppx *ppx_env)
 			STDIN_FILENO, MS_DUP_CLOSE_FD \
 		);
 	if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
+		&& (ppx_env->options & MS_OPT_APPEND_OUTPUT) == false \
 		&& ppx_env->i < ppx_env->cmd_nbr - 1)
 		ms_dup2(ms_env, \
 			ppx_env->pipe_fds[ppx_env->i][1], \
@@ -76,5 +77,8 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 		ms_execute_implemented_cmd(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 	else
 		ppx_execute_unimplemented_cmd(ms_env, ppx_env);
+	ms_close(ms_env, STDIN_FILENO);
+	ms_close(ms_env, STDOUT_FILENO);
+	ms_close(ms_env, STDERR_FILENO);
 	ms_free_all_allocated_variables(ms_env);
 }
