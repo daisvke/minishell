@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 06:19:18 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 01:34:33 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 02:00:37 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**ms_get_array_of_error_messages(char *errors[])
 
 char	*ms_get_err_message_from_err_code(int err_code)
 {
-	char	*err_messages[18 + 1];
+	char	*err_messages[19 + 1];
 
 	ms_get_array_of_error_messages(err_messages);
 	return (err_messages[err_code]);
