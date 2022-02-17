@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 05:38:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:40:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,6 @@ void	ms_execute_implemented_cmd(\
 	ppx_execute_implemented_cmd_in_parent(ms_env, ppx_env, cmd_code, cmd);
 }
 
-void	ms_close_all_standard_fds(t_ms *env)
-{
-	ms_close(env, STDIN_FILENO);
-	ms_close(env, STDOUT_FILENO);
-//	ms_close(env, STDERR_FILENO);
-}
-
 void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)
 {
 	size_t	lst_size;
@@ -61,7 +54,7 @@ void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)
 		ms_env, ms_env->envp_lst, lst_size);
 	if (execve(path_to_cmd, ppx_env->cmd, envp) == PPX_ERROR)
 	{
-		ms_close_all_standard_fds(ms_env);
+		ms_close_stdio(ms_env);
 		ppx_free_array_of_pointers(&envp, lst_size);
 		ppx_exit_when_cmd_not_found(ms_env, ppx_env->cmd[0]);
 	}
@@ -76,7 +69,7 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	ppx_handle_redirections(ms_env, ppx_env);
 	if (ppx_env->cmd == NULL || *ppx_env->cmd == NULL)
 	{
-		ms_close_all_standard_fds(ms_env);
+		ms_close_stdio(ms_env);
 		ms_free_all_allocated_variables(ms_env);
 		return ;
 	}
@@ -86,6 +79,6 @@ void	ppx_spawn_child_to_execute_cmd(t_ms *ms_env, t_ppx *ppx_env)
 		ms_execute_implemented_cmd(ms_env, ppx_env, cmd_code, ppx_env->cmd);
 	else
 		ppx_execute_unimplemented_cmd(ms_env, ppx_env);
-	ms_close_all_standard_fds(ms_env);
+	ms_close_stdio(ms_env);
 	ms_free_all_allocated_variables(ms_env);
 }

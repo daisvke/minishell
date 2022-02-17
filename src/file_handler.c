@@ -6,11 +6,17 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 23:18:51 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 05:13:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 08:40:31 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ms_close_stdio(t_ms *env)
+{
+	ms_close(env, STDIN_FILENO);
+	ms_close(env, STDOUT_FILENO);
+}
 
 char	*ppx_check_outfile(\
 	t_ms *env, char *file, size_t i, size_t *lines_to_del)
@@ -44,7 +50,7 @@ int	ppx_open_file(t_ms *env, char *file_name, int flags, int mod)
 		ppx_putstr_fd(err_message, STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(": ", STDERR_FILENO, MS_NONE);
 		ppx_putstr_fd(file_name, STDERR_FILENO, MS_PUT_NEWLINE);
-		ms_close_all_standard_fds(env);
+		ms_close_stdio(env);
 		ms_free_all_allocated_variables(env);
 		exit(EXIT_FAILURE);
 	}
