@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 00:28:12 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:53:59 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	ppx_handle_pipe_in_child_proc(t_ms *ms_env, t_ppx *ppx_env)
 	if ((ppx_env->options & MS_OPT_HEREDOC) == false \
 		&& (ppx_env->options & MS_OPT_READ_FROM_FILE) == false \
 		&& ppx_env->i > 0)
-		ms_dup2(\
-			ms_env, ppx_env->pipe_fds[ppx_env->i - 1][0], STDIN_FILENO, MS_DUP_CLOSE_FD \
+		ms_dup2(ms_env, \
+			ppx_env->pipe_fds[ppx_env->i - 1][0], \
+			STDIN_FILENO, MS_DUP_CLOSE_FD \
 		);
 	if ((ppx_env->options & MS_OPT_REDIR_OUTPUT) == false \
 		&& ppx_env->i < ppx_env->cmd_nbr - 1)
-		ms_dup2(ms_env, ppx_env->pipe_fds[ppx_env->i][1], STDOUT_FILENO, MS_DUP_OFF);
+		ms_dup2(ms_env, \
+			ppx_env->pipe_fds[ppx_env->i][1], \
+			STDOUT_FILENO, MS_DUP_OFF \
+		);
 }
 
 void	ms_execute_implemented_cmd(\
@@ -43,9 +47,7 @@ void	ppx_execute_unimplemented_cmd(t_ms *ms_env, t_ppx *ppx_env)
 	char	**envp;
 	char	*path_to_cmd;
 
-	path_to_cmd = ppx_get_the_right_cmd_path(\
-			ms_env, ppx_env, "PATH=", ppx_env->cmd[0] \
-		);
+	path_to_cmd = ppx_get_the_right_cmd_path(ms_env, "PATH=", ppx_env->cmd[0]);
 	lst_size = ms_lst_lstsize(ms_env->envp_lst);
 	envp = ms_convert_envp_lst_to_array_of_pointers(\
 		ms_env, ms_env->envp_lst, lst_size);

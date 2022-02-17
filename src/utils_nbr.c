@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 05:13:39 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/08 04:13:47 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:31:44 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,6 @@ char	*ms_itoa(t_ms *env, int n)
 	res = (char *)malloc(sizeof(*res) * (len + 1));
 	if (!res)
 		ms_exit_with_error_message(env, 16);
-	res[len] = '\0';
-	nb = ms_get_absolute_value(nb);
-	while (len--)
-	{
-		res[len] = nb % 10 + '0';
-		nb /= 10;
-	}
-	if (n < 0)
-		res[0] = '-';
-	return (res);
-}
-
-char	*ppx_itoa(t_ppx *env, int n)
-{
-	char	*res;
-	int		len;
-	long	nb;
-
-	nb = n;
-	len = ms_nbrlen(nb);
-	res = (char *)malloc(sizeof(*res) * (len + 1));
-	if (!res)
-		ppx_exit_with_error_message(env, 8);
 	res[len] = '\0';
 	nb = ms_get_absolute_value(nb);
 	while (len--)
