@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 03:24:27 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 23:21:08 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/18 10:43:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_ms	env;
 
-	ms_handle_signals();
+	ms_handle_signals_in_parentd();
 	ms_memset(&env, 0, sizeof(t_ms));
 	if (ms_check_arguments(envp, argc) == MS_OK)
 	{

@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 05:35:05 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/18 10:43:06 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ppx_execute_pipe_and_run_cmd_in_child_process(\
 	*pid = ms_fork(ms_env);
 	if (*pid == PPX_PROC_CHILD)
 	{
+		ms_handle_signals_in_child();
 		ppx_spawn_child_to_execute_cmd(ms_env, ppx_env);
 		exit(EXIT_SUCCESS);
 	}
