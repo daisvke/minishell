@@ -128,15 +128,20 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 G3_CFLAGS = -Wall -Wextra -g3
 
 # With -g3:
+
 g: fclean $(G3_OBJ)
 	$(CC) $(LDFLAGS) -o $(NAME) $(G3_OBJ)
 	@echo "\n\033[32m[COMPILATION WITH -G3 COMPLETED]\033[0m\n"
 
 # With -g3 & -fsanitize:
+
 MEM = -fsanitize=address -fsanitize=undefined
+
 gf: fclean $(G3_OBJ)
 	$(CC) $(LDFLAGS) $(MEM) -o $(NAME) $(G3_OBJ)
 	@echo "\n\033[32m[COMPILATION WITH -G3 & -FSANITIZE COMPLETED]\033[0m\n"
+
+# objs for all -G3 build rules
 
 $(G3_OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p g3_obj/
