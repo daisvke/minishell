@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 04:39:25 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/19 12:48:55 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/19 13:18:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ppx_execute_implemented_cmd_in_parent(\
 	else if (cmd_code == MS_CMD_UNSET)
 		ms_execute_cmd_unset(ms_env, cmd);
 	else if (cmd_code == MS_CMD_EXIT)
-		exit(EXIT_SUCCESS);
+		ms_execute_cmd_exit(ms_env, cmd);
 }
 
 void	ms_execute_command(\

@@ -6,38 +6,11 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 02:31:28 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 22:46:37 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/19 13:46:32 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	ms_check_if_the_cmd_is_implemented(\
-	char **cmdline, size_t *cmd_code, bool process)
-{
-	*cmd_code = 0;
-	if (process == PPX_PROC_PARENT || process == PPX_PROC_CHILD)
-	{
-		if (ms_strcmp(cmdline[0], "cd") == MS_SAME)
-			*cmd_code = MS_CMD_CD;
-		else if (ms_strcmp(cmdline[0], "exit") == MS_SAME)
-			*cmd_code = MS_CMD_EXIT;
-		else if (ms_strcmp(cmdline[0], "export") == MS_SAME)
-			*cmd_code = MS_CMD_EXPORT;
-		else if (ms_strcmp(cmdline[0], "unset") == MS_SAME)
-			*cmd_code = MS_CMD_UNSET;
-	}
-	if (process == PPX_PROC_CHILD)
-	{
-		if (ms_strcmp(cmdline[0], "pwd") == MS_SAME)
-			*cmd_code = MS_CMD_PWD;
-		else if (ms_strcmp(cmdline[0], "echo") == MS_SAME)
-			*cmd_code = MS_CMD_ECHO;
-		else if (ms_strcmp(cmdline[0], "env") == MS_SAME)
-			*cmd_code = MS_CMD_ENV;
-	}
-	return (*cmd_code);
-}
 
 void	ms_execute_cmd_pwd(t_env_lst *envp_lst)
 {
@@ -115,4 +88,20 @@ void	ms_execute_cmd_echo(char *cmd[])
 	}
 	if (opt_n == false)
 		write(STDOUT_FILENO, "\n", 1);
+}
+
+void	ms_execute_cmd_exit(t_ms *env, char *cmd[])
+{
+	if ((env->ppx_env.options & MS_OPT_PIPE) == false)
+	{
+		write(STDERR_FILENO, "exit\n", 5);
+		if (cmd[1] != NULL)
+		{
+			write(STDERR_FILENO, "minishell: exit: ", 17);
+			ppx_putstr_fd(cmd[1], STDERR_FILENO, MS_NONE);
+			write(STDERR_FILENO, ": numeric argument required\n", 28);
+		}
+		ms_free_all_allocated_variables(env);
+		exit(EXIT_SUCCESS);
+	}
 }
