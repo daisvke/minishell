@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 06:18:38 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/19 13:01:39 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2022/02/19 13:18:40 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ bool		ms_check_if_there_is_not_too_much_args(char **cmd_and_args);
 void		ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path);
 void		ms_execute_cmd_echo(char *cmd[]);
 void		ms_execute_cmd_env(t_env_lst *envp_head);
+void		ms_execute_cmd_exit(t_ms *env, char *cmd[]);
 void		ms_execute_cmd_export(t_ms *env, char *cmdline[]);
 void		ms_execute_cmd_pwd(t_env_lst *envp_lst);
 void		ms_execute_cmd_unset(t_ms *env, char *cmdline[]);
