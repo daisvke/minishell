@@ -29,7 +29,6 @@ CC					=	clang
 CFLAGS				=	-Wall -Wextra -Werror
 LDFLAGS				=	-lreadline	
 INC					=	-I inc/
-MEM					=	-fsanitize=address -fsanitize=undefined
 
 
 #######################################
@@ -134,6 +133,7 @@ g: fclean $(G3_OBJ)
 	@echo "\n\033[32m[COMPILATION WITH -G3 COMPLETED]\033[0m\n"
 
 # With -g3 & -fsanitize:
+MEM = -fsanitize=address -fsanitize=undefined
 gf: fclean $(G3_OBJ)
 	$(CC) $(LDFLAGS) $(MEM) -o $(NAME) $(G3_OBJ)
 	@echo "\n\033[32m[COMPILATION WITH -G3 & -FSANITIZE COMPLETED]\033[0m\n"
