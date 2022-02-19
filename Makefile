@@ -9,7 +9,7 @@
 # |__/ |__/ |__/|__/|__/  |__/|__/|_______/ |__/  |__/ \_______/|__/|__/
 #                                                                      
 #
-# make		=> make with WFLAGS
+# make		=> make with CFLAGS
 # make g	=> make with -g3 without -Werror
 # make gf	=> make with -g3 and fsanitize, without -Werror
 #
@@ -24,10 +24,10 @@ NAME				=	minishell
 #			C C  F L A G S			  #
 
 
-CC					=	clang $(INC) $(WFLAGS)
+CC					=	clang
 
-WFLAGS				=	-Wall -Wextra -Werror
-READ				=	-lreadline	
+CFLAGS				=	-Wall -Wextra -Werror
+LDFLAGS				=	-lreadline	
 INC					=	-I inc/
 MEM					=	-fsanitize=address -fsanitize=undefined
 
@@ -115,32 +115,32 @@ G3_OBJ				=	$(addprefix $(G3_OBJ_DIR), $(G3_OBJ_FILES))
 all: $(NAME)
 
 $(NAME): $(OBJ) 
-	$(CC) $(OBJ) $(READ) -o $(NAME)
+	$(CC) $(LDFLAGS) -o $(NAME) $(OBJ)
 	@echo "\n\033[32m[COMPILATION COMPLETED]\033[0m\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p obj/
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 
 #	  - G 3  B U I L D  R U L E S	  #
 
 
-G3_CC = clang $(INC) -Wall -Wextra -g3
+G3_CFLAGS = -Wall -Wextra -g3
 
 # With -g3:
 g: fclean $(G3_OBJ)
-	$(G3_CC) $(G3_OBJ) $(READ) -o $(NAME)
+	$(CC) $(LDFLAGS) -o $(NAME) $(G3_OBJ)
 	@echo "\n\033[32m[COMPILATION WITH -G3 COMPLETED]\033[0m\n"
 
 # With -g3 & -fsanitize:
 gf: fclean $(G3_OBJ)
-	$(G3_CC) $(MEM) $(G3_OBJ) $(READ) -o $(NAME)
+	$(CC) $(LDFLAGS) $(MEM) -o $(NAME) $(G3_OBJ)
 	@echo "\n\033[32m[COMPILATION WITH -G3 & -FSANITIZE COMPLETED]\033[0m\n"
 
 $(G3_OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p g3_obj/
-	$(G3_CC) -c $< -o $@
+	$(CC) $(G3_CFLAGS) $(INC) -o $@ -c $<
 
 
 # C L E A N  &  O T H E R  R U L E S  #
@@ -156,4 +156,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all g gf clean fclean re
