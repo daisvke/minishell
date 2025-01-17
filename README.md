@@ -49,6 +49,7 @@ The command prompt is composed of:<br />
 ### **cd**  
 - The `cd` command updates `$PWD` and changes the command prompt's path when the directory is altered.  
 - `cd ..` works as expected (using `chdir()`), navigating to the parent directory.  
+- `cd -` is implemented. It replaces the '-' argument by the $OLDPWD value.
 - If `cd` is called with more than one argument, it will return an error.  
 - Running `cd` alone brings the user to `$HOME`.
 
