@@ -4,6 +4,11 @@ minishell
 # Temporary files
 .heredoc.tmp
 .*.sw?
+.cache
+.config
+.lesshst
+.pki
+.vscode
 
 # Prerequisites
 *.d
