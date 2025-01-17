@@ -86,6 +86,7 @@ typedef struct s_ppx
 //	MINISHELL ENV
 
 # define MS_ENV_HOME_KEYLEN				5 // Length of "HOME="
+# define MS_ENV_GET_EXPANDED_VALUE_MODE	1 // For value++ to get rid of '='
 
 typedef struct s_ms
 {

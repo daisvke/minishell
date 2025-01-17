@@ -31,14 +31,13 @@ void	*ms_get_expanded_value_from_cmdline(\
 		ms_exit_with_error_message(env, 11);
 	value = ms_get_envp_value_from_key(env, key);
 	key = ms_free(key);
-	if (value)
-	{
-		vars->found_var = true;
-		if (mode == 1)
-			value++;
-		else
-			vars->len += ms_strlen(value) - 1 + vars->double_quote;
-	}
+	vars->found_var = true;
+	if (!value)
+		value = " ";
+	if (mode == MS_ENV_GET_EXPANDED_VALUE_MODE)
+		value++;
+	else
+		vars->len += ms_strlen(value) - 1 + vars->double_quote;
 	return (value);
 }
 
@@ -87,7 +86,7 @@ char	*ms_expand_exit_status_or_value_from_envp(\
 	{
 		vars->start = vars->i + 1;
 		value = ms_get_expanded_value_from_cmdline(\
-			env, cmdline, vars, 1);
+			env, cmdline, vars, MS_ENV_GET_EXPANDED_VALUE_MODE);
 	}
 	ms_copy_value_to_the_expansion_location(value, new_cmdline, vars);
 	++i;
