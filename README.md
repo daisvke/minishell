@@ -40,7 +40,7 @@ The command prompt is composed of:<br />
 - Unsetting `$LOGNAME` or `$NAME/$SESSION_MANAGER` does not change this part.  
 - If `$HOME` is unset, the **absolute current path** is used.  
 - If the current directory is the same as `$HOME`, the path is replaced by a tilde (`~`).  
-- If the current directory is the root directory, it only shows `\$`.  
+- If the current directory is the root directory, [PATH] only shows `/$`.  
 
 ---
 
@@ -112,7 +112,15 @@ To check for memory leaks (excluding those due to `readline()`), create a suppre
 }
 ```
 You can name this file anything you'd like.  
-Make sure to replace the last line with the correct path for your system (you can find this in the **valgrind** reports).
+Make sure to replace the last line with the correct path for your system.<br />
+You can find this in the **valgrind** reports. For instance:
+
+```
+// With this output:
+
+==356791==    by 0x4890CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+```
+You will replace `obj:/lib/x86_64-linux-gnu/libreadline.so.7.0` by `obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1`
 
 Then, run:
 ```bash

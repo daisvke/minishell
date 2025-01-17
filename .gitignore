@@ -9,6 +9,7 @@ minishell
 .lesshst
 .pki
 .vscode
+.dotnet
 
 # Prerequisites
 *.d

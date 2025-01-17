@@ -27,6 +27,26 @@ void	ms_print_cd_err_messages(int err_code, char *path)
 	}
 }
 
+void	ms_set_current_pwd_to_oldpwd(t_ms *env)
+{
+	t_env_lst	*node_pwd;
+	t_env_lst	*node_oldpwd;
+	char		*current_pwd;
+	char		*new_path;
+
+	node_pwd = ms_lst_get_node_with_the_same_key(env->envp_lst, "PWD=");
+	node_oldpwd = ms_lst_get_node_with_the_same_key(env->envp_lst, "OLDPWD=");
+	if (node_pwd && node_oldpwd)
+	{
+		current_pwd = node_pwd->entry;
+		new_path = ppx_join_three_str(\
+			env, "OLDPWD", "=", &current_pwd[4] \
+		);
+		ms_lst_assign_entry_to_node(node_oldpwd, new_path);
+		new_path = ms_free(new_path);
+	}
+}
+
 void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path)
 {
 	char		*path;
@@ -43,8 +63,10 @@ void	ms_execute_cmd_cd(t_ms *ms_env, t_ppx *ppx_env, char *arg_path)
 	if (ms_check_if_there_is_not_too_much_args(ppx_env->cmd) == MS_OK)
 	{
 		if (ppx_check_access(path, PPX_OFF) == MS_SUCCESS)
+		{
+			ms_set_current_pwd_to_oldpwd(ms_env);
 			chdir(path);
-		else
+		} else
 			ms_print_cd_err_messages(1, path);
 		ms_update_prompt_when_home_is_unset(ms_env, false);
 	}
