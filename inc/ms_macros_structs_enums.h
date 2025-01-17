@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:42 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/16 05:55:50 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2025/01/17 02:49:46 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_ppx
 }			t_ppx;
 
 //	MINISHELL ENV
+
+# define MS_ENV_HOME_KEYLEN				5 // Length of "HOME="
 
 typedef struct s_ms
 {

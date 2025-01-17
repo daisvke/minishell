@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 11:20:41 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/17 03:29:01 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2025/01/17 02:50:48 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ void	ppx_apply_redirection(\
 {
 	static size_t	hd_pos;
 	size_t			hd_total;
-	int				fd;
 
-	fd = 0;
 	if (*str == '<' && *(str + 1) == '<')
 	{
 		hd_total = ppx_count_heredoc(ppx_env->cmd);

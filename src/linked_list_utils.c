@@ -6,7 +6,7 @@
 /*   By: dtanigaw <dtanigaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:16:11 by dtanigaw          #+#    #+#             */
-/*   Updated: 2022/02/12 10:51:13 by dtanigaw         ###   ########.fr       */
+/*   Updated: 2025/01/17 02:50:27 by dtanigaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,14 @@ char	*ms_get_home_value_from_envp_lst(t_ms *env)
 {
 	char		*home_path;
 	t_env_lst	*home_node;
-	size_t		key_len;
 
 	home_node = ms_lst_get_node_with_the_same_key(env->envp_lst, "HOME=");
 	if (home_node == NULL)
 		home_path = getcwd(NULL, 0);
 	else
 	{
-		key_len = 5;
-		home_path = ms_strdup(home_node->entry + 5, \
-			ms_strlen(home_node->entry) - 5);
+		home_path = ms_strdup(home_node->entry + MS_ENV_HOME_KEYLEN, \
+			ms_strlen(home_node->entry) - MS_ENV_HOME_KEYLEN);
 		if (home_path == NULL)
 			exit(EXIT_FAILURE);
 	}
