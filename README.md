@@ -79,6 +79,25 @@ The command prompt is composed of:<br />
 ### **env**  
 - This command ignores any arguments and prints all active environment variables within **minishell**.
 
+#### Advantages of Using Linked Lists
+
+Using a linked list to manage environment variables in a C shell offers several key benefits:
+
+1. **Dynamic Size**  
+   Easily add or remove variables without wasting memory.
+
+2. **Efficient Modifications**  
+   Insertions and deletions occur in constant time (O(1)).
+
+3. **Easy Traversal**  
+   Supports sequential access without the need for fixed indexing.
+
+4. **Better Memory Management**  
+   Allows for precise memory allocation and reduces the risk of memory leaks.
+
+5. **Simpler Implementation**  
+   Operations are easier due to the inherent structure of linked lists.
+
 ---
 
 ## **Leaks**
