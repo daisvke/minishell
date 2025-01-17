@@ -46,8 +46,6 @@ The command prompt is composed of:<br />
 
 ## **Implemented Commands**
 
-<img src="screenshots/minishell.png" width="60%" />
-
 ### **cd**  
 - The `cd` command updates `$PWD` and changes the command prompt's path when the directory is altered.  
 - `cd ..` works as expected (using `chdir()`), navigating to the parent directory.  
