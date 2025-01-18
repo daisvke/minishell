@@ -69,7 +69,6 @@ char	*ms_expand_exit_status_or_value_from_envp(\
 	t_ms *env, char *cmdline, t_expv *vars, char *new_cmdline)
 {
 	char		*value;
-	static int	i;
 
 	vars->status = 0;
 	if (cmdline[vars->i + 1] == ' ' || cmdline[vars->i + 1] == '\0')
@@ -89,7 +88,6 @@ char	*ms_expand_exit_status_or_value_from_envp(\
 			env, cmdline, vars, MS_ENV_GET_EXPANDED_VALUE_MODE);
 	}
 	ms_copy_value_to_the_expansion_location(value, new_cmdline, vars);
-	++i;
 	return (new_cmdline);
 }
 
