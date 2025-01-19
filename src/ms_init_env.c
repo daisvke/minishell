@@ -41,25 +41,25 @@ void	ms_set_var_according_to_envp_entry(t_ms *env, char **var, char *key)
 {
 	t_env_lst	*node;
 	char		*entry;
-	size_t		key_len;
-	bool		malloced;
+	t_res		result;
 
 	entry = NULL;
-	malloced = false;
+	result.malloced = false;
 	node = ms_lst_get_node_with_the_same_key(env->envp_lst, key);
 	if (node == NULL)
-		entry = ms_handle_case_null(&key_len, &malloced);
+		result = ms_handle_empty_node(env, key, node, &entry);
 	else
 	{
 		entry = node->entry;
-		key_len = ms_strlen(key);
+		result.key_len = ms_strlen(key);
 	}
 	ms_free(*var);
-	if (ms_strcmp(key, "SESSION_MANAGER=local/") == MS_SAME)
-		ms_assign_session_manager_value_to_cmd_prompt(var, entry, key_len);
+	if (ms_strncmp(entry, "SESSION_MANAGER=local/", 22) == MS_SAME)
+		ms_assign_session_manager_value_to_cmd_prompt(\
+			var, entry, result.key_len);
 	else
-		ms_assign_key_value_to_cmd_prompt(var, entry, key_len);
-	if (malloced == true)
+		ms_assign_key_value_to_cmd_prompt(var, entry, result.key_len);
+	if (entry && result.malloced == true)
 		entry = ms_free(entry);
 }
 

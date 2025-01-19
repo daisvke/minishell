@@ -101,6 +101,50 @@ Using a linked list to manage environment variables in a C shell offers several 
 
 ---
 
+## Environment Variable Expansion
+
+We have added comprehensive support for environment variable expansion, enabling dynamic substitution of variables within commands and scripts.
+
+### Features
+
+1. **Environment Variable Expansion**  
+   - Any variable prefixed with a `$` and defined in the environment is expanded to its corresponding value. For example:
+     ```
+     echo $HOME
+     ```
+     will display the value of the `HOME` environment variable.
+
+   - Variables enclosed in quotes, such as `"$HOME"`, are also expanded correctly. The quotes are preserved, but the variable is substituted with its value. For example:
+     ```
+     export MY_VAR=hello
+     echo "$MY_VAR"
+     ```
+     Output:
+     ```
+     hello
+     ```
+
+2. **Special Variable Expansion**  
+   - The `$?` variable is expanded to represent the exit status of the last executed command. For example:
+     ```
+     ls /nonexistent
+     echo $?
+     ```
+     would output `2`, as the `ls` command failed to find the specified path.
+
+3. **Undefined Variables**  
+   - If a variable is not defined in the environment or is invalid, it is replaced with an empty string (`""`) during expansion. For example:
+     ```
+     echo $UNSET_VAR
+     ```
+     results in:
+     ```
+     (no output, replaced by an empty string followed by a newline character)
+     ```
+  ```
+
+---
+
 ## **Leaks**
 
 To check for memory leaks (excluding those due to `readline()`), create a suppression file with the following content:

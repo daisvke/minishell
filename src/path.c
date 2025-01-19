@@ -34,7 +34,15 @@ t_env_lst	*ms_lst_get_node_with_the_same_key(t_env_lst *envp_lst, char *key)
 	while (node)
 	{
 		if (ms_compare_with_envp_key(node->entry, key, true) == MS_SAME)
+		{
+			if (ms_strcmp(key, "SESSION_MANAGER=local/") == MS_SAME)
+			{
+				if (node->entry
+					&& ms_strncmp(node->entry, key, 22) == MS_DIFFERENT)
+					return (NULL);
+			}
 			return (node);
+		}
 		node = node->next;
 	}
 	return (NULL);

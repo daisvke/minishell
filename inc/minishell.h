@@ -63,6 +63,8 @@ char		*ms_get_pwd(t_ms *env, t_env_lst *path_node, size_t *key_len);
 char		*ms_handle_case_null(size_t *key_len, bool *malloced);
 void		ms_init_cmd_prompt(t_ms *env);
 void		ms_init_env(int argc, char *envp[], t_ms *env);
+t_res		ms_handle_empty_node(\
+			t_ms *env, char *key, t_env_lst *node, char **entry);
 void		ms_set_var_according_to_envp_entry(\
 	t_ms *env, char **var, char *key);
 void		ms_set_variables_for_cmd_prompt(t_ms *env, t_prompt *cmd_prompt);

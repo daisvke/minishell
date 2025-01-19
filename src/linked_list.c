@@ -80,12 +80,12 @@ int	ms_compare_with_envp_key(\
 {
 	if (str && envp_entry)
 	{
-		while (*str && *envp_entry)
+		while (*str || *envp_entry)
 		{
+			if (*str != *envp_entry)
+				return (MS_DIFFERENT);
 			if (equal_in_str == true && *envp_entry == '=')
 				break ;
-			if (*str != *envp_entry)
-				return ((unsigned char)(*str) - (unsigned char)(*envp_entry));
 			str++;
 			envp_entry++;
 		}

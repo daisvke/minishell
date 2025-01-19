@@ -37,8 +37,10 @@ t_env_lst	*ms_lst_get_last_node(t_env_lst *node)
 
 void	ms_lst_del_node(t_env_lst *node)
 {
-	node->entry = ms_free(node->entry);
-	node = ms_free(node);
+	if (node->entry)
+		node->entry = ms_free(node->entry);
+	if (node)
+		node = ms_free(node);
 }
 
 void	ms_lst_clear_list(t_env_lst *node)

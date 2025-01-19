@@ -62,7 +62,8 @@ SRC_FILES			=	builtin_cmds_1.c \
 						minishell_utils_1.c \
 						minishell_utils_2.c \
 						ms_init_env.c \
-						ms_init_env_utils.c \
+						ms_init_env_utils_1.c \
+						ms_init_env_utils_2.c \
 						path.c \
 						pipex.c \
 						pipex_utils.c \
