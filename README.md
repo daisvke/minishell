@@ -111,13 +111,13 @@ We have added comprehensive support for environment variable expansion, enabling
 
 1. **Environment Variable Expansion**  
    - Any variable prefixed with a `$` and defined in the environment is expanded to its corresponding value. For example:
-     ```
+     ```bash
      echo $HOME
      ```
      will display the value of the `HOME` environment variable.
 
    - Variables enclosed in quotes, such as `"$HOME"`, are also expanded correctly. The quotes are preserved, but the variable is substituted with its value. For example:
-     ```
+     ```bash
      export MY_VAR=hello
      echo "$MY_VAR"
      ```
@@ -128,7 +128,7 @@ We have added comprehensive support for environment variable expansion, enabling
 
 2. **Special Variable Expansion**  
    - The `$?` variable is expanded to represent the exit status of the last executed command. For example:
-     ```
+     ```bash
      ls /nonexistent
      echo $?
      ```
@@ -136,20 +136,18 @@ We have added comprehensive support for environment variable expansion, enabling
 
 3. **Undefined Variables**  
    - If a variable is not defined in the environment or is invalid, it is replaced with an empty string (`""`) during expansion. For example:
-     ```
+     ```bash
      echo $UNSET_VAR
      ```
      results in:
      ```
      (no output, replaced by an empty string followed by a newline character)
      ```
-  ```
-
----
 
 ## **Leaks**
 
 To check for memory leaks (excluding those due to `readline()`), create a suppression file with the following content:
+
 ```plaintext
 {
   ignore_readline_leaks
@@ -158,6 +156,7 @@ To check for memory leaks (excluding those due to `readline()`), create a suppre
   obj:/lib/x86_64-linux-gnu/libreadline.so.7.0
 }
 ```
+
 You can name this file anything you'd like.  
 Make sure to replace the last line with the correct path for your system.<br />
 You can find this in the **valgrind** reports. For instance:
